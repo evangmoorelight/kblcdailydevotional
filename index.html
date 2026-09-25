@@ -16,28 +16,81 @@
 
 <style>
 
-/* =========================
-   ROOT
-========================= */
+/* ==================================================
+   THEME VARIABLES
+================================================== */
 
 :root{
 
   --bg:#121212;
+  --bg-secondary:#181818;
+
   --card:#202020;
+  --card-secondary:#191919;
 
   --blue:#1687ff;
 
   --text:#EDEDED;
+  --heading:#FFFFFF;
   --muted:#A7A7A7;
 
   --line:#303030;
+  --input:#151515;
+  --episode:#181818;
+
+  --header-bg:rgba(18,18,18,.94);
+  --nav-bg:rgba(18,18,18,.96);
+
+  --player-bg:#090909;
+  --player-inner:#111111;
+
+  --watermark-opacity:.055;
+
+  --shadow:
+    0 14px 40px rgba(0,0,0,.25);
 
 }
 
 
-/* =========================
+/* ==================================================
+   LIGHT THEME
+================================================== */
+
+body.light-theme{
+
+  --bg:#F5F8FC;
+  --bg-secondary:#FFFFFF;
+
+  --card:#FFFFFF;
+  --card-secondary:#F7F9FC;
+
+  --blue:#0878E8;
+
+  --text:#202733;
+  --heading:#111827;
+  --muted:#657080;
+
+  --line:#DDE4EC;
+  --input:#F4F7FA;
+  --episode:#F5F8FC;
+
+  --header-bg:rgba(255,255,255,.94);
+  --nav-bg:rgba(255,255,255,.96);
+
+  --player-bg:#EEF3F8;
+  --player-inner:#FFFFFF;
+
+  --watermark-opacity:.045;
+
+  --shadow:
+    0 14px 40px rgba(30,60,90,.10);
+
+}
+
+
+/* ==================================================
    GLOBAL
-========================= */
+================================================== */
 
 *{
   box-sizing:border-box;
@@ -69,12 +122,52 @@ body{
 
   color:var(--text);
 
+  transition:
+    background .3s ease,
+    color .3s ease;
+
 }
 
 
-/* =========================
+/* ==================================================
+   LOGO WATERMARK
+================================================== */
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:-1;
+
+  pointer-events:none;
+
+  background-image:
+    url("kblc-logo.png");
+
+  background-repeat:no-repeat;
+
+  background-position:
+    center center;
+
+  background-size:
+    min(560px,72vw);
+
+  opacity:
+    var(--watermark-opacity);
+
+  transition:
+    opacity .3s ease;
+
+}
+
+
+/* ==================================================
    SVG ICONS
-========================= */
+================================================== */
 
 .icon{
 
@@ -104,9 +197,9 @@ body{
 }
 
 
-/* =========================
+/* ==================================================
    HEADER
-========================= */
+================================================== */
 
 header{
 
@@ -119,7 +212,7 @@ header{
   height:72px;
 
   background:
-    rgba(18,18,18,.94);
+    var(--header-bg);
 
   backdrop-filter:
     blur(16px);
@@ -134,14 +227,18 @@ header{
   justify-content:center;
 
   padding:
-    8px 20px;
+    8px 70px;
+
+  transition:
+    background .3s ease,
+    border-color .3s ease;
 
 }
 
 
-/* =========================
+/* ==================================================
    CENTERED BRAND
-========================= */
+================================================== */
 
 .brand{
 
@@ -159,9 +256,12 @@ header{
 
   font-weight:700;
 
-  color:#fff;
+  color:var(--heading);
 
   text-align:center;
+
+  transition:
+    color .3s ease;
 
 }
 
@@ -179,18 +279,80 @@ header{
 
   border:
     2px solid
-    rgba(255,255,255,.12);
+    rgba(22,135,255,.18);
 
   box-shadow:
     0 5px 18px
-    rgba(0,0,0,.3);
+    rgba(0,0,0,.20);
 
 }
 
 
-/* =========================
+/* ==================================================
+   THEME BUTTON
+================================================== */
+
+.theme-toggle{
+
+  position:absolute;
+
+  right:18px;
+
+  top:50%;
+
+  transform:
+    translateY(-50%);
+
+  width:44px;
+
+  height:44px;
+
+  border-radius:50%;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    var(--card-secondary);
+
+  color:var(--text);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:
+    .25s ease;
+
+}
+
+.theme-toggle:hover{
+
+  color:var(--blue);
+
+  border-color:var(--blue);
+
+  transform:
+    translateY(-50%)
+    scale(1.06);
+
+}
+
+.theme-toggle .icon{
+
+  width:20px;
+  height:20px;
+
+}
+
+
+/* ==================================================
    OLD TOP NAV HIDDEN
-========================= */
+================================================== */
 
 .top-nav{
   display:none;
@@ -201,9 +363,9 @@ header{
 }
 
 
-/* =========================
+/* ==================================================
    BOTTOM NAVIGATION
-========================= */
+================================================== */
 
 .bottom-nav{
 
@@ -228,7 +390,7 @@ header{
   gap:8px;
 
   background:
-    rgba(18,18,18,.96);
+    var(--nav-bg);
 
   backdrop-filter:
     blur(18px);
@@ -238,10 +400,14 @@ header{
 
   box-shadow:
     0 -10px 30px
-    rgba(0,0,0,.30);
+    rgba(0,0,0,.18);
 
   padding:
     6px 10px;
+
+  transition:
+    background .3s ease,
+    border-color .3s ease;
 
 }
 
@@ -261,7 +427,7 @@ header{
 
   border-radius:14px;
 
-  color:#888;
+  color:var(--muted);
 
   text-decoration:none;
 
@@ -332,9 +498,9 @@ header{
 }
 
 
-/* =========================
+/* ==================================================
    CONTAINER
-========================= */
+================================================== */
 
 .container{
 
@@ -346,9 +512,9 @@ header{
 }
 
 
-/* =========================
+/* ==================================================
    HERO
-========================= */
+================================================== */
 
 .hero{
 
@@ -376,7 +542,7 @@ header{
 
   box-shadow:
     0 10px 30px
-    rgba(0,0,0,.35);
+    rgba(0,0,0,.20);
 
 }
 
@@ -422,6 +588,8 @@ header{
 
   letter-spacing:-1.5px;
 
+  color:var(--heading);
+
 }
 
 
@@ -448,9 +616,9 @@ header{
 }
 
 
-/* =========================
+/* ==================================================
    CARDS
-========================= */
+================================================== */
 
 .card{
 
@@ -458,8 +626,8 @@ header{
 
     linear-gradient(
       145deg,
-      #202020,
-      #191919
+      var(--card),
+      var(--card-secondary)
     );
 
   border:
@@ -473,23 +641,24 @@ header{
   margin:18px 0;
 
   box-shadow:
-    0 14px 40px
-    rgba(0,0,0,.25);
+    var(--shadow);
 
-  transition:.25s;
+  transition:
+    .3s ease;
 
 }
 
 .card:hover{
 
-  border-color:#3A3A3A;
+  border-color:
+    rgba(22,135,255,.35);
 
 }
 
 .card h2,
 .card h3{
 
-  color:#fff;
+  color:var(--heading);
 
 }
 
@@ -524,10 +693,11 @@ header{
 
   overflow:hidden;
 
-  background:#090909;
+  background:
+    var(--player-bg);
 
   border:
-    1px solid #303030;
+    1px solid var(--line);
 
   margin:
     18px 0;
@@ -545,8 +715,8 @@ header{
 
     linear-gradient(
       145deg,
-      #181818,
-      #0d0d0d
+      var(--player-inner),
+      var(--player-bg)
     );
 
 }
@@ -606,7 +776,7 @@ header{
 
 .player-title{
 
-  color:#fff;
+  color:var(--heading);
 
   font-size:13px;
 
@@ -635,7 +805,7 @@ header{
 
   background:var(--blue);
 
-  color:#000;
+  color:#fff;
 
   display:flex;
 
@@ -688,7 +858,8 @@ header{
 
   -webkit-appearance:none;
 
-  background:#3a3a3a;
+  background:
+    var(--line);
 
   border-radius:10px;
 
@@ -745,7 +916,7 @@ header{
 
 .time{
 
-  color:#888;
+  color:var(--muted);
 
   font-size:9px;
 
@@ -769,7 +940,7 @@ header{
 
   height:17px;
 
-  color:#aaa;
+  color:var(--muted);
 
   display:flex;
 
@@ -819,7 +990,9 @@ header{
 }
 
 
-/* BADGE */
+/* ==================================================
+   BADGE
+================================================== */
 
 .badge{
 
@@ -844,7 +1017,9 @@ header{
 }
 
 
-/* READING */
+/* ==================================================
+   READING
+================================================== */
 
 .read{
 
@@ -854,12 +1029,14 @@ header{
 
   font-size:15px;
 
-  color:#D1D1D1;
+  color:var(--text);
 
 }
 
 
-/* DEVOTIONAL HEADER */
+/* ==================================================
+   DEVOTIONAL HEADER
+================================================== */
 
 .devotional-header{
 
@@ -882,7 +1059,9 @@ header{
 }
 
 
-/* MINIMIZE BUTTON */
+/* ==================================================
+   MINIMIZE BUTTON
+================================================== */
 
 .minimize-btn{
 
@@ -893,11 +1072,12 @@ header{
   border-radius:50%;
 
   border:
-    1px solid #3A3A3A;
+    1px solid var(--line);
 
-  background:#181818;
+  background:
+    var(--card-secondary);
 
-  color:#fff;
+  color:var(--text);
 
   cursor:pointer;
 
@@ -921,14 +1101,16 @@ header{
 
   border-color:var(--blue);
 
-  color:#000;
+  color:#fff;
 
   transform:scale(1.05);
 
 }
 
 
-/* SEARCH */
+/* ==================================================
+   SEARCH
+================================================== */
 
 .search-box{
 
@@ -949,11 +1131,12 @@ header{
   border-radius:12px;
 
   border:
-    1px solid #353535;
+    1px solid var(--line);
 
-  background:#151515;
+  background:
+    var(--input);
 
-  color:#fff;
+  color:var(--text);
 
   outline:none;
 
@@ -969,7 +1152,7 @@ header{
 
 .search-box input::placeholder{
 
-  color:#777;
+  color:var(--muted);
 
 }
 
@@ -995,7 +1178,7 @@ header{
   transform:
     translateY(-50%);
 
-  color:#777;
+  color:var(--muted);
 
   pointer-events:none;
 
@@ -1014,16 +1197,19 @@ header{
 }
 
 
-/* EPISODES */
+/* ==================================================
+   EPISODES
+================================================== */
 
 .episode-item{
 
   cursor:pointer;
 
-  background:#181818;
+  background:
+    var(--episode);
 
   border:
-    1px solid #303030;
+    1px solid var(--line);
 
   padding:15px;
 
@@ -1037,9 +1223,11 @@ header{
 
 .episode-item:hover{
 
-  background:#282828;
+  background:
+    rgba(22,135,255,.07);
 
-  border-color:#444;
+  border-color:
+    rgba(22,135,255,.35);
 
   transform:
     translateY(-1px);
@@ -1048,7 +1236,7 @@ header{
 
 .episode-item b{
 
-  color:#fff;
+  color:var(--heading);
 
   font-size:13px;
 
@@ -1056,12 +1244,14 @@ header{
 
 .episode-item small{
 
-  color:#888;
+  color:var(--muted);
 
 }
 
 
-/* ACTIVE EPISODE */
+/* ==================================================
+   ACTIVE EPISODE
+================================================== */
 
 .episode-active{
 
@@ -1074,7 +1264,9 @@ header{
 }
 
 
-/* NO RESULTS */
+/* ==================================================
+   NO RESULTS
+================================================== */
 
 .no-results{
 
@@ -1083,7 +1275,7 @@ header{
   padding:
     25px 10px;
 
-  color:#777;
+  color:var(--muted);
 
   font-size:13px;
 
@@ -1091,7 +1283,7 @@ header{
 
 
 /* ==================================================
-   NEW DEVOTIONAL NOTIFICATION
+   NOTIFICATION
 ================================================== */
 
 .notification-area{
@@ -1157,7 +1349,7 @@ header{
   background:
     var(--blue);
 
-  color:#000;
+  color:#fff;
 
   transform:
     translateY(-1px);
@@ -1169,14 +1361,14 @@ header{
   background:
     var(--blue);
 
-  color:#000;
+  color:#fff;
 
 }
 
 
-/* =========================
+/* ==================================================
    NEW DEVOTIONAL POPUP
-========================= */
+================================================== */
 
 .new-episode-alert{
 
@@ -1193,7 +1385,8 @@ header{
   width:
     min(360px,calc(100% - 40px));
 
-  background:#202020;
+  background:
+    var(--card);
 
   border:
     1px solid
@@ -1205,7 +1398,7 @@ header{
 
   box-shadow:
     0 15px 45px
-    rgba(0,0,0,.45);
+    rgba(0,0,0,.25);
 
   animation:
     newEpisodeIn .3s ease;
@@ -1283,7 +1476,7 @@ header{
 
 .new-episode-alert-title{
 
-  color:#fff;
+  color:var(--heading);
 
   font-size:12px;
 
@@ -1305,7 +1498,7 @@ header{
 
   background:none;
 
-  color:#888;
+  color:var(--muted);
 
   cursor:pointer;
 
@@ -1341,7 +1534,7 @@ header{
 
   background:var(--blue);
 
-  color:#000;
+  color:#fff;
 
   font-weight:800;
 
@@ -1373,7 +1566,9 @@ header{
 }
 
 
-/* FOOTER */
+/* ==================================================
+   FOOTER
+================================================== */
 
 footer{
 
@@ -1382,16 +1577,16 @@ footer{
   padding:
     35px 10px 45px;
 
-  color:#666;
+  color:var(--muted);
 
   font-size:11px;
 
 }
 
 
-/* =========================
+/* ==================================================
    MOBILE
-========================= */
+================================================== */
 
 @media(max-width:650px){
 
@@ -1400,7 +1595,7 @@ footer{
     height:68px;
 
     padding:
-      7px 12px;
+      7px 58px;
 
   }
 
@@ -1413,6 +1608,16 @@ footer{
   }
 
   .brand img{
+
+    width:40px;
+
+    height:40px;
+
+  }
+
+  .theme-toggle{
+
+    right:10px;
 
     width:40px;
 
@@ -1543,7 +1748,9 @@ footer{
 }
 
 
-/* SCROLLBAR */
+/* ==================================================
+   SCROLLBAR
+================================================== */
 
 ::-webkit-scrollbar{
 
@@ -1553,13 +1760,15 @@ footer{
 
 ::-webkit-scrollbar-track{
 
-  background:#121212;
+  background:
+    var(--bg);
 
 }
 
 ::-webkit-scrollbar-thumb{
 
-  background:#3A3A3A;
+  background:
+    var(--line);
 
   border-radius:10px;
 
@@ -1567,7 +1776,8 @@ footer{
 
 ::-webkit-scrollbar-thumb:hover{
 
-  background:#555;
+  background:
+    var(--muted);
 
 }
 
@@ -1579,9 +1789,9 @@ footer{
 <body>
 
 
-<!-- =========================
+<!-- ==================================================
      CENTERED HEADER
-========================= -->
+================================================== -->
 
 <header>
 
@@ -1598,14 +1808,44 @@ footer{
 
   </div>
 
+
+  <!-- THEME SWITCH -->
+
+  <button
+    class="theme-toggle"
+    id="themeToggle"
+    type="button"
+    aria-label="Switch theme"
+    title="Switch theme"
+  >
+
+    <!-- Moon -->
+
+    <svg
+      class="icon"
+      id="themeIcon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+
+      <path
+        d="M21 12.8A8.5 8.5 0 1 1 11.2 3
+           6.5 6.5 0 0 0 21 12.8Z">
+      </path>
+
+    </svg>
+
+  </button>
+
 </header>
 
 
-<!-- =========================
+<!-- ==================================================
      BOTTOM NAVIGATION
-========================= -->
+================================================== -->
 
 <nav class="bottom-nav">
+
 
   <!-- HOME -->
 
@@ -1740,9 +1980,9 @@ footer{
 <div class="container">
 
 
-<!-- =========================
+<!-- ==================================================
      HERO
-========================= -->
+================================================== -->
 
 <section class="hero">
 
@@ -1783,9 +2023,9 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- ==================================================
      MAIN DEVOTIONAL
-========================= -->
+================================================== -->
 
 <div class="card">
 
@@ -1974,9 +2214,9 @@ footer{
   </div>
 
 
-  <!-- =========================
+  <!-- ==================================================
        NOTIFICATION
-  ========================= -->
+  ================================================== -->
 
   <div class="notification-area">
 
@@ -2025,9 +2265,9 @@ footer{
 </div>
 
 
-<!-- =========================
+<!-- ==================================================
      ALL DEVOTIONALS
-========================= -->
+================================================== -->
 
 <div class="card">
 
@@ -2097,11 +2337,13 @@ footer{
 </div>
 
 
-<!-- FOOTER -->
+<!-- ==================================================
+     FOOTER
+================================================== -->
 
 <footer>
 
-  <strong style="color:#aaa">
+  <strong style="color:var(--heading)">
 
     KBLC DAILY DEVOTIONAL
 
@@ -2124,9 +2366,9 @@ footer{
 </div>
 
 
-<!-- =========================
+<!-- ==================================================
      NEW DEVOTIONAL POPUP
-========================= -->
+================================================== -->
 
 <div
   class="new-episode-alert"
@@ -2206,6 +2448,196 @@ footer{
 
 
 <script>
+
+/* ==================================================
+   THEME SYSTEM
+================================================== */
+
+const THEME_STORAGE_KEY =
+  "kblc_theme";
+
+
+const themeToggle =
+  document.getElementById(
+    "themeToggle"
+  );
+
+
+const themeIcon =
+  document.getElementById(
+    "themeIcon"
+  );
+
+
+/* UPDATE THEME ICON */
+
+function updateThemeIcon(){
+
+  if(!themeIcon)
+    return;
+
+  if(
+    document.body.classList.contains(
+      "light-theme"
+    )
+  ){
+
+    /* SUN */
+
+    themeIcon.innerHTML = `
+
+      <circle
+        cx="12"
+        cy="12"
+        r="4">
+      </circle>
+
+      <path d="M12 2v2"></path>
+
+      <path d="M12 20v2"></path>
+
+      <path d="m4.93 4.93 1.41 1.41"></path>
+
+      <path d="m17.66 17.66 1.41 1.41"></path>
+
+      <path d="M2 12h2"></path>
+
+      <path d="M20 12h2"></path>
+
+      <path d="m6.34 17.66-1.41 1.41"></path>
+
+      <path d="m19.07 4.93-1.41 1.41"></path>
+
+    `;
+
+    themeToggle.title =
+      "Switch to dark mode";
+
+    themeToggle.setAttribute(
+      "aria-label",
+      "Switch to dark mode"
+    );
+
+  }
+
+  else{
+
+    /* MOON */
+
+    themeIcon.innerHTML = `
+
+      <path
+        d="M21 12.8A8.5 8.5 0 1 1 11.2 3
+           6.5 6.5 0 0 0 21 12.8Z">
+      </path>
+
+    `;
+
+    themeToggle.title =
+      "Switch to light mode";
+
+    themeToggle.setAttribute(
+      "aria-label",
+      "Switch to light mode"
+    );
+
+  }
+
+}
+
+
+/* APPLY THEME */
+
+function applyTheme(theme){
+
+  if(theme === "light"){
+
+    document.body.classList.add(
+      "light-theme"
+    );
+
+  }
+
+  else{
+
+    document.body.classList.remove(
+      "light-theme"
+    );
+
+  }
+
+  updateThemeIcon();
+
+}
+
+
+/* LOAD SAVED THEME */
+
+const savedTheme =
+  localStorage.getItem(
+    THEME_STORAGE_KEY
+  );
+
+
+if(savedTheme){
+
+  applyTheme(
+    savedTheme
+  );
+
+}
+
+else{
+
+  /* Follow device preference */
+
+  const prefersLight =
+    window.matchMedia &&
+    window.matchMedia(
+      "(prefers-color-scheme: light)"
+    ).matches;
+
+  applyTheme(
+    prefersLight
+      ? "light"
+      : "dark"
+  );
+
+}
+
+
+/* SWITCH THEME */
+
+if(themeToggle){
+
+  themeToggle.addEventListener(
+    "click",
+    function(){
+
+      const isLight =
+        document.body.classList.contains(
+          "light-theme"
+        );
+
+      const newTheme =
+        isLight
+          ? "dark"
+          : "light";
+
+      applyTheme(
+        newTheme
+      );
+
+      localStorage.setItem(
+        THEME_STORAGE_KEY,
+        newTheme
+      );
+
+    }
+  );
+
+}
+
 
 /* ==================================================
    SPREAKER SHOW
@@ -2466,9 +2898,6 @@ function showFallback(id){
 
   mainPlayer.src =
     getSpreakerURL(id);
-
-  document
-    .getElementById("status");
 
 }
 
@@ -3108,7 +3537,7 @@ function toggleDevotionals(){
 
 
 /* ==================================================
-   NEW DEVOTIONAL SOUND NOTIFICATION
+   NEW DEVOTIONAL NOTIFICATION
 ================================================== */
 
 const NEW_EPISODE_STORAGE_KEY =
