@@ -25,7 +25,6 @@
   --bg:#121212;
   --card:#202020;
 
-  --green:#1DB954;
   --blue:#1687ff;
 
   --text:#EDEDED;
@@ -44,15 +43,15 @@
   box-sizing:border-box;
 }
 
-
 html{
   scroll-behavior:smooth;
 }
 
-
 body{
 
   margin:0;
+
+  padding-bottom:82px;
 
   font-family:
     'Plus Jakarta Sans',
@@ -62,13 +61,45 @@ body{
 
     radial-gradient(
       circle at 80% -10%,
-      rgba(29,185,84,.12),
+      rgba(22,135,255,.12),
       transparent 35%
     ),
 
     var(--bg);
 
   color:var(--text);
+
+}
+
+
+/* =========================
+   SVG ICONS
+========================= */
+
+.icon{
+
+  width:20px;
+  height:20px;
+
+  display:block;
+
+  fill:none;
+
+  stroke:currentColor;
+
+  stroke-width:2;
+
+  stroke-linecap:round;
+
+  stroke-linejoin:round;
+
+}
+
+.icon-fill{
+
+  fill:currentColor;
+
+  stroke:none;
 
 }
 
@@ -83,10 +114,12 @@ header{
 
   top:0;
 
-  z-index:10;
+  z-index:1000;
+
+  height:72px;
 
   background:
-    rgba(18,18,18,.92);
+    rgba(18,18,18,.94);
 
   backdrop-filter:
     blur(16px);
@@ -94,32 +127,31 @@ header{
   border-bottom:
     1px solid var(--line);
 
-  padding:
-    10px 20px;
-
   display:flex;
-
-  justify-content:
-    space-between;
 
   align-items:center;
 
-  gap:15px;
+  justify-content:center;
+
+  padding:
+    8px 20px;
 
 }
 
 
 /* =========================
-   BRAND
+   CENTERED BRAND
 ========================= */
 
 .brand{
 
   display:flex;
 
-  gap:10px;
-
   align-items:center;
+
+  justify-content:center;
+
+  gap:10px;
 
   font-family:
     'Fraunces',
@@ -129,14 +161,15 @@ header{
 
   color:#fff;
 
-}
+  text-align:center;
 
+}
 
 .brand img{
 
-  width:44px;
+  width:46px;
 
-  height:44px;
+  height:46px;
 
   border-radius:50%;
 
@@ -148,36 +181,87 @@ header{
     2px solid
     rgba(255,255,255,.12);
 
+  box-shadow:
+    0 5px 18px
+    rgba(0,0,0,.3);
+
 }
 
 
 /* =========================
-   TOP NAV
+   OLD TOP NAV HIDDEN
 ========================= */
 
 .top-nav{
+  display:none;
+}
+
+#status{
+  display:none;
+}
+
+
+/* =========================
+   BOTTOM NAVIGATION
+========================= */
+
+.bottom-nav{
+
+  position:fixed;
+
+  left:0;
+
+  right:0;
+
+  bottom:0;
+
+  z-index:9999;
+
+  height:72px;
 
   display:flex;
 
   align-items:center;
 
+  justify-content:center;
+
   gap:8px;
+
+  background:
+    rgba(18,18,18,.96);
+
+  backdrop-filter:
+    blur(18px);
+
+  border-top:
+    1px solid var(--line);
+
+  box-shadow:
+    0 -10px 30px
+    rgba(0,0,0,.30);
+
+  padding:
+    6px 10px;
 
 }
 
 
-.nav-icon{
+/* NAV BUTTON */
 
-  min-width:58px;
+.bottom-nav .nav-icon{
 
-  height:54px;
+  flex:1;
+
+  max-width:90px;
+
+  height:58px;
 
   padding:
-    5px 7px;
+    5px 8px;
 
-  border-radius:13px;
+  border-radius:14px;
 
-  color:#aaa;
+  color:#888;
 
   text-decoration:none;
 
@@ -189,23 +273,27 @@ header{
 
   justify-content:center;
 
-  gap:2px;
+  gap:4px;
 
   transition:.2s;
 
 }
 
 
-.nav-icon span{
+/* NAV ICON */
 
-  font-size:20px;
+.bottom-nav .nav-icon .icon{
 
-  line-height:20px;
+  width:21px;
+
+  height:21px;
 
 }
 
 
-.nav-icon small{
+/* NAV TEXT */
+
+.bottom-nav .nav-icon small{
 
   font-size:8px;
 
@@ -216,54 +304,30 @@ header{
 }
 
 
-.nav-icon:hover{
+/* HOVER */
 
-  color:var(--green);
+.bottom-nav .nav-icon:hover{
+
+  color:var(--blue);
 
   background:
-    rgba(29,185,84,.10);
-
-  transform:
-    translateY(-1px);
+    rgba(22,135,255,.10);
 
 }
 
 
-.nav-icon.active{
+/* ACTIVE */
 
-  color:var(--green);
+.bottom-nav .nav-icon.active{
+
+  color:var(--blue);
 
   background:
-    rgba(29,185,84,.10);
+    rgba(22,135,255,.12);
 
   border:
     1px solid
-    rgba(29,185,84,.25);
-
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-#status{
-
-  background:#252525;
-
-  color:var(--green);
-
-  padding:
-    7px 11px;
-
-  border-radius:20px;
-
-  font-size:10px;
-
-  font-weight:800;
-
-  border:
-    1px solid #333;
+    rgba(22,135,255,.25);
 
 }
 
@@ -290,6 +354,8 @@ header{
 
   padding:
     60px 0 28px;
+
+  text-align:center;
 
 }
 
@@ -318,9 +384,9 @@ header{
 .today-badge{
 
   background:
-    rgba(29,185,84,.12);
+    rgba(22,135,255,.12);
 
-  color:var(--green);
+  color:var(--blue);
 
   display:inline-block;
 
@@ -335,7 +401,7 @@ header{
 
   border:
     1px solid
-    rgba(29,185,84,.2);
+    rgba(22,135,255,.2);
 
 }
 
@@ -360,7 +426,9 @@ header{
 
 
 .hero h1 span{
-  color:var(--green);
+
+  color:var(--blue);
+
 }
 
 
@@ -368,7 +436,10 @@ header{
 
   color:var(--muted);
 
-  max-width:620px;
+  max-width:650px;
+
+  margin:
+    0 auto;
 
   line-height:1.7;
 
@@ -409,17 +480,18 @@ header{
 
 }
 
-
 .card:hover{
-  border-color:#3A3A3A;
-}
 
+  border-color:#3A3A3A;
+
+}
 
 .card h2,
 .card h3{
-  color:#fff;
-}
 
+  color:#fff;
+
+}
 
 .card h2{
 
@@ -430,7 +502,6 @@ header{
   font-size:24px;
 
 }
-
 
 .card h3{
 
@@ -463,7 +534,6 @@ header{
 
 }
 
-
 .custom-player{
 
   width:100%;
@@ -494,7 +564,6 @@ header{
 
 }
 
-
 .player-logo{
 
   width:52px;
@@ -511,7 +580,6 @@ header{
 
 }
 
-
 .player-info{
 
   min-width:0;
@@ -520,10 +588,9 @@ header{
 
 }
 
-
 .player-label{
 
-  color:var(--green);
+  color:var(--blue);
 
   font-size:9px;
 
@@ -536,7 +603,6 @@ header{
   margin-bottom:4px;
 
 }
-
 
 .player-title{
 
@@ -567,7 +633,7 @@ header{
 
   border:0;
 
-  background:var(--green);
+  background:var(--blue);
 
   color:#000;
 
@@ -577,8 +643,6 @@ header{
 
   justify-content:center;
 
-  font-size:19px;
-
   cursor:pointer;
 
   flex-shrink:0;
@@ -587,6 +651,13 @@ header{
 
 }
 
+.play-button .icon{
+
+  width:19px;
+
+  height:19px;
+
+}
 
 .play-button:hover{
 
@@ -594,7 +665,7 @@ header{
 
   box-shadow:
     0 0 0 5px
-    rgba(29,185,84,.10);
+    rgba(22,135,255,.10);
 
 }
 
@@ -606,7 +677,6 @@ header{
   margin-top:18px;
 
 }
-
 
 .progress{
 
@@ -628,7 +698,6 @@ header{
 
 }
 
-
 .progress::-webkit-slider-thumb{
 
   appearance:none;
@@ -641,10 +710,9 @@ header{
 
   border-radius:50%;
 
-  background:var(--green);
+  background:var(--blue);
 
 }
-
 
 .progress::-moz-range-thumb{
 
@@ -656,7 +724,7 @@ header{
 
   border:0;
 
-  background:var(--green);
+  background:var(--blue);
 
 }
 
@@ -675,7 +743,6 @@ header{
 
 }
 
-
 .time{
 
   color:#888;
@@ -685,7 +752,6 @@ header{
   font-weight:700;
 
 }
-
 
 .volume-area{
 
@@ -697,15 +763,29 @@ header{
 
 }
 
-
 .volume-icon{
 
-  font-size:13px;
+  width:17px;
+
+  height:17px;
 
   color:#aaa;
 
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
 }
 
+.volume-icon .icon{
+
+  width:15px;
+
+  height:15px;
+
+}
 
 .volume{
 
@@ -713,7 +793,7 @@ header{
 
   height:4px;
 
-  accent-color:var(--green);
+  accent-color:var(--blue);
 
 }
 
@@ -725,7 +805,6 @@ header{
   display:none;
 
 }
-
 
 .spreaker-fallback iframe{
 
@@ -745,9 +824,9 @@ header{
 .badge{
 
   background:
-    rgba(29,185,84,.12);
+    rgba(22,135,255,.12);
 
-  color:var(--green);
+  color:var(--blue);
 
   padding:
     7px 12px;
@@ -760,7 +839,7 @@ header{
 
   border:
     1px solid
-    rgba(29,185,84,.2);
+    rgba(22,135,255,.2);
 
 }
 
@@ -796,9 +875,10 @@ header{
 
 }
 
-
 .devotional-header h3{
+
   margin:0;
+
 }
 
 
@@ -835,12 +915,11 @@ header{
 
 }
 
-
 .minimize-btn:hover{
 
-  background:var(--green);
+  background:var(--blue);
 
-  border-color:var(--green);
+  border-color:var(--blue);
 
   color:#000;
 
@@ -858,7 +937,6 @@ header{
   margin-bottom:16px;
 
 }
-
 
 .search-box input{
 
@@ -889,23 +967,22 @@ header{
 
 }
 
-
 .search-box input::placeholder{
-  color:#777;
-}
 
+  color:#777;
+
+}
 
 .search-box input:focus{
 
   border-color:
-    var(--green);
+    var(--blue);
 
   box-shadow:
     0 0 0 3px
-    rgba(29,185,84,.10);
+    rgba(22,135,255,.10);
 
 }
-
 
 .search-icon{
 
@@ -922,7 +999,17 @@ header{
 
   pointer-events:none;
 
-  font-size:18px;
+  display:flex;
+
+  align-items:center;
+
+}
+
+.search-icon .icon{
+
+  width:18px;
+
+  height:18px;
 
 }
 
@@ -948,7 +1035,6 @@ header{
 
 }
 
-
 .episode-item:hover{
 
   background:#282828;
@@ -960,7 +1046,6 @@ header{
 
 }
 
-
 .episode-item b{
 
   color:#fff;
@@ -969,9 +1054,10 @@ header{
 
 }
 
-
 .episode-item small{
+
   color:#888;
+
 }
 
 
@@ -980,10 +1066,10 @@ header{
 .episode-active{
 
   background:
-    rgba(29,185,84,.10)!important;
+    rgba(22,135,255,.10)!important;
 
   border-color:
-    var(--green)!important;
+    var(--blue)!important;
 
 }
 
@@ -1022,17 +1108,16 @@ header{
 
 }
 
-
 .notification-btn{
 
   border:
     1px solid
-    rgba(29,185,84,.35);
+    rgba(22,135,255,.35);
 
   background:
-    rgba(29,185,84,.10);
+    rgba(22,135,255,.10);
 
-  color:var(--green);
+  color:var(--blue);
 
   padding:
     10px 14px;
@@ -1051,13 +1136,26 @@ header{
 
   transition:.2s;
 
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
 }
 
+.notification-btn .icon{
+
+  width:17px;
+
+  height:17px;
+
+}
 
 .notification-btn:hover{
 
   background:
-    var(--green);
+    var(--blue);
 
   color:#000;
 
@@ -1066,11 +1164,10 @@ header{
 
 }
 
-
 .notification-btn.enabled{
 
   background:
-    var(--green);
+    var(--blue);
 
   color:#000;
 
@@ -1089,7 +1186,7 @@ header{
 
   right:20px;
 
-  bottom:20px;
+  bottom:92px;
 
   z-index:9999;
 
@@ -1100,7 +1197,7 @@ header{
 
   border:
     1px solid
-    rgba(29,185,84,.45);
+    rgba(22,135,255,.45);
 
   border-radius:16px;
 
@@ -1115,13 +1212,11 @@ header{
 
 }
 
-
 .new-episode-alert.show{
 
   display:block;
 
 }
-
 
 .new-episode-alert-top{
 
@@ -1133,7 +1228,6 @@ header{
 
 }
 
-
 .new-episode-alert-icon{
 
   width:42px;
@@ -1143,7 +1237,7 @@ header{
   border-radius:50%;
 
   background:
-    rgba(29,185,84,.15);
+    rgba(22,135,255,.15);
 
   display:flex;
 
@@ -1151,12 +1245,19 @@ header{
 
   justify-content:center;
 
-  font-size:20px;
+  color:var(--blue);
 
   flex-shrink:0;
 
 }
 
+.new-episode-alert-icon .icon{
+
+  width:20px;
+
+  height:20px;
+
+}
 
 .new-episode-alert-text{
 
@@ -1166,10 +1267,9 @@ header{
 
 }
 
-
 .new-episode-alert-label{
 
-  color:var(--green);
+  color:var(--blue);
 
   font-size:9px;
 
@@ -1180,7 +1280,6 @@ header{
   letter-spacing:.6px;
 
 }
-
 
 .new-episode-alert-title{
 
@@ -1200,7 +1299,6 @@ header{
 
 }
 
-
 .new-episode-alert-close{
 
   border:0;
@@ -1211,10 +1309,21 @@ header{
 
   cursor:pointer;
 
-  font-size:18px;
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
 
 }
 
+.new-episode-alert-close .icon{
+
+  width:18px;
+
+  height:18px;
+
+}
 
 .new-episode-alert-open{
 
@@ -1230,7 +1339,7 @@ header{
 
   border-radius:10px;
 
-  background:var(--green);
+  background:var(--blue);
 
   color:#000;
 
@@ -1280,95 +1389,86 @@ footer{
 }
 
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:650px){
 
   header{
 
-    padding:
-      8px 10px;
+    height:68px;
 
-    gap:5px;
+    padding:
+      7px 12px;
 
   }
-
 
   .brand{
 
-    font-size:13px;
+    font-size:14px;
 
-    flex-shrink:1;
+    gap:8px;
 
   }
-
 
   .brand img{
 
-    width:36px;
+    width:40px;
 
-    height:36px;
-
-  }
-
-
-  .top-nav{
-
-    display:flex;
-
-    gap:2px;
+    height:40px;
 
   }
 
+  .bottom-nav{
 
-  .nav-icon{
+    height:68px;
 
-    min-width:42px;
+    padding:
+      5px 8px;
 
-    width:42px;
-
-    height:44px;
-
-    padding:3px;
+    gap:3px;
 
   }
 
+  .bottom-nav .nav-icon{
 
-  .nav-icon span{
+    height:56px;
 
-    font-size:17px;
+    max-width:80px;
 
-    line-height:18px;
-
-  }
-
-
-  .nav-icon small{
-
-    font-size:6.5px;
-
-    line-height:9px;
+    border-radius:12px;
 
   }
 
+  .bottom-nav .nav-icon .icon{
 
-  #status{
-    display:none;
+    width:19px;
+
+    height:19px;
+
   }
 
+  .bottom-nav .nav-icon small{
+
+    font-size:7px;
+
+  }
 
   .hero{
 
     padding:
       42px 0 22px;
 
-  }
+    text-align:center;
 
+  }
 
   .hero h1{
-    font-size:43px;
-  }
 
+    font-size:43px;
+
+  }
 
   .hero-logo{
 
@@ -1378,6 +1478,14 @@ footer{
 
   }
 
+  .hero p{
+
+    font-size:14px;
+
+    padding:
+      0 10px;
+
+  }
 
   .card{
 
@@ -1387,13 +1495,11 @@ footer{
 
   }
 
-
   .custom-player{
 
     padding:15px;
 
   }
-
 
   .player-logo{
 
@@ -1403,7 +1509,6 @@ footer{
 
   }
 
-
   .play-button{
 
     width:44px;
@@ -1412,13 +1517,11 @@ footer{
 
   }
 
-
   .player-title{
 
     font-size:12px;
 
   }
-
 
   .volume{
 
@@ -1426,12 +1529,11 @@ footer{
 
   }
 
-
   .new-episode-alert{
 
     right:10px;
 
-    bottom:10px;
+    bottom:78px;
 
     width:
       calc(100% - 20px);
@@ -1444,14 +1546,16 @@ footer{
 /* SCROLLBAR */
 
 ::-webkit-scrollbar{
-  width:9px;
-}
 
+  width:9px;
+
+}
 
 ::-webkit-scrollbar-track{
-  background:#121212;
-}
 
+  background:#121212;
+
+}
 
 ::-webkit-scrollbar-thumb{
 
@@ -1461,8 +1565,8 @@ footer{
 
 }
 
-
 ::-webkit-scrollbar-thumb:hover{
+
   background:#555;
 
 }
@@ -1476,102 +1580,161 @@ footer{
 
 
 <!-- =========================
-     HEADER
+     CENTERED HEADER
 ========================= -->
 
 <header>
 
+  <div class="brand">
 
-<div class="brand">
+    <img
+      src="kblc-logo.png"
+      alt="KBLC Logo"
+    >
 
-<img
-src="kblc-logo.png"
-alt="KBLC Logo"
->
+    <span>
+      KBLC DAILY DEVOTIONAL
+    </span>
 
-<span>
-KBLC DAILY DEVOTIONAL
-</span>
-
-</div>
-
-
-<nav class="top-nav">
-
-
-<a
-href="index.html"
-class="nav-icon active"
-title="Home"
-aria-label="Home"
->
-
-<span>⌂</span>
-
-<small>
-Home
-</small>
-
-</a>
-
-
-<a
-href="reviews.html"
-class="nav-icon"
-title="Reviews"
-aria-label="Reviews"
->
-
-<span>💬</span>
-
-<small>
-Reviews
-</small>
-
-</a>
-
-
-<a
-href="notes.html"
-class="nav-icon"
-title="My Notes"
-aria-label="My Notes"
->
-
-<span>📝</span>
-
-<small>
-Notes
-</small>
-
-</a>
-
-
-<a
-href="contact.html"
-class="nav-icon"
-title="Contact Us"
-aria-label="Contact Us"
->
-
-<span>☎</span>
-
-<small>
-Contact
-</small>
-
-</a>
-
-
-</nav>
-
-
-<span id="status">
-Loading...
-</span>
-
+  </div>
 
 </header>
+
+
+<!-- =========================
+     BOTTOM NAVIGATION
+========================= -->
+
+<nav class="bottom-nav">
+
+  <!-- HOME -->
+
+  <a
+    href="index.html"
+    class="nav-icon active"
+    title="Home"
+    aria-label="Home"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+
+      <path d="M3 10.5L12 3l9 7.5"></path>
+
+      <path d="M5 9.5V21h14V9.5"></path>
+
+      <path d="M9 21v-7h6v7"></path>
+
+    </svg>
+
+    <small>
+      Home
+    </small>
+
+  </a>
+
+
+  <!-- REVIEWS -->
+
+  <a
+    href="reviews.html"
+    class="nav-icon"
+    title="Reviews"
+    aria-label="Reviews"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+
+      <path
+        d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H8l-4 3v-6.2A7.5 7.5 0 1 1 20 11.5Z">
+      </path>
+
+      <path d="M8 11h.01"></path>
+
+      <path d="M12 11h.01"></path>
+
+      <path d="M16 11h.01"></path>
+
+    </svg>
+
+    <small>
+      Reviews
+    </small>
+
+  </a>
+
+
+  <!-- NOTES -->
+
+  <a
+    href="notes.html"
+    class="nav-icon"
+    title="My Notes"
+    aria-label="My Notes"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+
+      <path d="M5 3h14v18H5z"></path>
+
+      <path d="M8 7h8"></path>
+
+      <path d="M8 11h8"></path>
+
+      <path d="M8 15h5"></path>
+
+    </svg>
+
+    <small>
+      Notes
+    </small>
+
+  </a>
+
+
+  <!-- CONTACT -->
+
+  <a
+    href="contact.html"
+    class="nav-icon"
+    title="Contact Us"
+    aria-label="Contact Us"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+
+      <path d="M5 4h14v16H5z"></path>
+
+      <path d="M8 8h8"></path>
+
+      <path d="M8 12h8"></path>
+
+      <path d="M8 16h5"></path>
+
+    </svg>
+
+    <small>
+      Contact
+    </small>
+
+  </a>
+
+</nav>
 
 
 <div class="container">
@@ -1583,43 +1746,39 @@ Loading...
 
 <section class="hero">
 
+  <img
+    class="hero-logo"
+    src="kblc-logo.png"
+    alt="KBLC Daily Devotional"
+  >
 
-<img
-class="hero-logo"
-src="kblc-logo.png"
-alt="KBLC Daily Devotional"
->
+  <div class="today-badge">
 
+    TODAY •
 
-<div class="today-badge">
+    <span id="todayDate"></span>
 
-TODAY •
+  </div>
 
-<span id="todayDate"></span>
+  <h1>
 
-</div>
+    TODAY'S RHEMA<br>
 
+    <span>
+      WORD
+    </span>
 
-<h1>
+  </h1>
 
-Start each day with<br>
+  <p>
 
-<span>
-God's Word.
-</span>
+    Welcome to KBLC Daily Devotional —
+    Listen & Read mode.
 
-</h1>
+    Take a moment each day to listen,
+    read, reflect and grow in God's Word.
 
-
-<p>
-
-Welcome to KBLC Daily Devotional —
-Listen & Read mode.
-
-Take a moment each day to listen,
-read, reflect and grow in God's Word.
-
-</p>
+  </p>
 
 </section>
 
@@ -1630,223 +1789,238 @@ read, reflect and grow in God's Word.
 
 <div class="card">
 
+  <div
+    style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    "
+  >
 
-<div
-style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-"
->
+    <h2
+      id="title"
+      style="margin:0"
+    >
+      Loading ...
+    </h2>
 
+    <span class="badge">
+      DAILY DEVOTIONAL
+    </span>
 
-<h2
-id="title"
-style="margin:0"
->
+  </div>
 
-Loading ...
 
-</h2>
+  <!-- CUSTOM PLAYER -->
 
+  <div class="player">
 
-<span class="badge">
+    <div
+      class="custom-player"
+      id="customPlayer"
+    >
 
-DAILY DEVOTIONAL
+      <div class="player-top">
 
-</span>
+        <img
+          class="player-logo"
+          src="kblc-logo.png"
+          alt="KBLC"
+        >
 
+        <div class="player-info">
 
-</div>
+          <div class="player-label">
+            NOW PLAYING
+          </div>
 
+          <div
+            class="player-title"
+            id="playerTitle"
+          >
+            KBLC Daily Devotional
+          </div>
 
-<!-- CUSTOM PLAYER -->
+        </div>
 
-<div class="player">
+        <button
+          class="play-button"
+          id="playButton"
+          type="button"
+          aria-label="Play"
+        >
 
+          <svg
+            class="icon"
+            id="playIcon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
 
-<div
-class="custom-player"
-id="customPlayer"
->
+            <path
+              d="M8 5v14l11-7z"
+              fill="currentColor"
+              stroke="none">
+            </path>
 
+          </svg>
 
-<div class="player-top">
+        </button>
 
+      </div>
 
-<img
-class="player-logo"
-src="kblc-logo.png"
-alt="KBLC"
->
 
+      <audio
+        id="audioPlayer"
+        preload="metadata"
+      ></audio>
 
-<div class="player-info">
 
+      <div class="progress-area">
 
-<div class="player-label">
-NOW PLAYING
-</div>
+        <input
+          class="progress"
+          id="progress"
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          step="0.1"
+        >
 
+      </div>
 
-<div
-class="player-title"
-id="playerTitle"
->
 
-KBLC Daily Devotional
+      <div class="player-bottom">
 
-</div>
+        <span
+          class="time"
+          id="currentTime"
+        >
+          0:00
+        </span>
 
 
-</div>
+        <div class="volume-area">
 
+          <span class="volume-icon">
 
-<button
-class="play-button"
-id="playButton"
-type="button"
-aria-label="Play"
->
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
 
-▶
+              <path
+                d="M4 10v4h4l5 4V6l-5 4H4z">
+              </path>
 
-</button>
+              <path
+                d="M16 9.5a4 4 0 0 1 0 5">
+              </path>
 
+              <path
+                d="M18.5 7a7.5 7.5 0 0 1 0 10">
+              </path>
 
-</div>
+            </svg>
 
+          </span>
 
-<audio
-id="audioPlayer"
-preload="metadata"
-></audio>
+          <input
+            class="volume"
+            id="volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+            aria-label="Volume"
+          >
 
+        </div>
 
-<div class="progress-area">
 
+        <span
+          class="time"
+          id="duration"
+        >
+          0:00
+        </span>
 
-<input
-class="progress"
-id="progress"
-type="range"
-min="0"
-max="100"
-value="0"
-step="0.1"
->
+      </div>
 
+    </div>
 
-</div>
 
+    <!-- SPREAKER FALLBACK -->
 
-<div class="player-bottom">
+    <div
+      class="spreaker-fallback"
+      id="spreakerFallback"
+    >
 
+      <iframe
+        id="mainPlayer"
+        src=""
+        allow="autoplay"
+        title="KBLC Daily Devotional Player"
+        frameborder="0"
+      ></iframe>
 
-<span
-class="time"
-id="currentTime"
->
-0:00
-</span>
+    </div>
 
+  </div>
 
-<div class="volume-area">
 
+  <!-- =========================
+       NOTIFICATION
+  ========================= -->
 
-<span class="volume-icon">
-🔊
-</span>
+  <div class="notification-area">
 
+    <button
+      class="notification-btn"
+      id="notificationBtn"
+      type="button"
+    >
 
-<input
-class="volume"
-id="volume"
-type="range"
-min="0"
-max="1"
-step="0.01"
-value="1"
-aria-label="Volume"
->
+      <svg
+        class="icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
 
+        <path
+          d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9">
+        </path>
 
-</div>
+        <path d="M10 21h4"></path>
 
+      </svg>
 
-<span
-class="time"
-id="duration"
->
-0:00
-</span>
+      <span>
+        Enable New Devotional Alerts
+      </span>
 
+    </button>
 
-</div>
+  </div>
 
 
-</div>
+  <!-- READING -->
 
+  <h3>
+    Read
+  </h3>
 
-<!-- SPREAKER FALLBACK -->
-
-<div
-class="spreaker-fallback"
-id="spreakerFallback"
->
-
-
-<iframe
-id="mainPlayer"
-src=""
-allow="autoplay"
-title="KBLC Daily Devotional Player"
-frameborder="0"
-></iframe>
-
-
-</div>
-
-
-</div>
-
-
-<!-- =========================
-     NEW DEVOTIONAL ALERT BUTTON
-========================= -->
-
-<div class="notification-area">
-
-<button
-class="notification-btn"
-id="notificationBtn"
-type="button"
->
-
-🔔 Enable New Devotional Alerts
-
-</button>
-
-</div>
-
-
-<!-- READING -->
-
-<h3>
-Read
-</h3>
-
-
-<div
-class="read"
-id="read"
->
-
-⏳ Loading today's devotional...
-
-</div>
-
+  <div
+    class="read"
+    id="read"
+  >
+    ⏳ Loading today's devotional...
+  </div>
 
 </div>
 
@@ -1857,62 +2031,68 @@ id="read"
 
 <div class="card">
 
+  <div class="devotional-header">
 
-<div class="devotional-header">
+    <h3>
+      All Devotionals
+    </h3>
 
+    <button
+      class="minimize-btn"
+      id="minimizeBtn"
+      onclick="toggleDevotionals()"
+      aria-label="Minimize devotionals"
+      title="Minimize"
+    >
+      −
+    </button>
 
-<h3>
-All Devotionals
-</h3>
-
-
-<button
-class="minimize-btn"
-id="minimizeBtn"
-onclick="toggleDevotionals()"
-aria-label="Minimize devotionals"
-title="Minimize"
->
-
-−
-
-</button>
+  </div>
 
 
-</div>
+  <div id="devotionalContent">
+
+    <div class="search-box">
+
+      <input
+        type="search"
+        id="episodeSearch"
+        placeholder="Search devotionals..."
+        autocomplete="off"
+      >
+
+      <span class="search-icon">
+
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+
+          <circle
+            cx="11"
+            cy="11"
+            r="7">
+          </circle>
+
+          <path
+            d="m16 16 5 5">
+          </path>
+
+        </svg>
+
+      </span>
+
+    </div>
 
 
-<div id="devotionalContent">
+    <div id="list">
 
+      Loading devotional list...
 
-<div class="search-box">
+    </div>
 
-
-<input
-type="search"
-id="episodeSearch"
-placeholder="Search devotionals..."
-autocomplete="off"
->
-
-
-<span class="search-icon">
-🔎
-</span>
-
-
-</div>
-
-
-<div id="list">
-
-Loading devotional list...
-
-</div>
-
-
-</div>
-
+  </div>
 
 </div>
 
@@ -1921,22 +2101,22 @@ Loading devotional list...
 
 <footer>
 
-<strong style="color:#aaa">
+  <strong style="color:#aaa">
 
-KBLC DAILY DEVOTIONAL
+    KBLC DAILY DEVOTIONAL
 
-</strong>
+  </strong>
 
-<br>
+  <br>
 
-Listen • Read • Reflect • Grow
+  Listen • Read • Reflect • Grow
 
-<br><br>
+  <br><br>
 
-©
-<span id="year"></span>
+  ©
+  <span id="year"></span>
 
-Kingdom Builders Lovelife Church INC.
+  Kingdom Builders Lovelife Church INC.
 
 </footer>
 
@@ -1949,53 +2129,78 @@ Kingdom Builders Lovelife Church INC.
 ========================= -->
 
 <div
-class="new-episode-alert"
-id="newEpisodeAlert"
+  class="new-episode-alert"
+  id="newEpisodeAlert"
 >
 
-<div class="new-episode-alert-top">
+  <div class="new-episode-alert-top">
 
-<div class="new-episode-alert-icon">
-🔔
-</div>
+    <div class="new-episode-alert-icon">
 
+      <svg
+        class="icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
 
-<div class="new-episode-alert-text">
+        <path
+          d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9">
+        </path>
 
-<div class="new-episode-alert-label">
-New Devotional
-</div>
+        <path d="M10 21h4"></path>
 
+      </svg>
 
-<div
-class="new-episode-alert-title"
-id="newEpisodeTitle"
->
-New KBLC Daily Devotional available
-</div>
-
-</div>
+    </div>
 
 
-<button
-class="new-episode-alert-close"
-id="closeEpisodeAlert"
-type="button"
-aria-label="Close"
->
-×
-</button>
+    <div class="new-episode-alert-text">
 
-</div>
+      <div class="new-episode-alert-label">
+        New Devotional
+      </div>
+
+      <div
+        class="new-episode-alert-title"
+        id="newEpisodeTitle"
+      >
+        New KBLC Daily Devotional available
+      </div>
+
+    </div>
 
 
-<button
-class="new-episode-alert-open"
-id="openNewEpisode"
-type="button"
->
-Listen Now
-</button>
+    <button
+      class="new-episode-alert-close"
+      id="closeEpisodeAlert"
+      type="button"
+      aria-label="Close"
+    >
+
+      <svg
+        class="icon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+
+        <path d="M6 6l12 12"></path>
+
+        <path d="M18 6L6 18"></path>
+
+      </svg>
+
+    </button>
+
+  </div>
+
+
+  <button
+    class="new-episode-alert-open"
+    id="openNewEpisode"
+    type="button"
+  >
+    Listen Now
+  </button>
 
 </div>
 
@@ -2031,6 +2236,11 @@ document.getElementById(
 const playButton =
 document.getElementById(
   "playButton"
+);
+
+const playIcon =
+document.getElementById(
+  "playIcon"
 );
 
 const progress =
@@ -2128,6 +2338,70 @@ function formatTime(seconds){
 
 
 /* ==================================================
+   UPDATE PLAY ICON
+================================================== */
+
+function updatePlayIcon(playing){
+
+  if(!playIcon)
+    return;
+
+  if(playing){
+
+    playIcon.innerHTML = `
+
+      <rect
+        x="6"
+        y="5"
+        width="4"
+        height="14"
+        rx="1"
+        fill="currentColor"
+        stroke="none">
+      </rect>
+
+      <rect
+        x="14"
+        y="5"
+        width="4"
+        height="14"
+        rx="1"
+        fill="currentColor"
+        stroke="none">
+      </rect>
+
+    `;
+
+    playButton.setAttribute(
+      "aria-label",
+      "Pause"
+    );
+
+  }
+
+  else{
+
+    playIcon.innerHTML = `
+
+      <path
+        d="M8 5v14l11-7z"
+        fill="currentColor"
+        stroke="none">
+      </path>
+
+    `;
+
+    playButton.setAttribute(
+      "aria-label",
+      "Play"
+    );
+
+  }
+
+}
+
+
+/* ==================================================
    SPREAKER FALLBACK URL
 ================================================== */
 
@@ -2194,9 +2468,7 @@ function showFallback(id){
     getSpreakerURL(id);
 
   document
-    .getElementById("status")
-    .textContent =
-    "Spreaker Player";
+    .getElementById("status");
 
 }
 
@@ -2212,11 +2484,6 @@ function showCustomPlayer(){
 
   spreakerFallback.style.display =
     "none";
-
-  document
-    .getElementById("status")
-    .textContent =
-    "Ready";
 
 }
 
@@ -2324,14 +2591,12 @@ playButton.addEventListener(
       audio.play()
       .then(() => {
 
-        playButton.textContent =
-          "❚❚";
+        updatePlayIcon(true);
 
       })
       .catch(() => {
 
-        playButton.textContent =
-          "▶";
+        updatePlayIcon(false);
 
       });
 
@@ -2341,8 +2606,7 @@ playButton.addEventListener(
 
       audio.pause();
 
-      playButton.textContent =
-        "▶";
+      updatePlayIcon(false);
 
     }
 
@@ -2358,8 +2622,7 @@ audio.addEventListener(
   "play",
   function(){
 
-    playButton.textContent =
-      "❚❚";
+    updatePlayIcon(true);
 
   }
 );
@@ -2368,8 +2631,7 @@ audio.addEventListener(
   "pause",
   function(){
 
-    playButton.textContent =
-      "▶";
+    updatePlayIcon(false);
 
   }
 );
@@ -2378,8 +2640,7 @@ audio.addEventListener(
   "ended",
   function(){
 
-    playButton.textContent =
-      "▶";
+    updatePlayIcon(false);
 
     progress.value =
       0;
@@ -2897,10 +3158,19 @@ function updateNotificationButton(){
   if(!notificationBtn)
     return;
 
+  const span =
+    notificationBtn.querySelector(
+      "span"
+    );
+
   if(notificationEnabled){
 
-    notificationBtn.textContent =
-      "🔔 New Devotional Alerts Enabled";
+    if(span){
+
+      span.textContent =
+        "New Devotional Alerts Enabled";
+
+    }
 
     notificationBtn.classList.add(
       "enabled"
@@ -2910,8 +3180,12 @@ function updateNotificationButton(){
 
   else{
 
-    notificationBtn.textContent =
-      "🔔 Enable New Devotional Alerts";
+    if(span){
+
+      span.textContent =
+        "Enable New Devotional Alerts";
+
+    }
 
     notificationBtn.classList.remove(
       "enabled"
@@ -2990,8 +3264,6 @@ function playNewEpisodeSound(){
       ctx.currentTime;
 
 
-    /* FIRST TONE */
-
     const oscillator1 =
       ctx.createOscillator();
 
@@ -3033,8 +3305,6 @@ function playNewEpisodeSound(){
       now + 0.25
     );
 
-
-    /* SECOND TONE */
 
     const oscillator2 =
       ctx.createOscillator();
@@ -3114,11 +3384,6 @@ if(notificationBtn){
       );
 
       updateNotificationButton();
-
-
-      /*
-         Confirmation sound
-      */
 
       setTimeout(
         playNewEpisodeSound,
@@ -3295,13 +3560,6 @@ async function checkForNewEpisode(){
       );
 
 
-    /*
-       FIRST VISIT
-
-       Save the latest devotional
-       without producing a sound.
-    */
-
     if(!knownLatestEpisodeId){
 
       knownLatestEpisodeId =
@@ -3316,10 +3574,6 @@ async function checkForNewEpisode(){
 
     }
 
-
-    /*
-       NEW DEVOTIONAL DETECTED
-    */
 
     if(
       latestId !==
@@ -3407,8 +3661,6 @@ async function load(){
       [];
 
 
-    /* DEFAULT DEVOTIONAL */
-
     if(
       !curId
       &&
@@ -3429,8 +3681,6 @@ async function load(){
     );
 
 
-    /* GET DEVOTIONAL */
-
     const ep =
       await fetchEpisode(
         curId
@@ -3439,8 +3689,6 @@ async function load(){
 
     if(ep){
 
-      /* TITLE */
-
       document
         .getElementById("title")
         .textContent =
@@ -3448,14 +3696,10 @@ async function load(){
           "KBLC Daily Devotional";
 
 
-      /* PLAYER TITLE */
-
       playerTitle.textContent =
         ep.title ||
         "KBLC Daily Devotional";
 
-
-      /* DESCRIPTION */
 
       document
         .getElementById("read")
@@ -3470,8 +3714,6 @@ async function load(){
 
           "No description available for this devotional.";
 
-
-      /* CUSTOM PLAYER */
 
       const loaded =
         loadCustomAudio(ep);
@@ -3529,6 +3771,8 @@ async function load(){
 /* ==================================================
    START
 ================================================== */
+
+updatePlayIcon(false);
 
 load();
 
