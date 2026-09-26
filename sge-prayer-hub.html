@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SGE PRAYER HUB</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #0878E8;
+      --bg: #121212;
+      --card: #1c1c1c;
+      --text: #ffffff;
+      --muted: #a8a8a8;
+      --border: rgba(255,255,255,.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 25px;
+    }
+
+    .back {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--card);
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .topbar h1 {
+      font-size: 20px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 30px 10px;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(8,120,232,.15);
+      color: #4da3ff;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      margin-bottom: 15px;
+    }
+
+    .hero h2 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(32px, 8vw, 52px);
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 550px;
+      margin: auto;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .feature {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px 12px;
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .feature span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .join-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 25px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .join-btn {
+      display: block;
+      width: 100%;
+      padding: 16px 20px;
+      background: var(--blue);
+      color: white;
+      text-decoration: none;
+      border-radius: 14px;
+      font-weight: 800;
+      margin-top: 15px;
+      transition: .2s;
+    }
+
+    .join-btn:hover {
+      transform: translateY(-2px);
+      opacity: .92;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 15px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .feature {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        gap: 14px;
+      }
+
+      .feature-icon {
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="topbar">
+    <button class="back" onclick="history.back()" aria-label="Go back">
+      ←
+    </button>
+
+    <h1>SGE PRAYER HUB</h1>
+  </div>
+
+  <section class="hero">
+
+    <img
+      src="kblc-logo.png"
+      alt="SGE Prayer Hub"
+      class="logo"
+    >
+
+    <div class="badge">
+      SGE PRAYER HUB
+    </div>
+
+    <h2>
+      SGE PRAYER HUB
+    </h2>
+
+    <p>
+      Join SGE Prayer Hub on Telegram.
+      Stay connected, receive prayer updates,
+      announcements, devotionals and other
+      important community information.
+    </p>
+
+  </section>
+
+  <div class="features">
+
+    <div class="feature">
+      <div class="feature-icon">🙏</div>
+
+      <div>
+        <strong>Prayer Updates</strong>
+        <span>Stay connected</span>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">📢</div>
+
+      <div>
+        <strong>Announcements</strong>
+        <span>Stay informed</span>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🤝</div>
+
+      <div>
+        <strong>Community</strong>
+        <span>Connect together</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="join-card">
+
+    <h3>Connect With Us</h3>
+
+    <p class="note">
+      Join the SGE Prayer Hub community on Telegram
+      to receive prayer updates and community information.
+    </p>
+
+    <a
+      class="join-btn"
+      href="https://t.me/+fcuP97Z4W604MDc0"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Join SGE PRAYER HUB
+    </a>
+
+    <p class="note">
+      Telegram will open when you choose the Join button.
+    </p>
+
+  </div>
+
+</div>
+
+</body>
+</html>
