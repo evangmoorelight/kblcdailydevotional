@@ -1,4242 +1,4055 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>KBLC DAILY DEVOTIONAL</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:opsz,wght@700&display=swap"
-      rel="stylesheet">
-
-<style>
-
-:root{
-  --bg:#121212;
-  --bg-secondary:#181818;
-  --card:#202020;
-  --card-secondary:#191919;
-
-  --blue:#1687ff;
-
-  --text:#EDEDED;
-  --heading:#FFFFFF;
-  --muted:#A7A7A7;
-
-  --line:#303030;
-  --input:#151515;
-  --episode:#181818;
-
-  --header-bg:rgba(18,18,18,.94);
-  --nav-bg:rgba(18,18,18,.96);
-
-  --player-bg:#090909;
-  --player-inner:#111111;
-
-  --watermark-opacity:.055;
-
-  --shadow:0 14px 40px rgba(0,0,0,.25);
-}
-
-
-body.light-theme{
-
-  --bg:#F5F8FC;
-  --bg-secondary:#FFFFFF;
-  --card:#FFFFFF;
-  --card-secondary:#F7F9FC;
-
-  --blue:#0878E8;
-
-  --text:#202733;
-  --heading:#111827;
-  --muted:#657080;
-
-  --line:#DDE4EC;
-  --input:#F4F7FA;
-  --episode:#F5F8FC;
-
-  --header-bg:rgba(255,255,255,.94);
-  --nav-bg:rgba(255,255,255,.96);
-
-  --player-bg:#EEF3F8;
-  --player-inner:#FFFFFF;
-
-  --watermark-opacity:.045;
-
-  --shadow:0 14px 40px rgba(30,60,90,.10);
-}
-
-
-*{
-  box-sizing:border-box;
-}
-
-
-html{
-  scroll-behavior:smooth;
-}
-
-
-body{
-
-  margin:0;
-
-  padding-bottom:82px;
-
-  font-family:'Plus Jakarta Sans',sans-serif;
-
-  background:
-    radial-gradient(
-      circle at 80% -10%,
-      rgba(22,135,255,.12),
-      transparent 35%
-    ),
-    var(--bg);
-
-  color:var(--text);
-
-  transition:
-    background .3s ease,
-    color .3s ease;
-}
-
-
-body::before{
-
-  content:"";
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:-1;
-
-  pointer-events:none;
-
-  background-image:url("kblc-logo.png");
-
-  background-repeat:no-repeat;
-
-  background-position:center center;
-
-  background-size:min(560px,72vw);
-
-  opacity:var(--watermark-opacity);
-
-  transition:opacity .3s ease;
-}
-
-
-.icon{
-
-  width:20px;
-  height:20px;
-
-  display:block;
-
-  fill:none;
-
-  stroke:currentColor;
-
-  stroke-width:2;
-
-  stroke-linecap:round;
-
-  stroke-linejoin:round;
-}
-
-
-.icon-fill{
-  fill:currentColor;
-  stroke:none;
-}
-
-
-/* HEADER */
-
-header{
-
-  position:sticky;
-
-  top:0;
-
-  z-index:1000;
-
-  height:72px;
-
-  background:var(--header-bg);
-
-  backdrop-filter:blur(16px);
-
-  border-bottom:1px solid var(--line);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  padding:8px 70px;
-
-  transition:
-    background .3s ease,
-    border-color .3s ease;
-}
-
-
-.brand{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  gap:10px;
-
-  font-family:'Fraunces',serif;
-
-  font-weight:700;
-
-  color:var(--heading);
-
-  text-align:center;
-}
-
-
-.brand img{
-
-  width:46px;
-
-  height:46px;
-
-  border-radius:50%;
-
-  object-fit:cover;
-
-  background:#fff;
-
-  border:2px solid rgba(22,135,255,.18);
-
-  box-shadow:0 5px 18px rgba(0,0,0,.20);
-}
-
-
-/* THEME BUTTON */
-
-.theme-toggle{
-
-  position:absolute;
-
-  right:18px;
-
-  top:50%;
-
-  transform:translateY(-50%);
-
-  width:44px;
-
-  height:44px;
-
-  border-radius:50%;
-
-  border:1px solid var(--line);
-
-  background:var(--card-secondary);
-
-  color:var(--text);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  cursor:pointer;
-
-  transition:.25s ease;
-}
-
-
-.theme-toggle:hover{
-
-  color:var(--blue);
-
-  border-color:var(--blue);
-
-  transform:
-    translateY(-50%)
-    scale(1.06);
-}
-
-
-.theme-toggle .icon{
-
-  width:20px;
-  height:20px;
-}
-
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-
-  position:fixed;
-
-  left:0;
-  right:0;
-  bottom:0;
-
-  z-index:9999;
-
-  min-height:72px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  gap:5px;
-
-  background:var(--nav-bg);
-
-  backdrop-filter:blur(18px);
-
-  border-top:1px solid var(--line);
-
-  box-shadow:
-    0 -10px 30px rgba(0,0,0,.18);
-
-  padding:6px 8px;
-
-  transition:
-    background .3s ease,
-    border-color .3s ease;
-}
-
-
-.bottom-nav .nav-icon{
-
-  flex:1;
-
-  max-width:100px;
-
-  height:58px;
-
-  padding:5px 6px;
-
-  border-radius:14px;
-
-  color:var(--muted);
-
-  text-decoration:none;
-
-  background:none;
-
-  border:1px solid transparent;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  justify-content:center;
-
-  gap:4px;
-
-  transition:.2s;
-
-  cursor:pointer;
-
-  font-family:'Plus Jakarta Sans',sans-serif;
-}
-
-
-.bottom-nav .nav-icon .icon{
-
-  width:21px;
-  height:21px;
-}
-
-
-.bottom-nav .nav-icon small{
-
-  font-size:8px;
-
-  font-weight:800;
-
-  line-height:10px;
-}
-
-
-.bottom-nav .nav-icon:hover{
-
-  color:var(--blue);
-
-  background:rgba(22,135,255,.10);
-}
-
-
-.bottom-nav .nav-icon.active{
-
-  color:var(--blue);
-
-  background:rgba(22,135,255,.12);
-
-  border:1px solid rgba(22,135,255,.25);
-}
-
-
-/* CONTAINER */
-
-.container{
-
-  width:min(1100px,92%);
-
-  margin:auto;
-}
-
-
-/* HERO */
-
-.hero{
-
-  padding:60px 0 28px;
-
-  text-align:center;
-}
-
-
-.hero-logo{
-
-  width:82px;
-
-  height:82px;
-
-  border-radius:50%;
-
-  object-fit:cover;
-
-  background:#fff;
-
-  margin-bottom:18px;
-
-  box-shadow:0 10px 30px rgba(0,0,0,.20);
-}
-
-
-.today-badge{
-
-  background:rgba(22,135,255,.12);
-
-  color:var(--blue);
-
-  display:inline-block;
-
-  padding:7px 13px;
-
-  border-radius:30px;
-
-  font-size:10px;
-
-  font-weight:800;
-
-  border:1px solid rgba(22,135,255,.2);
-}
-
-
-.hero h1{
-
-  font-family:'Fraunces',serif;
-
-  font-size:clamp(38px,7vw,68px);
-
-  margin:16px 0;
-
-  line-height:.98;
-
-  letter-spacing:-1.5px;
-
-  color:var(--heading);
-}
-
-
-.hero h1 span{
-  color:var(--blue);
-}
-
-
-.hero p{
-
-  color:var(--muted);
-
-  max-width:650px;
-
-  margin:0 auto;
-
-  line-height:1.7;
-
-  font-size:15px;
-}
-
-
-/* CARD */
-
-.card{
-
-  background:
-    linear-gradient(
-      145deg,
-      var(--card),
-      var(--card-secondary)
-    );
-
-  border:1px solid var(--line);
-
-  border-radius:18px;
-
-  padding:24px;
-
-  margin:18px 0;
-
-  box-shadow:var(--shadow);
-
-  transition:.3s ease;
-}
-
-
-.card:hover{
-
-  border-color:
-    rgba(22,135,255,.35);
-}
-
-
-.card h2,
-.card h3{
-  color:var(--heading);
-}
-
-
-.card h2{
-
-  font-family:'Fraunces',serif;
-
-  font-size:24px;
-}
-
-
-.card h3{
-
-  font-family:'Fraunces',serif;
-
-  font-size:21px;
-}
-
-
-/* PLAYER */
-
-.player{
-
-  border-radius:16px;
-
-  overflow:hidden;
-
-  background:var(--player-bg);
-
-  border:1px solid var(--line);
-
-  margin:18px 0;
-}
-
-
-.custom-player{
-
-  width:100%;
-
-  padding:18px;
-
-  background:
-    linear-gradient(
-      145deg,
-      var(--player-inner),
-      var(--player-bg)
-    );
-}
-
-
-.player-top{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:14px;
-}
-
-
-.player-logo{
-
-  width:52px;
-
-  height:52px;
-
-  border-radius:12px;
-
-  object-fit:cover;
-
-  background:#fff;
-
-  flex-shrink:0;
-}
-
-
-.player-info{
-
-  min-width:0;
-
-  flex:1;
-}
-
-
-.player-label{
-
-  color:var(--blue);
-
-  font-size:9px;
-
-  font-weight:800;
-
-  letter-spacing:.7px;
-
-  text-transform:uppercase;
-
-  margin-bottom:4px;
-}
-
-
-.player-title{
-
-  color:var(--heading);
-
-  font-size:13px;
-
-  font-weight:800;
-
-  white-space:nowrap;
-
-  overflow:hidden;
-
-  text-overflow:ellipsis;
-}
-
-
-.play-button{
-
-  width:48px;
-
-  height:48px;
-
-  border-radius:50%;
-
-  border:0;
-
-  background:var(--blue);
-
-  color:#fff;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  cursor:pointer;
-
-  flex-shrink:0;
-
-  transition:.2s;
-}
-
-
-.play-button:hover{
-
-  transform:scale(1.06);
-
-  box-shadow:
-    0 0 0 5px rgba(22,135,255,.10);
-}
-
-
-.progress-area{
-  margin-top:18px;
-}
-
-
-.progress{
-
-  width:100%;
-
-  height:5px;
-
-  appearance:none;
-
-  -webkit-appearance:none;
-
-  background:var(--line);
-
-  border-radius:10px;
-
-  outline:none;
-
-  cursor:pointer;
-}
-
-
-.progress::-webkit-slider-thumb{
-
-  appearance:none;
-
-  -webkit-appearance:none;
-
-  width:13px;
-
-  height:13px;
-
-  border-radius:50%;
-
-  background:var(--blue);
-}
-
-
-.progress::-moz-range-thumb{
-
-  width:13px;
-
-  height:13px;
-
-  border-radius:50%;
-
-  border:0;
-
-  background:var(--blue);
-}
-
-
-.player-bottom{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  margin-top:9px;
-}
-
-
-.time{
-
-  color:var(--muted);
-
-  font-size:9px;
-
-  font-weight:700;
-}
-
-
-.volume-area{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:7px;
-}
-
-
-.volume-icon{
-
-  width:17px;
-
-  height:17px;
-
-  color:var(--muted);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-}
-
-
-.volume{
-
-  width:70px;
-
-  height:4px;
-
-  accent-color:var(--blue);
-}
-
-
-.spreaker-fallback{
-  display:none;
-}
-
-
-.spreaker-fallback iframe{
-
-  width:100%;
-
-  height:200px;
-
-  border:0;
-
-  display:block;
-}
-
-
-/* BADGE */
-
-.badge{
-
-  background:rgba(22,135,255,.12);
-
-  color:var(--blue);
-
-  padding:7px 12px;
-
-  border-radius:20px;
-
-  font-size:10px;
-
-  font-weight:800;
-
-  border:1px solid rgba(22,135,255,.2);
-}
-
-
-/* READ */
-
-.read{
-
-  white-space:pre-wrap;
-
-  line-height:1.9;
-
-  font-size:15px;
-
-  color:var(--text);
-}
-
-
-/* DEVOTIONAL */
-
-.devotional-header{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  gap:15px;
-
-  margin-bottom:18px;
-}
-
-
-.devotional-header h3{
-  margin:0;
-}
-
-
-.minimize-btn{
-
-  width:38px;
-
-  height:38px;
-
-  border-radius:50%;
-
-  border:1px solid var(--line);
-
-  background:var(--card-secondary);
-
-  color:var(--text);
-
-  cursor:pointer;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:18px;
-
-  font-weight:800;
-
-  transition:.2s;
-}
-
-
-.minimize-btn:hover{
-
-  background:var(--blue);
-
-  border-color:var(--blue);
-
-  color:#fff;
-
-  transform:scale(1.05);
-}
-
-
-/* SEARCH */
-
-.search-box{
-
-  position:relative;
-
-  margin-bottom:16px;
-}
-
-
-.search-box input{
-
-  width:100%;
-
-  padding:14px 45px 14px 16px;
-
-  border-radius:12px;
-
-  border:1px solid var(--line);
-
-  background:var(--input);
-
-  color:var(--text);
-
-  outline:none;
-
-  font-family:'Plus Jakarta Sans',sans-serif;
-
-  font-size:13px;
-}
-
-
-.search-box input::placeholder{
-  color:var(--muted);
-}
-
-
-.search-box input:focus{
-
-  border-color:var(--blue);
-
-  box-shadow:
-    0 0 0 3px rgba(22,135,255,.10);
-}
-
-
-.search-icon{
-
-  position:absolute;
-
-  right:15px;
-
-  top:50%;
-
-  transform:translateY(-50%);
-
-  color:var(--muted);
-
-  pointer-events:none;
-}
-
-
-/* EPISODES */
-
-.episode-item{
-
-  cursor:pointer;
-
-  background:var(--episode);
-
-  border:1px solid var(--line);
-
-  padding:15px;
-
-  border-radius:12px;
-
-  margin-top:8px;
-
-  transition:.2s;
-}
-
-
-.episode-item:hover{
-
-  background:rgba(22,135,255,.07);
-
-  border-color:rgba(22,135,255,.35);
-
-  transform:translateY(-1px);
-}
-
-
-.episode-item b{
-
-  color:var(--heading);
-
-  font-size:13px;
-}
-
-
-.episode-item small{
-
-  color:var(--muted);
-}
-
-
-.episode-active{
-
-  background:rgba(22,135,255,.10)!important;
-
-  border-color:var(--blue)!important;
-}
-
-
-.no-results{
-
-  text-align:center;
-
-  padding:25px 10px;
-
-  color:var(--muted);
-
-  font-size:13px;
-}
-
-
-/* NOTIFICATION */
-
-.notification-area{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-  margin-top:15px;
-
-  flex-wrap:wrap;
-}
-
-
-.notification-btn{
-
-  border:1px solid rgba(22,135,255,.35);
-
-  background:rgba(22,135,255,.10);
-
-  color:var(--blue);
-
-  padding:10px 14px;
-
-  border-radius:12px;
-
-  font-family:'Plus Jakarta Sans',sans-serif;
-
-  font-size:11px;
-
-  font-weight:800;
-
-  cursor:pointer;
-
-  transition:.2s;
-
-  display:flex;
-
-  align-items:center;
-
-  gap:8px;
-}
-
-
-.notification-btn:hover{
-
-  background:var(--blue);
-
-  color:#fff;
-
-  transform:translateY(-1px);
-}
-
-
-.notification-btn.enabled{
-
-  background:var(--blue);
-
-  color:#fff;
-}
-
-
-/* NEW EPISODE POPUP */
-
-.new-episode-alert{
-
-  display:none;
-
-  position:fixed;
-
-  right:20px;
-
-  bottom:92px;
-
-  z-index:9999;
-
-  width:min(360px,calc(100% - 40px));
-
-  background:var(--card);
-
-  border:1px solid rgba(22,135,255,.45);
-
-  border-radius:16px;
-
-  padding:16px;
-
-  box-shadow:
-    0 15px 45px rgba(0,0,0,.25);
-
-  animation:newEpisodeIn .3s ease;
-}
-
-
-.new-episode-alert.show{
-  display:block;
-}
-
-
-.new-episode-alert-top{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:12px;
-}
-
-
-.new-episode-alert-icon{
-
-  width:42px;
-
-  height:42px;
-
-  border-radius:50%;
-
-  background:rgba(22,135,255,.15);
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  color:var(--blue);
-
-  flex-shrink:0;
-}
-
-
-.new-episode-alert-text{
-
-  min-width:0;
-
-  flex:1;
-}
-
-
-.new-episode-alert-label{
-
-  color:var(--blue);
-
-  font-size:9px;
-
-  font-weight:800;
-
-  text-transform:uppercase;
-}
-
-
-.new-episode-alert-title{
-
-  color:var(--heading);
-
-  font-size:12px;
-
-  font-weight:800;
-
-  margin-top:3px;
-
-  white-space:nowrap;
-
-  overflow:hidden;
-
-  text-overflow:ellipsis;
-}
-
-
-.new-episode-alert-close{
-
-  border:0;
-
-  background:none;
-
-  color:var(--muted);
-
-  cursor:pointer;
-}
-
-
-.new-episode-alert-open{
-
-  display:block;
-
-  width:100%;
-
-  margin-top:12px;
-
-  padding:10px;
-
-  border:0;
-
-  border-radius:10px;
-
-  background:var(--blue);
-
-  color:#fff;
-
-  font-weight:800;
-
-  cursor:pointer;
-}
-
-
-@keyframes newEpisodeIn{
-
-  from{
-    opacity:0;
-    transform:translateY(15px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-}
-
-
-/* =========================
-   SGE PRAYER HUB PAGE
-========================= */
-
-.telegram-page{
-
-  display:none;
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:20000;
-
-  background:var(--bg);
-
-  overflow-y:auto;
-
-  animation:telegramPageIn .25s ease;
-}
-
-
-.telegram-page.show{
-  display:block;
-}
-
-
-.telegram-topbar{
-
-  position:sticky;
-
-  top:0;
-
-  z-index:5;
-
-  height:68px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  padding:8px 18px;
-
-  background:var(--header-bg);
-
-  backdrop-filter:blur(18px);
-
-  border-bottom:1px solid var(--line);
-}
-
-
-.telegram-brand{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-  color:var(--heading);
-
-  font-weight:800;
-
-  font-size:14px;
-}
-
-
-.telegram-brand-icon{
-
-  width:42px;
-
-  height:42px;
-
-  border-radius:50%;
-
-  background:#229ED9;
-
-  color:#fff;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  box-shadow:
-    0 7px 20px rgba(34,158,217,.25);
-}
-
-
-.telegram-brand-icon .icon{
-
-  width:21px;
-
-  height:21px;
-}
-
-
-.telegram-page-close{
-
-  width:42px;
-
-  height:42px;
-
-  border-radius:50%;
-
-  border:1px solid var(--line);
-
-  background:var(--card-secondary);
-
-  color:var(--text);
-
-  cursor:pointer;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  transition:.2s;
-}
-
-
-.telegram-page-close:hover{
-
-  background:var(--blue);
-
-  border-color:var(--blue);
-
-  color:#fff;
-
-  transform:scale(1.05);
-}
-
-
-.telegram-content{
-
-  width:min(700px,92%);
-
-  margin:0 auto;
-
-  padding:55px 0 100px;
-}
-
-
-.telegram-card{
-
-  background:
-    linear-gradient(
-      145deg,
-      var(--card),
-      var(--card-secondary)
-    );
-
-  border:1px solid var(--line);
-
-  border-radius:24px;
-
-  padding:35px 25px;
-
-  text-align:center;
-
-  box-shadow:var(--shadow);
-}
-
-
-.telegram-main-icon{
-
-  width:90px;
-
-  height:90px;
-
-  margin:0 auto 22px;
-
-  border-radius:50%;
-
-  background:#229ED9;
-
-  color:#fff;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  box-shadow:
-    0 15px 35px rgba(34,158,217,.25);
-}
-
-
-.telegram-main-icon .icon{
-
-  width:43px;
-
-  height:43px;
-}
-
-
-.telegram-badge{
-
-  display:inline-block;
-
-  padding:7px 13px;
-
-  border-radius:30px;
-
-  background:rgba(34,158,217,.12);
-
-  color:#229ED9;
-
-  border:1px solid rgba(34,158,217,.25);
-
-  font-size:10px;
-
-  font-weight:800;
-
-  text-transform:uppercase;
-
-  letter-spacing:.5px;
-}
-
-
-.telegram-card h1{
-
-  margin:18px 0 12px;
-
-  color:var(--heading);
-
-  font-family:'Fraunces',serif;
-
-  font-size:clamp(32px,7vw,48px);
-
-  line-height:1;
-}
-
-
-.telegram-card p{
-
-  max-width:520px;
-
-  margin:0 auto;
-
-  color:var(--muted);
-
-  font-size:14px;
-
-  line-height:1.8;
-}
-
-
-.telegram-features{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:10px;
-
-  margin:28px 0;
-}
-
-
-.telegram-feature{
-
-  padding:15px 8px;
-
-  border-radius:14px;
-
-  background:var(--input);
-
-  border:1px solid var(--line);
-}
-
-
-.telegram-feature strong{
-
-  display:block;
-
-  color:var(--heading);
-
-  font-size:11px;
-
-  margin-top:7px;
-}
-
-
-.telegram-feature span{
-
-  color:var(--muted);
-
-  font-size:9px;
-}
-
-
-.telegram-feature .icon{
-
-  width:21px;
-
-  height:21px;
-
-  margin:auto;
-
-  color:#229ED9;
-}
-
-
-.telegram-join{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  gap:9px;
-
-  width:100%;
-
-  padding:14px 18px;
-
-  border:0;
-
-  border-radius:13px;
-
-  background:#229ED9;
-
-  color:#fff;
-
-  text-decoration:none;
-
-  font-family:'Plus Jakarta Sans',sans-serif;
-
-  font-size:13px;
-
-  font-weight:800;
-
-  cursor:pointer;
-
-  box-shadow:
-    0 10px 25px rgba(34,158,217,.25);
-
-  transition:.2s;
-}
-
-
-.telegram-join:hover{
-
-  transform:translateY(-2px);
-
-  box-shadow:
-    0 14px 30px rgba(34,158,217,.35);
-}
-
-
-.telegram-join .icon{
-
-  width:19px;
-
-  height:19px;
-}
-
-
-.telegram-note{
-
-  margin-top:15px !important;
-
-  font-size:10px !important;
-
-  line-height:1.6 !important;
-}
-
-
-@keyframes telegramPageIn{
-
-  from{
-    opacity:0;
-    transform:translateY(15px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-}
-
-
-/* FOOTER */
-
-footer{
-
-  text-align:center;
-
-  padding:35px 10px 45px;
-
-  color:var(--muted);
-
-  font-size:11px;
-}
-
-
-/* MOBILE */
-
-@media(max-width:650px){
-
-  header{
-
-    height:68px;
-
-    padding:7px 58px;
-  }
-
-
-  .brand{
-
-    font-size:14px;
-
-    gap:8px;
-  }
-
-
-  .brand img{
-
-    width:40px;
-
-    height:40px;
-  }
-
-
-  .theme-toggle{
-
-    right:10px;
-
-    width:40px;
-
-    height:40px;
-  }
-
-
-  .bottom-nav{
-
-    min-height:68px;
-
-    padding:5px 3px;
-
-    gap:2px;
-  }
-
-
-  .bottom-nav .nav-icon{
-
-    height:56px;
-
-    max-width:80px;
-
-    border-radius:12px;
-
-    padding:4px 3px;
-  }
-
-
-  .bottom-nav .nav-icon .icon{
-
-    width:19px;
-
-    height:19px;
-  }
-
-
-  .bottom-nav .nav-icon small{
-
-    font-size:7px;
-  }
-
-
-  .hero{
-
-    padding:42px 0 22px;
-
-    text-align:center;
-  }
-
-
-  .hero h1{
-    font-size:43px;
-  }
-
-
-  .hero-logo{
-
-    width:68px;
-
-    height:68px;
-  }
-
-
-  .hero p{
-
-    font-size:14px;
-
-    padding:0 10px;
-  }
-
-
-  .card{
-
-    padding:18px;
-
-    border-radius:15px;
-  }
-
-
-  .custom-player{
-    padding:15px;
-  }
-
-
-  .player-logo{
-
-    width:46px;
-
-    height:46px;
-  }
-
-
-  .play-button{
-
-    width:44px;
-
-    height:44px;
-  }
-
-
-  .player-title{
-    font-size:12px;
-  }
-
-
-  .volume{
-    width:55px;
-  }
-
-
-  .new-episode-alert{
-
-    right:10px;
-
-    bottom:78px;
-
-    width:calc(100% - 20px);
-  }
-
-
-  .telegram-topbar{
-
-    height:64px;
-
-    padding:7px 12px;
-  }
-
-
-  .telegram-content{
-
-    width:92%;
-
-    padding:35px 0 90px;
-  }
-
-
-  .telegram-card{
-
-    padding:28px 18px;
-
-    border-radius:20px;
-  }
-
-
-  .telegram-main-icon{
-
-    width:76px;
-
-    height:76px;
-  }
-
-
-  .telegram-main-icon .icon{
-
-    width:36px;
-
-    height:36px;
-  }
-
-
-  .telegram-features{
-
-    grid-template-columns:1fr;
-  }
-
-}
-
-
-/* SCROLLBAR */
-
-::-webkit-scrollbar{
-  width:9px;
-}
-
-
-::-webkit-scrollbar-track{
-  background:var(--bg);
-}
-
-
-::-webkit-scrollbar-thumb{
-
-  background:var(--line);
-
-  border-radius:10px;
-}
-
-
-::-webkit-scrollbar-thumb:hover{
-  background:var(--muted);
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<!-- HEADER -->
-
-<header>
-
-  <div class="brand">
-
-    <img
-      src="kblc-logo.png"
-      alt="KBLC Logo"
-    >
-
-    <span>
-      KBLC DAILY DEVOTIONAL
-    </span>
-
-  </div>
-
-
-  <button
-    class="theme-toggle"
-    id="themeToggle"
-    type="button"
-    aria-label="Switch theme"
-    title="Switch theme"
-  >
-
-    <svg
-      class="icon"
-      id="themeIcon"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-
-      <path
-        d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8Z">
-      </path>
-
-    </svg>
-
-  </button>
-
-</header>
-
-
-<!-- BOTTOM NAVIGATION -->
-
-<nav class="bottom-nav">
-
-
-  <a
-    href="index.html"
-    class="nav-icon active"
-    title="Home"
-    aria-label="Home"
-  >
-
-    <svg
-      class="icon"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-
-      <path d="M3 10.5L12 3l9 7.5"></path>
-
-      <path d="M5 9.5V21h14V9.5"></path>
-
-      <path d="M9 21v-7h6v7"></path>
-
-    </svg>
-
-    <small>Home</small>
-
-  </a>
-
-
-  <a
-    href="reviews.html"
-    class="nav-icon"
-    title="Reviews"
-    aria-label="Reviews"
-  >
-
-    <svg
-      class="icon"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-
-      <path
-        d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H8l-4 3v-6.2A7.5 7.5 0 1 1 20 11.5Z">
-      </path>
-
-      <path d="M8 11h.01"></path>
-
-      <path d="M12 11h.01"></path>
-
-      <path d="M16 11h.01"></path>
-
-    </svg>
-
-    <small>Reviews</small>
-
-  </a>
-
-
-  <a
-    href="notes.html"
-    class="nav-icon"
-    title="My Notes"
-    aria-label="My Notes"
-  >
-
-    <svg
-      class="icon"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-
-      <path d="M5 3h14v18H5z"></path>
-
-      <path d="M8 7h8"></path>
-
-      <path d="M8 11h8"></path>
-
-      <path d="M8 15h5"></path>
-
-    </svg>
-
-    <small>Notes</small>
-
-  </a>
-
-
-  <a
-    href="contact.html"
-    class="nav-icon"
-    title="Contact Us"
-    aria-label="Contact Us"
-  >
-
-    <svg
-      class="icon"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-
-      <path d="M5 4h14v16H5z"></path>
-
-      <path d="M8 8h8"></path>
-
-      <path d="M8 12h8"></path>
-
-      <path d="M8 16h5"></path>
-
-    </svg>
-
-    <small>Contact</small>
-
-  </a>
-
-
-  <!-- SGE PRAYER HUB -->
-
-  <button
-    class="nav-icon"
-    type="button"
-    onclick="openTelegramPage()"
-    title="SGE Prayer Hub"
-    aria-label="Open SGE Prayer Hub"
-  >
-
-    <svg
-      class="icon"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-
-      <path
-        d="M21.5 3.5 3.8 10.3c-.9.35-.9 1.2-.17 1.43l4.52 1.41 1.73 5.43c.22.69.12.96.84.96.56 0 .8-.26 1.1-.57l2.18-2.12 4.54 3.35c.84.46 1.45.22 1.66-.78L23.02 4.7c.3-1.2-.46-1.74-1.52-1.2Z"
-        fill="currentColor"
-        stroke="none">
-      </path>
-
-    </svg>
-
-    <small>SGE PRAYER HUB</small>
-
-  </button>
-
-</nav>
-
-
-<!-- MAIN -->
-
-<div class="container">
-
-
-  <!-- HERO -->
-
-  <section class="hero">
-
-    <img
-      class="hero-logo"
-      src="kblc-logo.png"
-      alt="KBLC Daily Devotional"
-    >
-
-
-    <div class="today-badge">
-
-      TODAY •
-      <span id="todayDate"></span>
-
-    </div>
-
-
-    <h1>
-
-      TODAY'S RHEMA
-
-      <br>
-
-      <span>WORD</span>
-
-    </h1>
-
-
-    <p>
-
-      Welcome to KBLC Daily Devotional —
-      Listen & Read mode.
-      Take a moment each day to listen,
-      read, reflect and grow in God's Word.
-
-    </p>
-
-  </section>
-
-
-  <!-- CURRENT DEVOTIONAL -->
-
-  <div class="card">
-
-
-    <div
-      style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:15px;
-      "
-    >
-
-      <h2
-        id="title"
-        style="margin:0"
-      >
-        Loading ...
-      </h2>
-
-
-      <span class="badge">
-        DAILY DEVOTIONAL
-      </span>
-
-    </div>
-
-
-    <!-- PLAYER -->
-
-    <div class="player">
-
-
-      <div
-        class="custom-player"
-        id="customPlayer"
-      >
-
-        <div class="player-top">
-
-
-          <img
-            class="player-logo"
-            src="kblc-logo.png"
-            alt="KBLC"
-          >
-
-
-          <div class="player-info">
-
-            <div class="player-label">
-              NOW PLAYING
-            </div>
-
-            <div
-              class="player-title"
-              id="playerTitle"
-            >
-              KBLC Daily Devotional
-            </div>
-
-          </div>
-
-
-          <button
-            class="play-button"
-            id="playButton"
-            type="button"
-            aria-label="Play"
-          >
-
-            <svg
-              class="icon"
-              id="playIcon"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-
-              <path
-                d="M8 5v14l11-7z"
-                fill="currentColor"
-                stroke="none">
-              </path>
-
-            </svg>
-
-          </button>
-
-        </div>
-
-
-        <audio
-          id="audioPlayer"
-          preload="metadata">
-        </audio>
-
-
-        <div class="progress-area">
-
-          <input
-            class="progress"
-            id="progress"
-            type="range"
-            min="0"
-            max="100"
-            value="0"
-            step="0.1"
-          >
-
-        </div>
-
-
-        <div class="player-bottom">
-
-
-          <span
-            class="time"
-            id="currentTime"
-          >
-            0:00
-          </span>
-
-
-          <div class="volume-area">
-
-
-            <span class="volume-icon">
-
-              <svg
-                class="icon"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-
-                <path
-                  d="M4 10v4h4l5 4V6l-5 4H4z">
-                </path>
-
-                <path
-                  d="M16 9.5a4 4 0 0 1 0 5">
-                </path>
-
-                <path
-                  d="M18.5 7a7.5 7.5 0 0 1 0 10">
-                </path>
-
-              </svg>
-
-            </span>
-
-
-            <input
-              class="volume"
-              id="volume"
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value="1"
-              aria-label="Volume"
-            >
-
-          </div>
-
-
-          <span
-            class="time"
-            id="duration"
-          >
-            0:00
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <!-- SPREAKER FALLBACK -->
-
-      <div
-        class="spreaker-fallback"
-        id="spreakerFallback"
-      >
-
-        <iframe
-          id="mainPlayer"
-          src=""
-          allow="autoplay"
-          title="KBLC Daily Devotional Player"
-          frameborder="0">
-        </iframe>
-
-      </div>
-
-    </div>
-
-
-    <!-- NOTIFICATIONS -->
-
-    <div class="notification-area">
-
-      <button
-        class="notification-btn"
-        id="notificationBtn"
-        type="button"
-      >
-
-        <svg
-          class="icon"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-
-          <path
-            d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9">
-          </path>
-
-          <path d="M10 21h4"></path>
-
-        </svg>
-
-        <span>
-          Enable New Devotional Alerts
-        </span>
-
-      </button>
-
-    </div>
-
-
-    <h3>
-      Read
-    </h3>
-
-
-    <div
-      class="read"
-      id="read"
-    >
-      ⏳ Loading today's devotional...
-    </div>
-
-  </div>
-
-
-  <!-- ALL DEVOTIONALS -->
-
-  <div class="card">
-
-
-    <div class="devotional-header">
-
-      <h3>
-        All Devotionals
-      </h3>
-
-
-      <button
-        class="minimize-btn"
-        id="minimizeBtn"
-        onclick="toggleDevotionals()"
-        aria-label="Minimize devotionals"
-        title="Minimize"
-      >
-        −
-      </button>
-
-    </div>
-
-
-    <div id="devotionalContent">
-
-
-      <div class="search-box">
-
-        <input
-          type="search"
-          id="episodeSearch"
-          placeholder="Search devotionals..."
-          autocomplete="off"
-        >
-
-
-        <span class="search-icon">
-
-          <svg
-            class="icon"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-
-            <circle
-              cx="11"
-              cy="11"
-              r="7">
-            </circle>
-
-            <path
-              d="m16 16 5 5">
-            </path>
-
-          </svg>
-
-        </span>
-
-      </div>
-
-
-      <div id="list">
-        Loading devotional list...
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- FOOTER -->
-
-  <footer>
-
-    <strong style="color:var(--heading)">
-      KBLC DAILY DEVOTIONAL
-    </strong>
-
-    <br>
-
-    Listen • Read • Reflect • Grow
-
-    <br><br>
-
-    ©
-    <span id="year"></span>
-    Kingdom Builders Lovelife Church INC.
-
-  </footer>
+<!DOCTYPE html>  <html lang="en">  <head>  <meta charset="UTF-8">  <meta name="viewport"  
+content="width=device-width, initial-scale=1.0">
+
+<title>KBLC DAILY DEVOTIONAL</title>  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:opsz,wght@700&display=swap"  
+      rel="stylesheet">  <style>  
+  
+/* ==================================================  
+   THEME VARIABLES  
+================================================== */  
+  
+:root{  
+  
+  --bg:#121212;  
+  --bg-secondary:#181818;  
+  
+  --card:#202020;  
+  --card-secondary:#191919;  
+  
+  --blue:#1687ff;  
+  
+  --text:#EDEDED;  
+  --heading:#FFFFFF;  
+  --muted:#A7A7A7;  
+  
+  --line:#303030;  
+  --input:#151515;  
+  --episode:#181818;  
+  
+  --header-bg:rgba(18,18,18,.94);  
+  --nav-bg:rgba(18,18,18,.96);  
+  
+  --player-bg:#090909;  
+  --player-inner:#111111;  
+  
+  --watermark-opacity:.055;  
+  
+  --shadow:  
+    0 14px 40px rgba(0,0,0,.25);  
+  
+}  
+  
+  
+/* ==================================================  
+   LIGHT THEME  
+================================================== */  
+  
+body.light-theme{  
+  
+  --bg:#F5F8FC;  
+  --bg-secondary:#FFFFFF;  
+  
+  --card:#FFFFFF;  
+  --card-secondary:#F7F9FC;  
+  
+  --blue:#0878E8;  
+  
+  --text:#202733;  
+  --heading:#111827;  
+  --muted:#657080;  
+  
+  --line:#DDE4EC;  
+  --input:#F4F7FA;  
+  --episode:#F5F8FC;  
+  
+  --header-bg:rgba(255,255,255,.94);  
+  --nav-bg:rgba(255,255,255,.96);  
+  
+  --player-bg:#EEF3F8;  
+  --player-inner:#FFFFFF;  
+  
+  --watermark-opacity:.045;  
+  
+  --shadow:  
+    0 14px 40px rgba(30,60,90,.10);  
+  
+}  
+  
+  
+/* ==================================================  
+   GLOBAL  
+================================================== */  
+  
+*{  
+  box-sizing:border-box;  
+}  
+  
+html{  
+  scroll-behavior:smooth;  
+}  
+  
+body{  
+  
+  margin:0;  
+  
+  padding-bottom:82px;  
+  
+  font-family:  
+    'Plus Jakarta Sans',  
+    sans-serif;  
+  
+  background:  
+  
+    radial-gradient(  
+      circle at 80% -10%,  
+      rgba(22,135,255,.12),  
+      transparent 35%  
+    ),  
+  
+    var(--bg);  
+  
+  color:var(--text);  
+  
+  transition:  
+    background .3s ease,  
+    color .3s ease;  
+  
+}  
+  
+  
+/* ==================================================  
+   LOGO WATERMARK  
+================================================== */  
+  
+body::before{  
+  
+  content:"";  
+  
+  position:fixed;  
+  
+  inset:0;  
+  
+  z-index:-1;  
+  
+  pointer-events:none;  
+  
+  background-image:  
+    url("kblc-logo.png");  
+  
+  background-repeat:no-repeat;  
+  
+  background-position:  
+    center center;  
+  
+  background-size:  
+    min(560px,72vw);  
+  
+  opacity:  
+    var(--watermark-opacity);  
+  
+  transition:  
+    opacity .3s ease;  
+  
+}  
+  
+  
+/* ==================================================  
+   SVG ICONS  
+================================================== */  
+  
+.icon{  
+  
+  width:20px;  
+  height:20px;  
+  
+  display:block;  
+  
+  fill:none;  
+  
+  stroke:currentColor;  
+  
+  stroke-width:2;  
+  
+  stroke-linecap:round;  
+  
+  stroke-linejoin:round;  
+  
+}  
+  
+.icon-fill{  
+  
+  fill:currentColor;  
+  
+  stroke:none;  
+  
+}  
+  
+  
+/* ==================================================  
+   HEADER  
+================================================== */  
+  
+header{  
+  
+  position:sticky;  
+  
+  top:0;  
+  
+  z-index:1000;  
+  
+  height:72px;  
+  
+  background:  
+    var(--header-bg);  
+  
+  backdrop-filter:  
+    blur(16px);  
+  
+  border-bottom:  
+    1px solid var(--line);  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  padding:  
+    8px 70px;  
+  
+  transition:  
+    background .3s ease,  
+    border-color .3s ease;  
+  
+}  
+  
+  
+/* ==================================================  
+   CENTERED BRAND  
+================================================== */  
+  
+.brand{  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  gap:10px;  
+  
+  font-family:  
+    'Fraunces',  
+    serif;  
+  
+  font-weight:700;  
+  
+  color:var(--heading);  
+  
+  text-align:center;  
+  
+  transition:  
+    color .3s ease;  
+  
+}  
+  
+.brand img{  
+  
+  width:46px;  
+  
+  height:46px;  
+  
+  border-radius:50%;  
+  
+  object-fit:cover;  
+  
+  background:#fff;  
+  
+  border:  
+    2px solid  
+    rgba(22,135,255,.18);  
+  
+  box-shadow:  
+    0 5px 18px  
+    rgba(0,0,0,.20);  
+  
+}  
+  
+  
+/* ==================================================  
+   THEME BUTTON  
+================================================== */  
+  
+.theme-toggle{  
+  
+  position:absolute;  
+  
+  right:18px;  
+  
+  top:50%;  
+  
+  transform:  
+    translateY(-50%);  
+  
+  width:44px;  
+  
+  height:44px;  
+  
+  border-radius:50%;  
+  
+  border:  
+    1px solid var(--line);  
+  
+  background:  
+    var(--card-secondary);  
+  
+  color:var(--text);  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  cursor:pointer;  
+  
+  transition:  
+    .25s ease;  
+  
+}  
+  
+.theme-toggle:hover{  
+  
+  color:var(--blue);  
+  
+  border-color:var(--blue);  
+  
+  transform:  
+    translateY(-50%)  
+    scale(1.06);  
+  
+}  
+  
+.theme-toggle .icon{  
+  
+  width:20px;  
+  height:20px;  
+  
+}  
+  
+  
+/* ==================================================  
+   OLD TOP NAV HIDDEN  
+================================================== */  
+  
+.top-nav{  
+  display:none;  
+}  
+  
+#status{  
+  display:none;  
+}  
+  
+  
+/* ==================================================  
+   BOTTOM NAVIGATION  
+================================================== */  
+  
+.bottom-nav{  
+  
+  position:fixed;  
+  
+  left:0;  
+  
+  right:0;  
+  
+  bottom:0;  
+  
+  z-index:9999;  
+  
+  height:72px;  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  gap:8px;  
+  
+  background:  
+    var(--nav-bg);  
+  
+  backdrop-filter:  
+    blur(18px);  
+  
+  border-top:  
+    1px solid var(--line);  
+  
+  box-shadow:  
+    0 -10px 30px  
+    rgba(0,0,0,.18);  
+  
+  padding:  
+    6px 10px;  
+  
+  transition:  
+    background .3s ease,  
+    border-color .3s ease;  
+  
+}  
+  
+  
+/* NAV BUTTON */  
+  
+.bottom-nav .nav-icon{  
+  
+  flex:1;  
+  
+  max-width:90px;  
+  
+  height:58px;  
+  
+  padding:  
+    5px 8px;  
+  
+  border-radius:14px;  
+  
+  color:var(--muted);  
+  
+  text-decoration:none;  
+  
+  display:flex;  
+  
+  flex-direction:column;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  gap:4px;  
+  
+  transition:.2s;  
+  
+}  
+  
+  
+/* NAV ICON */  
+  
+.bottom-nav .nav-icon .icon{  
+  
+  width:21px;  
+  
+  height:21px;  
+  
+}  
+  
+  
+/* NAV TEXT */  
+  
+.bottom-nav .nav-icon small{  
+  
+  font-size:8px;  
+  
+  font-weight:800;  
+  
+  line-height:10px;  
+  
+}  
+  
+  
+/* HOVER */  
+  
+.bottom-nav .nav-icon:hover{  
+  
+  color:var(--blue);  
+  
+  background:  
+    rgba(22,135,255,.10);  
+  
+}  
+  
+  
+/* ACTIVE */  
+  
+.bottom-nav .nav-icon.active{  
+  
+  color:var(--blue);  
+  
+  background:  
+    rgba(22,135,255,.12);  
+  
+  border:  
+    1px solid  
+    rgba(22,135,255,.25);  
+  
+}  
+  
+  
+/* ==================================================  
+   CONTAINER  
+================================================== */  
+  
+.container{  
+  
+  width:  
+    min(1100px,92%);  
+  
+  margin:auto;  
+  
+}  
+  
+  
+/* ==================================================  
+   HERO  
+================================================== */  
+  
+.hero{  
+  
+  padding:  
+    60px 0 28px;  
+  
+  text-align:center;  
+  
+}  
+  
+  
+.hero-logo{  
+  
+  width:82px;  
+  
+  height:82px;  
+  
+  border-radius:50%;  
+  
+  object-fit:cover;  
+  
+  background:#fff;  
+  
+  margin-bottom:18px;  
+  
+  box-shadow:  
+    0 10px 30px  
+    rgba(0,0,0,.20);  
+  
+}  
+  
+  
+.today-badge{  
+  
+  background:  
+    rgba(22,135,255,.12);  
+  
+  color:var(--blue);  
+  
+  display:inline-block;  
+  
+  padding:  
+    7px 13px;  
+  
+  border-radius:30px;  
+  
+  font-size:10px;  
+  
+  font-weight:800;  
+  
+  border:  
+    1px solid  
+    rgba(22,135,255,.2);  
+  
+}  
+  
+  
+.hero h1{  
+  
+  font-family:  
+    'Fraunces',  
+    serif;  
+  
+  font-size:  
+    clamp(38px,7vw,68px);  
+  
+  margin:  
+    16px 0;  
+  
+  line-height:.98;  
+  
+  letter-spacing:-1.5px;  
+  
+  color:var(--heading);  
+  
+}  
+  
+  
+.hero h1 span{  
+  
+  color:var(--blue);  
+  
+}  
+  
+  
+.hero p{  
+  
+  color:var(--muted);  
+  
+  max-width:650px;  
+  
+  margin:  
+    0 auto;  
+  
+  line-height:1.7;  
+  
+  font-size:15px;  
+  
+}  
+  
+  
+/* ==================================================  
+   CARDS  
+================================================== */  
+  
+.card{  
+  
+  background:  
+  
+    linear-gradient(  
+      145deg,  
+      var(--card),  
+      var(--card-secondary)  
+    );  
+  
+  border:  
+    1px solid  
+    var(--line);  
+  
+  border-radius:18px;  
+  
+  padding:24px;  
+  
+  margin:18px 0;  
+  
+  box-shadow:  
+    var(--shadow);  
+  
+  transition:  
+    .3s ease;  
+  
+}  
+  
+.card:hover{  
+  
+  border-color:  
+    rgba(22,135,255,.35);  
+  
+}  
+  
+.card h2,  
+.card h3{  
+  
+  color:var(--heading);  
+  
+}  
+  
+.card h2{  
+  
+  font-family:  
+    'Fraunces',  
+    serif;  
+  
+  font-size:24px;  
+  
+}  
+  
+.card h3{  
+  
+  font-family:  
+    'Fraunces',  
+    serif;  
+  
+  font-size:21px;  
+  
+}  
+  
+  
+/* ==================================================  
+   CUSTOM PLAYER  
+================================================== */  
+  
+.player{  
+  
+  border-radius:16px;  
+  
+  overflow:hidden;  
+  
+  background:  
+    var(--player-bg);  
+  
+  border:  
+    1px solid var(--line);  
+  
+  margin:  
+    18px 0;  
+  
+}  
+  
+.custom-player{  
+  
+  width:100%;  
+  
+  padding:  
+    18px;  
+  
+  background:  
+  
+    linear-gradient(  
+      145deg,  
+      var(--player-inner),  
+      var(--player-bg)  
+    );  
+  
+}  
+  
+  
+/* PLAYER TOP */  
+  
+.player-top{  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  gap:14px;  
+  
+}  
+  
+.player-logo{  
+  
+  width:52px;  
+  
+  height:52px;  
+  
+  border-radius:12px;  
+  
+  object-fit:cover;  
+  
+  background:#fff;  
+  
+  flex-shrink:0;  
+  
+}  
+  
+.player-info{  
+  
+  min-width:0;  
+  
+  flex:1;  
+  
+}  
+  
+.player-label{  
+  
+  color:var(--blue);  
+  
+  font-size:9px;  
+  
+  font-weight:800;  
+  
+  letter-spacing:.7px;  
+  
+  text-transform:uppercase;  
+  
+  margin-bottom:4px;  
+  
+}  
+  
+.player-title{  
+  
+  color:var(--heading);  
+  
+  font-size:13px;  
+  
+  font-weight:800;  
+  
+  white-space:nowrap;  
+  
+  overflow:hidden;  
+  
+  text-overflow:ellipsis;  
+  
+}  
+  
+  
+/* PLAY BUTTON */  
+  
+.play-button{  
+  
+  width:48px;  
+  
+  height:48px;  
+  
+  border-radius:50%;  
+  
+  border:0;  
+  
+  background:var(--blue);  
+  
+  color:#fff;  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  cursor:pointer;  
+  
+  flex-shrink:0;  
+  
+  transition:.2s;  
+  
+}  
+  
+.play-button .icon{  
+  
+  width:19px;  
+  
+  height:19px;  
+  
+}  
+  
+.play-button:hover{  
+  
+  transform:scale(1.06);  
+  
+  box-shadow:  
+    0 0 0 5px  
+    rgba(22,135,255,.10);  
+  
+}  
+  
+  
+/* PROGRESS */  
+  
+.progress-area{  
+  
+  margin-top:18px;  
+  
+}  
+  
+.progress{  
+  
+  width:100%;  
+  
+  height:5px;  
+  
+  appearance:none;  
+  
+  -webkit-appearance:none;  
+  
+  background:  
+    var(--line);  
+  
+  border-radius:10px;  
+  
+  outline:none;  
+  
+  cursor:pointer;  
+  
+}  
+  
+.progress::-webkit-slider-thumb{  
+  
+  appearance:none;  
+  
+  -webkit-appearance:none;  
+  
+  width:13px;  
+  
+  height:13px;  
+  
+  border-radius:50%;  
+  
+  background:var(--blue);  
+  
+}  
+  
+.progress::-moz-range-thumb{  
+  
+  width:13px;  
+  
+  height:13px;  
+  
+  border-radius:50%;  
+  
+  border:0;  
+  
+  background:var(--blue);  
+  
+}  
+  
+  
+/* PLAYER BOTTOM */  
+  
+.player-bottom{  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:space-between;  
+  
+  margin-top:9px;  
+  
+}  
+  
+.time{  
+  
+  color:var(--muted);  
+  
+  font-size:9px;  
+  
+  font-weight:700;  
+  
+}  
+  
+.volume-area{  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  gap:7px;  
+  
+}  
+  
+.volume-icon{  
+  
+  width:17px;  
+  
+  height:17px;  
+  
+  color:var(--muted);  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+}  
+  
+.volume-icon .icon{  
+  
+  width:15px;  
+  
+  height:15px;  
+  
+}  
+  
+.volume{  
+  
+  width:70px;  
+  
+  height:4px;  
+  
+  accent-color:var(--blue);  
+  
+}  
+  
+  
+/* FALLBACK PLAYER */  
+  
+.spreaker-fallback{  
+  
+  display:none;  
+  
+}  
+  
+.spreaker-fallback iframe{  
+  
+  width:100%;  
+  
+  height:200px;  
+  
+  border:0;  
+  
+  display:block;  
+  
+}  
+  
+  
+/* ==================================================  
+   BADGE  
+================================================== */  
+  
+.badge{  
+  
+  background:  
+    rgba(22,135,255,.12);  
+  
+  color:var(--blue);  
+  
+  padding:  
+    7px 12px;  
+  
+  border-radius:20px;  
+  
+  font-size:10px;  
+  
+  font-weight:800;  
+  
+  border:  
+    1px solid  
+    rgba(22,135,255,.2);  
+  
+}  
+  
+  
+/* ==================================================  
+   READING  
+================================================== */  
+  
+.read{  
+  
+  white-space:pre-wrap;  
+  
+  line-height:1.9;  
+  
+  font-size:15px;  
+  
+  color:var(--text);  
+  
+}  
+  
+  
+/* ==================================================  
+   DEVOTIONAL HEADER  
+================================================== */  
+  
+.devotional-header{  
+  
+  display:flex;  
+  
+  justify-content:space-between;  
+  
+  align-items:center;  
+  
+  gap:15px;  
+  
+  margin-bottom:18px;  
+  
+}  
+  
+.devotional-header h3{  
+  
+  margin:0;  
+  
+}  
+  
+  
+/* ==================================================  
+   MINIMIZE BUTTON  
+================================================== */  
+  
+.minimize-btn{  
+  
+  width:38px;  
+  
+  height:38px;  
+  
+  border-radius:50%;  
+  
+  border:  
+    1px solid var(--line);  
+  
+  background:  
+    var(--card-secondary);  
+  
+  color:var(--text);  
+  
+  cursor:pointer;  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  font-size:18px;  
+  
+  font-weight:800;  
+  
+  transition:.2s;  
+  
+}  
+  
+.minimize-btn:hover{  
+  
+  background:var(--blue);  
+  
+  border-color:var(--blue);  
+  
+  color:#fff;  
+  
+  transform:scale(1.05);  
+  
+}  
+  
+  
+/* ==================================================  
+   SEARCH  
+================================================== */  
+  
+.search-box{  
+  
+  position:relative;  
+  
+  margin-bottom:16px;  
+  
+}  
+  
+.search-box input{  
+  
+  width:100%;  
+  
+  padding:  
+    14px 45px  
+    14px 16px;  
+  
+  border-radius:12px;  
+  
+  border:  
+    1px solid var(--line);  
+  
+  background:  
+    var(--input);  
+  
+  color:var(--text);  
+  
+  outline:none;  
+  
+  font-family:  
+    'Plus Jakarta Sans',  
+    sans-serif;  
+  
+  font-size:13px;  
+  
+  transition:.2s;  
+  
+}  
+  
+.search-box input::placeholder{  
+  
+  color:var(--muted);  
+  
+}  
+  
+.search-box input:focus{  
+  
+  border-color:  
+    var(--blue);  
+  
+  box-shadow:  
+    0 0 0 3px  
+    rgba(22,135,255,.10);  
+  
+}  
+  
+.search-icon{  
+  
+  position:absolute;  
+  
+  right:15px;  
+  
+  top:50%;  
+  
+  transform:  
+    translateY(-50%);  
+  
+  color:var(--muted);  
+  
+  pointer-events:none;  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+}  
+  
+.search-icon .icon{  
+  
+  width:18px;  
+  
+  height:18px;  
+  
+}  
+  
+  
+/* ==================================================  
+   EPISODES  
+================================================== */  
+  
+.episode-item{  
+  
+  cursor:pointer;  
+  
+  background:  
+    var(--episode);  
+  
+  border:  
+    1px solid var(--line);  
+  
+  padding:15px;  
+  
+  border-radius:12px;  
+  
+  margin-top:8px;  
+  
+  transition:.2s;  
+  
+}  
+  
+.episode-item:hover{  
+  
+  background:  
+    rgba(22,135,255,.07);  
+  
+  border-color:  
+    rgba(22,135,255,.35);  
+  
+  transform:  
+    translateY(-1px);  
+  
+}  
+  
+.episode-item b{  
+  
+  color:var(--heading);  
+  
+  font-size:13px;  
+  
+}  
+  
+.episode-item small{  
+  
+  color:var(--muted);  
+  
+}  
+  
+  
+/* ==================================================  
+   ACTIVE EPISODE  
+================================================== */  
+  
+.episode-active{  
+  
+  background:  
+    rgba(22,135,255,.10)!important;  
+  
+  border-color:  
+    var(--blue)!important;  
+  
+}  
+  
+  
+/* ==================================================  
+   NO RESULTS  
+================================================== */  
+  
+.no-results{  
+  
+  text-align:center;  
+  
+  padding:  
+    25px 10px;  
+  
+  color:var(--muted);  
+  
+  font-size:13px;  
+  
+}  
+  
+  
+/* ==================================================  
+   NOTIFICATION  
+================================================== */  
+  
+.notification-area{  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  gap:10px;  
+  
+  margin-top:15px;  
+  
+  flex-wrap:wrap;  
+  
+}  
+  
+.notification-btn{  
+  
+  border:  
+    1px solid  
+    rgba(22,135,255,.35);  
+  
+  background:  
+    rgba(22,135,255,.10);  
+  
+  color:var(--blue);  
+  
+  padding:  
+    10px 14px;  
+  
+  border-radius:12px;  
+  
+  font-family:  
+    'Plus Jakarta Sans',  
+    sans-serif;  
+  
+  font-size:11px;  
+  
+  font-weight:800;  
+  
+  cursor:pointer;  
+  
+  transition:.2s;  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  gap:8px;  
+  
+}  
+  
+.notification-btn .icon{  
+  
+  width:17px;  
+  
+  height:17px;  
+  
+}  
+  
+.notification-btn:hover{  
+  
+  background:  
+    var(--blue);  
+  
+  color:#fff;  
+  
+  transform:  
+    translateY(-1px);  
+  
+}  
+  
+.notification-btn.enabled{  
+  
+  background:  
+    var(--blue);  
+  
+  color:#fff;  
+  
+}  
+  
+  
+/* ==================================================  
+   NEW DEVOTIONAL POPUP  
+================================================== */  
+  
+.new-episode-alert{  
+  
+  display:none;  
+  
+  position:fixed;  
+  
+  right:20px;  
+  
+  bottom:92px;  
+  
+  z-index:9999;  
+  
+  width:  
+    min(360px,calc(100% - 40px));  
+  
+  background:  
+    var(--card);  
+  
+  border:  
+    1px solid  
+    rgba(22,135,255,.45);  
+  
+  border-radius:16px;  
+  
+  padding:16px;  
+  
+  box-shadow:  
+    0 15px 45px  
+    rgba(0,0,0,.25);  
+  
+  animation:  
+    newEpisodeIn .3s ease;  
+  
+}  
+  
+.new-episode-alert.show{  
+  
+  display:block;  
+  
+}  
+  
+.new-episode-alert-top{  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  gap:12px;  
+  
+}  
+  
+.new-episode-alert-icon{  
+  
+  width:42px;  
+  
+  height:42px;  
+  
+  border-radius:50%;  
+  
+  background:  
+    rgba(22,135,255,.15);  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+  color:var(--blue);  
+  
+  flex-shrink:0;  
+  
+}  
+  
+.new-episode-alert-icon .icon{  
+  
+  width:20px;  
+  
+  height:20px;  
+  
+}  
+  
+.new-episode-alert-text{  
+  
+  min-width:0;  
+  
+  flex:1;  
+  
+}  
+  
+.new-episode-alert-label{  
+  
+  color:var(--blue);  
+  
+  font-size:9px;  
+  
+  font-weight:800;  
+  
+  text-transform:uppercase;  
+  
+  letter-spacing:.6px;  
+  
+}  
+  
+.new-episode-alert-title{  
+  
+  color:var(--heading);  
+  
+  font-size:12px;  
+  
+  font-weight:800;  
+  
+  margin-top:3px;  
+  
+  white-space:nowrap;  
+  
+  overflow:hidden;  
+  
+  text-overflow:ellipsis;  
+  
+}  
+  
+.new-episode-alert-close{  
+  
+  border:0;  
+  
+  background:none;  
+  
+  color:var(--muted);  
+  
+  cursor:pointer;  
+  
+  display:flex;  
+  
+  align-items:center;  
+  
+  justify-content:center;  
+  
+}  
+  
+.new-episode-alert-close .icon{  
+  
+  width:18px;  
+  
+  height:18px;  
+  
+}  
+  
+.new-episode-alert-open{  
+  
+  display:block;  
+  
+  width:100%;  
+  
+  margin-top:12px;  
+  
+  padding:10px;  
+  
+  border:0;  
+  
+  border-radius:10px;  
+  
+  background:var(--blue);  
+  
+  color:#fff;  
+  
+  font-weight:800;  
+  
+  cursor:pointer;  
+  
+}  
+  
+  
+@keyframes newEpisodeIn{  
+  
+  from{  
+  
+    opacity:0;  
+  
+    transform:  
+      translateY(15px);  
+  
+  }  
+  
+  to{  
+  
+    opacity:1;  
+  
+    transform:  
+      translateY(0);  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   FOOTER  
+================================================== */  
+  
+footer{  
+  
+  text-align:center;  
+  
+  padding:  
+    35px 10px 45px;  
+  
+  color:var(--muted);  
+  
+  font-size:11px;  
+  
+}  
+  
+  
+/* ==================================================  
+   MOBILE  
+================================================== */  
+  
+@media(max-width:650px){  
+  
+  header{  
+  
+    height:68px;  
+  
+    padding:  
+      7px 58px;  
+  
+  }  
+  
+  .brand{  
+  
+    font-size:14px;  
+  
+    gap:8px;  
+  
+  }  
+  
+  .brand img{  
+  
+    width:40px;  
+  
+    height:40px;  
+  
+  }  
+  
+  .theme-toggle{  
+  
+    right:10px;  
+  
+    width:40px;  
+  
+    height:40px;  
+  
+  }  
+  
+  .bottom-nav{  
+  
+    height:68px;  
+  
+    padding:  
+      5px 8px;  
+  
+    gap:3px;  
+  
+  }  
+  
+  .bottom-nav .nav-icon{  
+  
+    height:56px;  
+  
+    max-width:80px;  
+  
+    border-radius:12px;  
+  
+  }  
+  
+  .bottom-nav .nav-icon .icon{  
+  
+    width:19px;  
+  
+    height:19px;  
+  
+  }  
+  
+  .bottom-nav .nav-icon small{  
+  
+    font-size:7px;  
+  
+  }  
+  
+  .hero{  
+  
+    padding:  
+      42px 0 22px;  
+  
+    text-align:center;  
+  
+  }  
+  
+  .hero h1{  
+  
+    font-size:43px;  
+  
+  }  
+  
+  .hero-logo{  
+  
+    width:68px;  
+  
+    height:68px;  
+  
+  }  
+  
+  .hero p{  
+  
+    font-size:14px;  
+  
+    padding:  
+      0 10px;  
+  
+  }  
+  
+  .card{  
+  
+    padding:18px;  
+  
+    border-radius:15px;  
+  
+  }  
+  
+  .custom-player{  
+  
+    padding:15px;  
+  
+  }  
+  
+  .player-logo{  
+  
+    width:46px;  
+  
+    height:46px;  
+  
+  }  
+  
+  .play-button{  
+  
+    width:44px;  
+  
+    height:44px;  
+  
+  }  
+  
+  .player-title{  
+  
+    font-size:12px;  
+  
+  }  
+  
+  .volume{  
+  
+    width:55px;  
+  
+  }  
+  
+  .new-episode-alert{  
+  
+    right:10px;  
+  
+    bottom:78px;  
+  
+    width:  
+      calc(100% - 20px);  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   SCROLLBAR  
+================================================== */  
+  
+::-webkit-scrollbar{  
+  
+  width:9px;  
+  
+}  
+  
+::-webkit-scrollbar-track{  
+  
+  background:  
+    var(--bg);  
+  
+}  
+  
+::-webkit-scrollbar-thumb{  
+  
+  background:  
+    var(--line);  
+  
+  border-radius:10px;  
+  
+}  
+  
+::-webkit-scrollbar-thumb:hover{  
+  
+  background:  
+    var(--muted);  
+  
+}  
+  
+</style>  </head>  <body>  <!-- ==================================================  
+     CENTERED HEADER  
+================================================== -->  <header>    <div class="brand">  <img  
+  src="kblc-logo.png"  
+  alt="KBLC Logo"  
+>  
+
+<span>  
+  KBLC DAILY DEVOTIONAL  
+</span>
+
+  </div>    <!-- THEME SWITCH -->  <button
+class="theme-toggle"
+id="themeToggle"
+type="button"
+aria-label="Switch theme"
+title="Switch theme"
+
+> 
+
+<!-- Moon -->  
+
+<svg  
+  class="icon"  
+  id="themeIcon"  
+  viewBox="0 0 24 24"  
+  aria-hidden="true"  
+>  
+
+  <path  
+    d="M21 12.8A8.5 8.5 0 1 1 11.2 3  
+       6.5 6.5 0 0 0 21 12.8Z">  
+  </path>  
+
+</svg>
+
+  </button>  </header>  <!-- ==================================================  
+     BOTTOM NAVIGATION  
+================================================== -->  <nav class="bottom-nav">    <!-- HOME -->  <a
+href="index.html"
+class="nav-icon active"
+title="Home"
+aria-label="Home"
+
+> 
+
+<svg  
+  class="icon"  
+  viewBox="0 0 24 24"  
+  aria-hidden="true"  
+>  
+
+  <path d="M3 10.5L12 3l9 7.5"></path>  
+
+  <path d="M5 9.5V21h14V9.5"></path>  
+
+  <path d="M9 21v-7h6v7"></path>  
+
+</svg>  
+
+<small>  
+  Home  
+</small>
+
+  </a>    <!-- REVIEWS -->  <a
+href="reviews.html"
+class="nav-icon"
+title="Reviews"
+aria-label="Reviews"
+
+> 
+
+<svg  
+  class="icon"  
+  viewBox="0 0 24 24"  
+  aria-hidden="true"  
+>  
+
+  <path  
+    d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H8l-4 3v-6.2A7.5 7.5 0 1 1 20 11.5Z">  
+  </path>  
+
+  <path d="M8 11h.01"></path>  
+
+  <path d="M12 11h.01"></path>  
+
+  <path d="M16 11h.01"></path>  
+
+</svg>  
+
+<small>  
+  Reviews  
+</small>
+
+  </a>    <!-- NOTES -->  <a
+href="notes.html"
+class="nav-icon"
+title="My Notes"
+aria-label="My Notes"
+
+> 
+
+<svg  
+  class="icon"  
+  viewBox="0 0 24 24"  
+  aria-hidden="true"  
+>  
+
+  <path d="M5 3h14v18H5z"></path>  
+
+  <path d="M8 7h8"></path>  
+
+  <path d="M8 11h8"></path>  
+
+  <path d="M8 15h5"></path>  
+
+</svg>  
+
+<small>  
+  Notes  
+</small>
+
+  </a>    <!-- CONTACT -->  <a
+href="contact.html"
+class="nav-icon"
+title="Contact Us"
+aria-label="Contact Us"
+
+> 
+
+<svg  
+  class="icon"  
+  viewBox="0 0 24 24"  
+  aria-hidden="true"  
+>  
+
+  <path d="M5 4h14v16H5z"></path>  
+
+  <path d="M8 8h8"></path>  
+
+  <path d="M8 12h8"></path>  
+
+  <path d="M8 16h5"></path>  
+
+</svg>  
+
+<small>  
+  Contact  
+</small>
+
+  </a>  </nav>  <div class="container">  <!-- ==================================================  
+     HERO  
+================================================== -->  <section class="hero">  <img
+class="hero-logo"
+src="kblc-logo.png"
+alt="KBLC Daily Devotional"
+
+> 
+
+  <div class="today-badge">  TODAY •  
+
+<span id="todayDate"></span>
+
+  </div>    <h1>  TODAY'S RHEMA<br>  
+
+<span>  
+  WORD  
+</span>
+
+  </h1>    <p>  Welcome to KBLC Daily Devotional —  
+Listen & Read mode.  
+
+Take a moment each day to listen,  
+read, reflect and grow in God's Word.
+
+  </p>  </section>  <!-- ==================================================  
+     MAIN DEVOTIONAL  
+================================================== -->  <div class="card">    <div  
+    style="  
+    display:flex;  
+    justify-content:space-between;  
+    align-items:center;  
+    gap:15px;  
+    "  
+  >  <h2  
+  id="title"  
+  style="margin:0"  
+>  
+  Loading ...  
+</h2>  
+
+<span class="badge">  
+  DAILY DEVOTIONAL  
+</span>
+
+  </div>    <!-- CUSTOM PLAYER -->    <div class="player">  <div  
+  class="custom-player"  
+  id="customPlayer"  
+>  
+
+  <div class="player-top">  
+
+    <img  
+      class="player-logo"  
+      src="kblc-logo.png"  
+      alt="KBLC"  
+    >  
+
+    <div class="player-info">  
+
+      <div class="player-label">  
+        NOW PLAYING  
+      </div>  
+
+      <div  
+        class="player-title"  
+        id="playerTitle"  
+      >  
+        KBLC Daily Devotional  
+      </div>  
+
+    </div>  
+
+    <button  
+      class="play-button"  
+      id="playButton"  
+      type="button"  
+      aria-label="Play"  
+    >  
+
+      <svg  
+        class="icon"  
+        id="playIcon"  
+        viewBox="0 0 24 24"  
+        aria-hidden="true"  
+      >  
+
+        <path  
+          d="M8 5v14l11-7z"  
+          fill="currentColor"  
+          stroke="none">  
+        </path>  
+
+      </svg>  
+
+    </button>  
+
+  </div>  
+
+
+  <audio  
+    id="audioPlayer"  
+    preload="metadata"  
+  ></audio>  
+
+
+  <div class="progress-area">  
+
+    <input  
+      class="progress"  
+      id="progress"  
+      type="range"  
+      min="0"  
+      max="100"  
+      value="0"  
+      step="0.1"  
+    >  
+
+  </div>  
+
+
+  <div class="player-bottom">  
+
+    <span  
+      class="time"  
+      id="currentTime"  
+    >  
+      0:00  
+    </span>  
+
+
+    <div class="volume-area">  
+
+      <span class="volume-icon">  
+
+        <svg  
+          class="icon"  
+          viewBox="0 0 24 24"  
+          aria-hidden="true"  
+        >  
+
+          <path  
+            d="M4 10v4h4l5 4V6l-5 4H4z">  
+          </path>  
+
+          <path  
+            d="M16 9.5a4 4 0 0 1 0 5">  
+          </path>  
+
+          <path  
+            d="M18.5 7a7.5 7.5 0 0 1 0 10">  
+          </path>  
+
+        </svg>  
+
+      </span>  
+
+      <input  
+        class="volume"  
+        id="volume"  
+        type="range"  
+        min="0"  
+        max="1"  
+        step="0.01"  
+        value="1"  
+        aria-label="Volume"  
+      >  
+
+    </div>  
+
+
+    <span  
+      class="time"  
+      id="duration"  
+    >  
+      0:00  
+    </span>  
+
+  </div>  
+
+</div>  
+
+
+<!-- SPREAKER FALLBACK -->  
+
+<div  
+  class="spreaker-fallback"  
+  id="spreakerFallback"  
+>  
+
+  <iframe  
+    id="mainPlayer"  
+    src=""  
+    allow="autoplay"  
+    title="KBLC Daily Devotional Player"  
+    frameborder="0"  
+  ></iframe>  
 
 </div>
 
+  </div>    <!-- ==================================================  
+       NOTIFICATION  
+  ================================================== -->    <div class="notification-area">  <button  
+  class="notification-btn"  
+  id="notificationBtn"  
+  type="button"  
+>  
 
-<!-- NEW DEVOTIONAL ALERT -->
+  <svg  
+    class="icon"  
+    viewBox="0 0 24 24"  
+    aria-hidden="true"  
+  >  
 
-<div
-  class="new-episode-alert"
-  id="newEpisodeAlert"
->
+    <path  
+      d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9">  
+    </path>  
 
-  <div class="new-episode-alert-top">
+    <path d="M10 21h4"></path>  
+
+  </svg>  
+
+  <span>  
+    Enable New Devotional Alerts  
+  </span>  
+
+</button>
+
+  </div>    <!-- READING -->    <h3>  
+    Read  
+  </h3>    <div  
+    class="read"  
+    id="read"  
+  >  
+    ⏳ Loading today's devotional...  
+  </div>  </div>  <!-- ==================================================  
+     ALL DEVOTIONALS  
+================================================== -->  <div class="card">    <div class="devotional-header">  <h3>  
+  All Devotionals  
+</h3>  
+
+<button  
+  class="minimize-btn"  
+  id="minimizeBtn"  
+  onclick="toggleDevotionals()"  
+  aria-label="Minimize devotionals"  
+  title="Minimize"  
+>  
+  −  
+</button>
+
+  </div>    <div id="devotionalContent">  <div class="search-box">  
+
+  <input  
+    type="search"  
+    id="episodeSearch"  
+    placeholder="Search devotionals..."  
+    autocomplete="off"  
+  >  
+
+  <span class="search-icon">  
+
+    <svg  
+      class="icon"  
+      viewBox="0 0 24 24"  
+      aria-hidden="true"  
+    >  
+
+      <circle  
+        cx="11"  
+        cy="11"  
+        r="7">  
+      </circle>  
+
+      <path  
+        d="m16 16 5 5">  
+      </path>  
+
+    </svg>  
+
+  </span>  
+
+</div>  
 
 
-    <div class="new-episode-alert-icon">
+<div id="list">  
 
-      <svg
-        class="icon"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-
-        <path
-          d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9">
-        </path>
-
-        <path d="M10 21h4"></path>
-
-      </svg>
-
-    </div>
-
-
-    <div class="new-episode-alert-text">
-
-      <div class="new-episode-alert-label">
-        New Devotional
-      </div>
-
-      <div
-        class="new-episode-alert-title"
-        id="newEpisodeTitle"
-      >
-        New KBLC Daily Devotional available
-      </div>
-
-    </div>
-
-
-    <button
-      class="new-episode-alert-close"
-      id="closeEpisodeAlert"
-      type="button"
-      aria-label="Close"
-    >
-
-      <svg
-        class="icon"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-
-        <path d="M6 6l12 12"></path>
-
-        <path d="M18 6L6 18"></path>
-
-      </svg>
-
-    </button>
-
-  </div>
-
-
-  <button
-    class="new-episode-alert-open"
-    id="openNewEpisode"
-    type="button"
-  >
-    Listen Now
-  </button>
+  Loading devotional list...  
 
 </div>
 
+  </div>  </div>  <!-- ==================================================  
+     FOOTER  
+================================================== -->  <footer>    <strong style="color:var(--heading)">  KBLC DAILY DEVOTIONAL
 
-<!-- =================================================
-     SGE PRAYER HUB IN-SITE PAGE
-================================================== -->
-
-<div
-  class="telegram-page"
-  id="telegramPage"
-  aria-hidden="true"
->
-
-
-  <div class="telegram-topbar">
-
-
-    <div class="telegram-brand">
-
-
-      <div class="telegram-brand-icon">
-
-        <svg
-          class="icon"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-
-          <path
-            d="M21.5 3.5 3.8 10.3c-.9.35-.9 1.2-.17 1.43l4.52 1.41 1.73 5.43c.22.69.12.96.84.96.56 0 .8-.26 1.1-.57l2.18-2.12 4.54 3.35c.84.46 1.45.22 1.66-.78L23.02 4.7c.3-1.2-.46-1.74-1.52-1.2Z"
-            fill="currentColor"
-            stroke="none">
-          </path>
-
-        </svg>
-
-      </div>
-
-
-      <span>
-        SGE PRAYER HUB
-      </span>
-
-    </div>
-
-
-    <button
-      class="telegram-page-close"
-      type="button"
-      onclick="closeTelegramPage()"
-      aria-label="Close SGE Prayer Hub"
-      title="Close"
-    >
-
-      <svg
-        class="icon"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-
-        <path d="M6 6l12 12"></path>
-
-        <path d="M18 6L6 18"></path>
-
-      </svg>
-
-    </button>
-
-  </div>
-
-
-  <div class="telegram-content">
-
-
-    <div class="telegram-card">
-
-
-      <div class="telegram-main-icon">
-
-        <svg
-          class="icon"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-
-          <path
-            d="M21.5 3.5 3.8 10.3c-.9.35-.9 1.2-.17 1.43l4.52 1.41 1.73 5.43c.22.69.12.96.84.96.56 0 .8-.26 1.1-.57l2.18-2.12 4.54 3.35c.84.46 1.45.22 1.66-.78L23.02 4.7c.3-1.2-.46-1.74-1.52-1.2Z"
-            fill="currentColor"
-            stroke="none">
-          </path>
-
-        </svg>
-
-      </div>
-
-
-      <div class="telegram-badge">
-        SGE PRAYER HUB
-      </div>
-
-
-      <h1>
-        SGE PRAYER HUB
-      </h1>
-
-
-      <p>
-
-        Join SGE Prayer Hub on Telegram.
-
-        Stay connected, receive prayer updates,
-        announcements, devotionals and other
-        important community information.
-
-      </p>
-
-
-      <div class="telegram-features">
-
-
-        <div class="telegram-feature">
-
-          <svg
-            class="icon"
-            viewBox="0 0 24 24"
-          >
-
-            <path
-              d="M12 21s-7-4.35-9.5-8.5C.7 8.9 2.7 5 6.4 5c2.04 0 3.44 1.2 4.1 2.32C11.16 6.2 12.56 5 14.6 5c3.7 0 5.7 3.9 3.9 7.5C19 16.65 12 21 12 21z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linejoin="round">
-            </path>
-
-          </svg>
-
-          <strong>
-            Prayer Updates
-          </strong>
-
-          <span>
-            Stay connected
-          </span>
-
-        </div>
-
-
-        <div class="telegram-feature">
-
-          <svg
-            class="icon"
-            viewBox="0 0 24 24"
-          >
-
-            <path d="M3 5h18v14H3z"></path>
-
-            <path d="m3 6 9 7 9-7"></path>
-
-          </svg>
-
-          <strong>
-            Announcements
-          </strong>
-
-          <span>
-            Stay informed
-          </span>
-
-        </div>
-
-
-        <div class="telegram-feature">
-
-          <svg
-            class="icon"
-            viewBox="0 0 24 24"
-          >
-
-            <circle
-              cx="12"
-              cy="12"
-              r="9">
-            </circle>
-
-            <path d="M12 8v8"></path>
-
-            <path d="M8 12h8"></path>
-
-          </svg>
-
-          <strong>
-            Community
-          </strong>
-
-          <span>
-            Connect together
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <a
-        class="telegram-join"
-        href="https://t.me/+fcuP97Z4W604MDc0"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-
-        <svg
-          class="icon"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-
-          <path
-            d="M21.5 3.5 3.8 10.3c-.9.35-.9 1.2-.17 1.43l4.52 1.41 1.73 5.43c.22.69.12.96.84.96.56 0 .8-.26 1.1-.57l2.18-2.12 4.54 3.35c.84.46 1.45.22 1.66-.78L23.02 4.7c.3-1.2-.46-1.74-1.52-1.2Z"
-            fill="currentColor"
-            stroke="none">
-          </path>
-
-        </svg>
-
-        Join SGE PRAYER HUB
-
-      </a>
-
-
-      <p class="telegram-note">
-
-        Telegram opens only when you choose
-        the Join button.
-
-      </p>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<script>
-
-
-/* =================================================
-   THEME SYSTEM
-================================================= */
-
-const THEME_STORAGE_KEY = "kblc_theme";
-
-const themeToggle =
-  document.getElementById("themeToggle");
-
-const themeIcon =
-  document.getElementById("themeIcon");
-
-
-function updateThemeIcon(){
-
-  if(!themeIcon) return;
-
-  const isLight =
-    document.body.classList.contains("light-theme");
-
-  if(isLight){
-
-    themeIcon.innerHTML =
-      '<circle cx="12" cy="12" r="4"></circle>' +
-      '<path d="M12 2v2"></path>' +
-      '<path d="M12 20v2"></path>' +
-      '<path d="m4.93 4.93 1.41 1.41"></path>' +
-      '<path d="m17.66 17.66 1.41 1.41"></path>' +
-      '<path d="M2 12h2"></path>' +
-      '<path d="M20 12h2"></path>' +
-      '<path d="m4.93 19.07 1.41-1.41"></path>' +
-      '<path d="m17.66 6.34 1.41-1.41"></path>';
-
-  }else{
-
-    themeIcon.innerHTML =
-      '<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8Z"></path>';
-
-  }
-
-}
-
-
-function applyTheme(theme){
-
-  document.body.classList.toggle(
-    "light-theme",
-    theme === "light"
-  );
-
-  updateThemeIcon();
-
-}
-
-
-const savedTheme =
-  localStorage.getItem(THEME_STORAGE_KEY);
-
-
-if(savedTheme){
-
-  applyTheme(savedTheme);
-
-}else{
-
-  const prefersLight =
-    window.matchMedia &&
-    window.matchMedia(
-      "(prefers-color-scheme: light)"
-    ).matches;
-
-  applyTheme(
-    prefersLight ? "light" : "dark"
-  );
-
-}
-
-
-if(themeToggle){
-
-  themeToggle.addEventListener(
-    "click",
-    function(){
-
-      const isLight =
-        document.body.classList.contains(
-          "light-theme"
-        );
-
-      const newTheme =
-        isLight ? "dark" : "light";
-
-      applyTheme(newTheme);
-
-      localStorage.setItem(
-        THEME_STORAGE_KEY,
-        newTheme
-      );
-
-    }
-  );
-
-}
-
-
-/* =================================================
-   SPREAKER
-================================================= */
-
-const SHOW_ID = "7392727";
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-let curId =
-  params.get("episode_id");
-
-let allEpisodes = [];
-
-
-/* ELEMENTS */
-
-const audio =
-  document.getElementById("audioPlayer");
-
-const playButton =
-  document.getElementById("playButton");
-
-const playIcon =
-  document.getElementById("playIcon");
-
-const progress =
-  document.getElementById("progress");
-
-const volume =
-  document.getElementById("volume");
-
-const currentTime =
-  document.getElementById("currentTime");
-
-const duration =
-  document.getElementById("duration");
-
-const playerTitle =
-  document.getElementById("playerTitle");
-
-const customPlayer =
-  document.getElementById("customPlayer");
-
-const spreakerFallback =
-  document.getElementById("spreakerFallback");
-
-const mainPlayer =
-  document.getElementById("mainPlayer");
-
-
-/* DATE */
-
-document.getElementById("todayDate").textContent =
-  new Date().toLocaleDateString(
-    undefined,
-    {
-      year:"numeric",
-      month:"short",
-      day:"numeric"
-    }
-  );
-
-
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-
-
-/* FORMAT TIME */
-
-function formatTime(seconds){
-
-  if(!Number.isFinite(seconds))
-    return "0:00";
-
-  const mins =
-    Math.floor(seconds / 60);
-
-  const secs =
-    Math.floor(seconds % 60);
-
-  return mins + ":" +
-    String(secs).padStart(2,"0");
-
-}
-
-
-/* PLAY ICON */
-
-function updatePlayIcon(playing){
-
-  if(!playIcon) return;
-
-  if(playing){
-
-    playIcon.innerHTML =
-      '<path d="M7 5h4v14H7z" fill="currentColor" stroke="none"></path>' +
-      '<path d="M13 5h4v14h-4z" fill="currentColor" stroke="none"></path>';
-
-  }else{
-
-    playIcon.innerHTML =
-      '<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"></path>';
-
-  }
-
-}
-
-
-/* SPREAKER FALLBACK */
-
-function getSpreakerURL(id){
-
-  if(id){
-
-    return (
-      "https://widget.spreaker.com/player?" +
-      "episode_id=" +
-      encodeURIComponent(id) +
-      "&theme=dark" +
-      "&playlist=show" +
-      "&playlist_id=" +
-      SHOW_ID +
-      "&autoplay=false" +
-      "&chapters-image=true"
-    );
-
-  }
-
-
-  return (
-    "https://widget.spreaker.com/player?" +
-    "show_id=" +
-    SHOW_ID +
-    "&theme=dark" +
-    "&playlist=show" +
-    "&playlist-continuous=true" +
-    "&chapters-image=true"
-  );
-
-}
-
-
-function showFallback(id){
-
-  if(customPlayer)
-    customPlayer.style.display = "none";
-
-  if(spreakerFallback)
-    spreakerFallback.style.display = "block";
-
-  if(mainPlayer)
-    mainPlayer.src =
-      getSpreakerURL(id);
-
-}
-
-
-function showCustomPlayer(){
-
-  if(customPlayer)
-    customPlayer.style.display = "block";
-
-  if(spreakerFallback)
-    spreakerFallback.style.display = "none";
-
-}
-
-
-/* AUDIO URL */
-
-function findAudioURL(ep){
-
-  if(!ep) return null;
-
-  const possible = [
-
-    ep.audio_url,
-
-    ep.audioUrl,
-
-    ep.media_url,
-
-    ep.mediaUrl,
-
-    ep.audio,
-
-    ep.url,
-
-    ep.episode_url,
-
-    ep.playback_url
-
-  ];
-
-  for(const url of possible){
-
-    if(
-      typeof url === "string" &&
-      url.startsWith("http")
-    ){
-
-      return url;
-
-    }
-
-  }
-
-  return null;
-
-}
-
-
-/* LOAD AUDIO */
-
-function loadCustomAudio(ep){
-
-  const url =
-    findAudioURL(ep);
-
-  if(!url){
-
-    showFallback(
-      ep && (ep.id || curId)
-    );
-
-    return;
-
-  }
-
-  try{
-
-    audio.src = url;
-
-    audio.load();
-
-    showCustomPlayer();
-
-  }catch(error){
-
-    showFallback(
-      ep && (ep.id || curId)
-    );
-
-  }
-
-}
-
-
-/* PLAY */
-
-if(playButton){
-
-  playButton.addEventListener(
-    "click",
-    function(){
-
-      if(!audio.src){
-
-        if(curId){
-
-          showFallback(curId);
-
-        }
-
-        return;
-
-      }
-
-
-      if(audio.paused){
-
-        audio.play().catch(
-          function(){
-            showFallback(curId);
-          }
-        );
-
-      }else{
-
-        audio.pause();
-
-      }
-
-    }
-  );
-
-}
-
-
-/* AUDIO EVENTS */
-
-audio.addEventListener(
-  "play",
-  function(){
-    updatePlayIcon(true);
-  }
-);
-
-
-audio.addEventListener(
-  "pause",
-  function(){
-    updatePlayIcon(false);
-  }
-);
-
-
-audio.addEventListener(
-  "ended",
-  function(){
-    updatePlayIcon(false);
-  }
-);
-
-
-audio.addEventListener(
-  "loadedmetadata",
-  function(){
-
-    duration.textContent =
-      formatTime(audio.duration);
-
-  }
-);
-
-
-audio.addEventListener(
-  "timeupdate",
-  function(){
-
-    currentTime.textContent =
-      formatTime(audio.currentTime);
-
-    if(
-      Number.isFinite(audio.duration) &&
-      audio.duration > 0
-    ){
-
-      progress.value =
-        (audio.currentTime /
-        audio.duration) * 100;
-
-    }
-
-  }
-);
-
-
-/* PROGRESS */
-
-progress.addEventListener(
-  "input",
-  function(){
-
-    if(
-      Number.isFinite(audio.duration)
-    ){
-
-      audio.currentTime =
-        (progress.value / 100) *
-        audio.duration;
-
-    }
-
-  }
-);
-
-
-/* VOLUME */
-
-volume.addEventListener(
-  "input",
-  function(){
-
-    audio.volume =
-      Number(volume.value);
-
-  }
-);
-
-
-/* PLAYER ERROR */
-
-audio.addEventListener(
-  "error",
-  function(){
-
-    showFallback(curId);
-
-  }
-);
-
-
-/* =================================================
-   FETCH EPISODE
-================================================= */
-
-async function fetchEpisode(id){
-
-  try{
-
-    const response =
-      await fetch(
-        "https://api.spreaker.com/v2/episodes/" +
-        encodeURIComponent(id)
-      );
-
-    if(!response.ok)
-      throw new Error("Episode unavailable");
-
-    const data =
-      await response.json();
-
-    return (
-      data &&
-      (
-        data.response ||
-        data
-      )
-    );
-
-  }catch(error){
-
-    return null;
-
-  }
-
-}
-
-
-/* CLEAN TEXT */
-
-function clean(raw){
-
-  if(!raw)
-    return "";
-
-  const div =
-    document.createElement("div");
-
-  div.innerHTML = raw;
-
-  return (
-    div.textContent ||
-    div.innerText ||
-    ""
-  ).trim();
-
-}
-
-
-/* ESCAPE */
-
-function escapeHTML(value){
-
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =================================================
-   RENDER EPISODES
-================================================= */
-
-function render(items){
-
-  const list =
-    document.getElementById("list");
-
-  if(!list)
-    return;
-
-
-  if(!items || !items.length){
-
-    list.innerHTML =
-      '<div class="no-results">No devotionals found.</div>';
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    items.map(function(ep){
-
-      const id =
-        ep.id || ep.episode_id || "";
-
-      const title =
-        ep.title ||
-        "KBLC Daily Devotional";
-
-      const date =
-        ep.published_at ||
-        ep.created_at ||
-        ep.release_date ||
-        "";
-
-
-      return `
-
-        <div
-          class="episode-item ${
-            String(id) === String(curId)
-              ? "episode-active"
-              : ""
-          }"
-          data-id="${escapeHTML(id)}"
-        >
-
-          <b>
-            ${escapeHTML(title)}
-          </b>
-
-          <br>
-
-          <small>
-            ${escapeHTML(date)}
-          </small>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-
-  document
-    .querySelectorAll(".episode-item")
-    .forEach(function(item){
-
-      item.addEventListener(
-        "click",
-        async function(){
-
-          const id =
-            item.dataset.id;
-
-          if(!id)
-            return;
-
-          curId = id;
-
-          window.history.replaceState(
-            {},
-            "",
-            "?episode_id=" +
-            encodeURIComponent(id)
-          );
-
-          const ep =
-            await fetchEpisode(id);
-
-          if(ep){
-
-            document.getElementById(
-              "title"
-            ).textContent =
-              ep.title ||
-              "KBLC Daily Devotional";
-
-
-            playerTitle.textContent =
-              ep.title ||
-              "KBLC Daily Devotional";
-
-
-            document.getElementById(
-              "read"
-            ).textContent =
-              clean(
-                ep.description ||
-                ep.body ||
-                ep.summary ||
-                ""
-              );
-
-
-            loadCustomAudio(ep);
-
-          }else{
-
-            showFallback(id);
-
-          }
-
-          window.scrollTo({
-            top:0,
-            behavior:"smooth"
-          });
-
-          render(allEpisodes);
-
-        }
-      );
-
-    });
-
-}
-
-
-/* SEARCH */
-
-function search(){
-
-  const input =
-    document.getElementById(
-      "episodeSearch"
-    );
-
-  if(!input)
-    return;
-
-
-  const query =
-    input.value
-      .toLowerCase()
-      .trim();
-
-
-  if(!query){
-
-    render(allEpisodes);
-
-    return;
-
-  }
-
-
-  const filtered =
-    allEpisodes.filter(
-      function(ep){
-
-        return String(
-          ep.title || ""
-        )
-        .toLowerCase()
-        .includes(query);
-
-      }
-    );
-
-
-  render(filtered);
-
-}
-
-
-document
-  .getElementById("episodeSearch")
-  .addEventListener(
-    "input",
-    search
-  );
-
-
-/* MINIMIZE */
-
-function toggleDevotionals(){
-
-  const content =
-    document.getElementById(
-      "devotionalContent"
-    );
-
-  const button =
-    document.getElementById(
-      "minimizeBtn"
-    );
-
-
-  if(
-    content.style.display === "none"
-  ){
-
-    content.style.display =
-      "block";
-
-    button.textContent = "−";
-
-    button.title = "Minimize";
-
-  }else{
-
-    content.style.display =
-      "none";
-
-    button.textContent = "+";
-
-    button.title = "Expand";
-
-  }
-
-}
-
-
-/* =================================================
-   NOTIFICATIONS
-================================================= */
-
-const NEW_EPISODE_STORAGE_KEY =
-  "kblc_latest_episode_id";
-
-const NOTIFICATION_ENABLED_KEY =
-  "kblc_episode_notifications_enabled";
-
-const NOTIFICATION_CHECK_INTERVAL =
-  60000;
-
-
-let notificationAudioContext = null;
-
-let notificationEnabled =
-  localStorage.getItem(
-    NOTIFICATION_ENABLED_KEY
-  ) === "true";
-
-
-let knownLatestEpisodeId =
-  localStorage.getItem(
-    NEW_EPISODE_STORAGE_KEY
-  );
-
-
-let newestEpisodeForNotification = null;
-
-
-const notificationBtn =
-  document.getElementById(
-    "notificationBtn"
-  );
-
-
-function updateNotificationButton(){
-
-  if(!notificationBtn)
-    return;
-
-
-  if(notificationEnabled){
-
-    notificationBtn.classList.add(
-      "enabled"
-    );
-
-    notificationBtn.querySelector(
-      "span"
-    ).textContent =
-      "New Devotional Alerts Enabled";
-
-  }else{
-
-    notificationBtn.classList.remove(
-      "enabled"
-    );
-
-    notificationBtn.querySelector(
-      "span"
-    ).textContent =
-      "Enable New Devotional Alerts";
-
-  }
-
-}
-
-
-updateNotificationButton();
-
-
-function prepareNotificationSound(){
-
-  try{
-
-    if(!notificationAudioContext){
-
-      notificationAudioContext =
-        new (
-          window.AudioContext ||
-          window.webkitAudioContext
-        )();
-
-    }
-
-
-    if(
-      notificationAudioContext.state ===
-      "suspended"
-    ){
-
-      notificationAudioContext.resume();
-
-    }
-
-  }catch(error){}
-
-}
-
-
-function playNewEpisodeSound(){
-
-  try{
-
-    prepareNotificationSound();
-
-    const ctx =
-      notificationAudioContext;
-
-    if(!ctx)
-      return;
-
-
-    const oscillator =
-      ctx.createOscillator();
-
-    const gain =
-      ctx.createGain();
-
-
-    oscillator.type = "sine";
-
-    oscillator.frequency.setValueAtTime(
-      660,
-      ctx.currentTime
-    );
-
-
-    oscillator.frequency.setValueAtTime(
-      880,
-      ctx.currentTime + .12
-    );
-
-
-    gain.gain.setValueAtTime(
-      .0001,
-      ctx.currentTime
-    );
-
-
-    gain.gain.exponentialRampToValueAtTime(
-      .18,
-      ctx.currentTime + .02
-    );
-
-
-    gain.gain.exponentialRampToValueAtTime(
-      .0001,
-      ctx.currentTime + .35
-    );
-
-
-    oscillator.connect(gain);
-
-    gain.connect(ctx.destination);
-
-    oscillator.start();
-
-    oscillator.stop(
-      ctx.currentTime + .4
-    );
-
-  }catch(error){}
-
-}
-
-
-/* ENABLE ALERTS */
-
-if(notificationBtn){
-
-  notificationBtn.addEventListener(
-    "click",
-    function(){
-
-      prepareNotificationSound();
-
-      notificationEnabled =
-        !notificationEnabled;
-
-
-      localStorage.setItem(
-        NOTIFICATION_ENABLED_KEY,
-        String(notificationEnabled)
-      );
-
-
-      updateNotificationButton();
-
-    }
-  );
-
-}
-
-
-/* SHOW ALERT */
-
-function showNewEpisodeAlert(ep){
-
-  const alert =
-    document.getElementById(
-      "newEpisodeAlert"
-    );
-
-  const title =
-    document.getElementById(
-      "newEpisodeTitle"
-    );
-
-
-  if(!alert)
-    return;
-
-
-  title.textContent =
-    ep.title ||
-    "New KBLC Daily Devotional available";
-
-
-  alert.classList.add("show");
-
-
-  if(notificationEnabled){
-
-    playNewEpisodeSound();
-
-  }
-
-}
-
-
-/* CLOSE ALERT */
-
-const closeEpisodeAlert =
-  document.getElementById(
-    "closeEpisodeAlert"
-  );
-
-
-if(closeEpisodeAlert){
-
-  closeEpisodeAlert.addEventListener(
-    "click",
-    function(){
-
-      document
-        .getElementById(
-          "newEpisodeAlert"
-        )
-        .classList.remove("show");
-
-    }
-  );
-
-}
-
-
-/* OPEN NEW EPISODE */
-
-const openNewEpisode =
-  document.getElementById(
-    "openNewEpisode"
-  );
-
-
-if(openNewEpisode){
-
-  openNewEpisode.addEventListener(
-    "click",
-    function(){
-
-      if(newestEpisodeForNotification){
-
-        curId =
-          newestEpisodeForNotification.id;
-
-        window.location.href =
-          "?episode_id=" +
-          encodeURIComponent(curId);
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =================================================
-   CHECK NEW DEVOTIONAL
-================================================= */
-
-async function checkForNewEpisode(){
-
-  try{
-
-    const response =
-      await fetch(
-        "https://api.spreaker.com/v2/shows/" +
-        SHOW_ID +
-        "/episodes?limit=1"
-      );
-
-
-    if(!response.ok)
-      return;
-
-
-    const data =
-      await response.json();
-
-
-    const episodes =
-      data &&
-      data.response &&
-      (
-        data.response.items ||
-        data.response.episodes ||
-        []
-      );
-
-
-    if(
-      !episodes ||
-      !episodes.length
-    )
-      return;
-
-
-    const newest =
-      episodes[0];
-
-
-    const newestId =
-      String(
-        newest.id ||
-        newest.episode_id ||
-        ""
-      );
-
-
-    if(!newestId)
-      return;
-
-
-    newestEpisodeForNotification =
-      newest;
-
-
-    if(!knownLatestEpisodeId){
-
-      knownLatestEpisodeId =
-        newestId;
-
-      localStorage.setItem(
-        NEW_EPISODE_STORAGE_KEY,
-        newestId
-      );
-
-      return;
-
-    }
-
-
-    if(
-      newestId !==
-      String(knownLatestEpisodeId)
-    ){
-
-      knownLatestEpisodeId =
-        newestId;
-
-      localStorage.setItem(
-        NEW_EPISODE_STORAGE_KEY,
-        newestId
-      );
-
-
-      if(notificationEnabled){
-
-        showNewEpisodeAlert(
-          newest
-        );
-
-      }
-
-    }
-
-  }catch(error){
-
-    console.log(
-      "Notification check failed:",
-      error
-    );
-
-  }
-
-}
-
-
-setTimeout(
-  checkForNewEpisode,
-  5000
-);
-
-
-setInterval(
-  checkForNewEpisode,
-  NOTIFICATION_CHECK_INTERVAL
-);
-
-
-/* =================================================
-   LOAD CONTENT
-================================================= */
-
-async function load(){
-
-  try{
-
-    const response =
-      await fetch(
-        "https://api.spreaker.com/v2/shows/" +
-        SHOW_ID +
-        "/episodes?limit=100"
-      );
-
-
-    if(!response.ok)
-      throw new Error(
-        "Unable to load episodes"
-      );
-
-
-    const data =
-      await response.json();
-
-
-    allEpisodes =
-      data &&
-      data.response &&
-      (
-        data.response.items ||
-        data.response.episodes ||
-        []
-      );
-
-
-    if(!Array.isArray(allEpisodes))
-      allEpisodes = [];
-
-
-    render(allEpisodes);
-
-
-    let episode = null;
-
-
-    if(curId){
-
-      episode =
-        await fetchEpisode(curId);
-
-    }
-
-
-    if(!episode && allEpisodes.length){
-
-      episode =
-        allEpisodes[0];
-
-      curId =
-        episode.id ||
-        episode.episode_id;
-
-    }
-
-
-    if(episode){
-
-      document.getElementById(
-        "title"
-      ).textContent =
-        episode.title ||
-        "KBLC Daily Devotional";
-
-
-      playerTitle.textContent =
-        episode.title ||
-        "KBLC Daily Devotional";
-
-
-      document.getElementById(
-        "read"
-      ).textContent =
-        clean(
-          episode.description ||
-          episode.body ||
-          episode.summary ||
-          "Today's devotional is available in the audio player."
-        );
-
-
-      loadCustomAudio(episode);
-
-    }else{
-
-      document.getElementById(
-        "title"
-      ).textContent =
-        "KBLC Daily Devotional";
-
-
-      document.getElementById(
-        "read"
-      ).textContent =
-        "Today's devotional could not be loaded.";
-
-      showFallback(curId);
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-
-    document.getElementById(
-      "title"
-    ).textContent =
-      "KBLC Daily Devotional";
-
-
-    document.getElementById(
-      "read"
-    ).textContent =
-      "Unable to load today's devotional. Please try again later.";
-
-
-    showFallback(curId);
-
-  }
-
-}
-
-
-/* =================================================
-   SGE PRAYER HUB IN-SITE PAGE
-================================================= */
-
-const telegramPage =
-  document.getElementById(
-    "telegramPage"
-  );
-
-
-function openTelegramPage(){
-
-  if(!telegramPage)
-    return;
-
-
-  telegramPage.classList.add(
-    "show"
-  );
-
-
-  telegramPage.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-
-  document.body.style.overflow =
-    "hidden";
-
-}
-
-
-function closeTelegramPage(){
-
-  if(!telegramPage)
-    return;
-
-
-  telegramPage.classList.remove(
-    "show"
-  );
-
-
-  telegramPage.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  document.body.style.overflow =
-    "";
-
-}
-
-
-/* ESCAPE CLOSE */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.key === "Escape" &&
-      telegramPage &&
-      telegramPage.classList.contains(
-        "show"
-      )
-    ){
-
-      closeTelegramPage();
-
-    }
-
-  }
-);
-
-
-/* =================================================
-   START
-================================================= */
-
-updatePlayIcon(false);
-
-load();
-
-</script>
-
-</body>
-
-</html>
+  </strong>    <br>  Listen • Read • Reflect • Grow
+
+<br><br>
+
+©
+<span id="year"></span>
+
+Kingdom Builders Lovelife Church INC.
+
+</footer>  </div>  <!-- ==================================================  
+     NEW DEVOTIONAL POPUP  
+================================================== -->  <div  
+  class="new-episode-alert"  
+  id="newEpisodeAlert"  
+>    <div class="new-episode-alert-top">  <div class="new-episode-alert-icon">  
+
+  <svg  
+    class="icon"  
+    viewBox="0 0 24 24"  
+    aria-hidden="true"  
+  >  
+
+    <path  
+      d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9">  
+    </path>  
+
+    <path d="M10 21h4"></path>  
+
+  </svg>  
+
+</div>  
+
+
+<div class="new-episode-alert-text">  
+
+  <div class="new-episode-alert-label">  
+    New Devotional  
+  </div>  
+
+  <div  
+    class="new-episode-alert-title"  
+    id="newEpisodeTitle"  
+  >  
+    New KBLC Daily Devotional available  
+  </div>  
+
+</div>  
+
+
+<button  
+  class="new-episode-alert-close"  
+  id="closeEpisodeAlert"  
+  type="button"  
+  aria-label="Close"  
+>  
+
+  <svg  
+    class="icon"  
+    viewBox="0 0 24 24"  
+    aria-hidden="true"  
+  >  
+
+    <path d="M6 6l12 12"></path>  
+
+    <path d="M18 6L6 18"></path>  
+
+  </svg>  
+
+</button>
+
+  </div>  <button
+class="new-episode-alert-open"
+id="openNewEpisode"
+type="button"
+
+> 
+
+Listen Now
+
+  </button>  </div>  <script>  
+  
+/* ==================================================  
+   THEME SYSTEM  
+================================================== */  
+  
+const THEME_STORAGE_KEY =  
+  "kblc_theme";  
+  
+  
+const themeToggle =  
+  document.getElementById(  
+    "themeToggle"  
+  );  
+  
+  
+const themeIcon =  
+  document.getElementById(  
+    "themeIcon"  
+  );  
+  
+  
+/* UPDATE THEME ICON */  
+  
+function updateThemeIcon(){  
+  
+  if(!themeIcon)  
+    return;  
+  
+  if(  
+    document.body.classList.contains(  
+      "light-theme"  
+    )  
+  ){  
+  
+    /* SUN */  
+  
+    themeIcon.innerHTML = `  
+  
+      <circle  
+        cx="12"  
+        cy="12"  
+        r="4">  
+      </circle>  
+  
+      <path d="M12 2v2"></path>  
+  
+      <path d="M12 20v2"></path>  
+  
+      <path d="m4.93 4.93 1.41 1.41"></path>  
+  
+      <path d="m17.66 17.66 1.41 1.41"></path>  
+  
+      <path d="M2 12h2"></path>  
+  
+      <path d="M20 12h2"></path>  
+  
+      <path d="m6.34 17.66-1.41 1.41"></path>  
+  
+      <path d="m19.07 4.93-1.41 1.41"></path>  
+  
+    `;  
+  
+    themeToggle.title =  
+      "Switch to dark mode";  
+  
+    themeToggle.setAttribute(  
+      "aria-label",  
+      "Switch to dark mode"  
+    );  
+  
+  }  
+  
+  else{  
+  
+    /* MOON */  
+  
+    themeIcon.innerHTML = `  
+  
+      <path  
+        d="M21 12.8A8.5 8.5 0 1 1 11.2 3  
+           6.5 6.5 0 0 0 21 12.8Z">  
+      </path>  
+  
+    `;  
+  
+    themeToggle.title =  
+      "Switch to light mode";  
+  
+    themeToggle.setAttribute(  
+      "aria-label",  
+      "Switch to light mode"  
+    );  
+  
+  }  
+  
+}  
+  
+  
+/* APPLY THEME */  
+  
+function applyTheme(theme){  
+  
+  if(theme === "light"){  
+  
+    document.body.classList.add(  
+      "light-theme"  
+    );  
+  
+  }  
+  
+  else{  
+  
+    document.body.classList.remove(  
+      "light-theme"  
+    );  
+  
+  }  
+  
+  updateThemeIcon();  
+  
+}  
+  
+  
+/* LOAD SAVED THEME */  
+  
+const savedTheme =  
+  localStorage.getItem(  
+    THEME_STORAGE_KEY  
+  );  
+  
+  
+if(savedTheme){  
+  
+  applyTheme(  
+    savedTheme  
+  );  
+  
+}  
+  
+else{  
+  
+  /* Follow device preference */  
+  
+  const prefersLight =  
+    window.matchMedia &&  
+    window.matchMedia(  
+      "(prefers-color-scheme: light)"  
+    ).matches;  
+  
+  applyTheme(  
+    prefersLight  
+      ? "light"  
+      : "dark"  
+  );  
+  
+}  
+  
+  
+/* SWITCH THEME */  
+  
+if(themeToggle){  
+  
+  themeToggle.addEventListener(  
+    "click",  
+    function(){  
+  
+      const isLight =  
+        document.body.classList.contains(  
+          "light-theme"  
+        );  
+  
+      const newTheme =  
+        isLight  
+          ? "dark"  
+          : "light";  
+  
+      applyTheme(  
+        newTheme  
+      );  
+  
+      localStorage.setItem(  
+        THEME_STORAGE_KEY,  
+        newTheme  
+      );  
+  
+    }  
+  );  
+  
+}  
+  
+  
+/* ==================================================  
+   SPREAKER SHOW  
+================================================== */  
+  
+const SHOW_ID = "7392727";  
+  
+const params =  
+new URLSearchParams(  
+window.location.search  
+);  
+  
+let curId =  
+params.get("episode_id");  
+  
+let allEpisodes = [];  
+  
+  
+/* ==================================================  
+   ELEMENTS  
+================================================== */  
+  
+const audio =  
+document.getElementById(  
+  "audioPlayer"  
+);  
+  
+const playButton =  
+document.getElementById(  
+  "playButton"  
+);  
+  
+const playIcon =  
+document.getElementById(  
+  "playIcon"  
+);  
+  
+const progress =  
+document.getElementById(  
+  "progress"  
+);  
+  
+const volume =  
+document.getElementById(  
+  "volume"  
+);  
+  
+const currentTime =  
+document.getElementById(  
+  "currentTime"  
+);  
+  
+const duration =  
+document.getElementById(  
+  "duration"  
+);  
+  
+const playerTitle =  
+document.getElementById(  
+  "playerTitle"  
+);  
+  
+const customPlayer =  
+document.getElementById(  
+  "customPlayer"  
+);  
+  
+const spreakerFallback =  
+document.getElementById(  
+  "spreakerFallback"  
+);  
+  
+const mainPlayer =  
+document.getElementById(  
+  "mainPlayer"  
+);  
+  
+  
+/* ==================================================  
+   DATE  
+================================================== */  
+  
+document  
+.getElementById("todayDate")  
+.textContent =  
+  
+new Date()  
+.toLocaleDateString(  
+  undefined,  
+  {  
+    year:"numeric",  
+    month:"short",  
+    day:"numeric"  
+  }  
+);  
+  
+document  
+.getElementById("year")  
+.textContent =  
+new Date().getFullYear();  
+  
+  
+/* ==================================================  
+   FORMAT TIME  
+================================================== */  
+  
+function formatTime(seconds){  
+  
+  if(  
+    !Number.isFinite(seconds)  
+    ||  
+    seconds < 0  
+  ){  
+  
+    return "0:00";  
+  
+  }  
+  
+  const minutes =  
+    Math.floor(seconds / 60);  
+  
+  const secs =  
+    Math.floor(seconds % 60)  
+    .toString()  
+    .padStart(2,"0");  
+  
+  return minutes + ":" + secs;  
+  
+}  
+  
+  
+/* ==================================================  
+   UPDATE PLAY ICON  
+================================================== */  
+  
+function updatePlayIcon(playing){  
+  
+  if(!playIcon)  
+    return;  
+  
+  if(playing){  
+  
+    playIcon.innerHTML = `  
+  
+      <rect  
+        x="6"  
+        y="5"  
+        width="4"  
+        height="14"  
+        rx="1"  
+        fill="currentColor"  
+        stroke="none">  
+      </rect>  
+  
+      <rect  
+        x="14"  
+        y="5"  
+        width="4"  
+        height="14"  
+        rx="1"  
+        fill="currentColor"  
+        stroke="none">  
+      </rect>  
+  
+    `;  
+  
+    playButton.setAttribute(  
+      "aria-label",  
+      "Pause"  
+    );  
+  
+  }  
+  
+  else{  
+  
+    playIcon.innerHTML = `  
+  
+      <path  
+        d="M8 5v14l11-7z"  
+        fill="currentColor"  
+        stroke="none">  
+      </path>  
+  
+    `;  
+  
+    playButton.setAttribute(  
+      "aria-label",  
+      "Play"  
+    );  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   SPREAKER FALLBACK URL  
+================================================== */  
+  
+function getSpreakerURL(id){  
+  
+  let src;  
+  
+  if(id){  
+  
+    src =  
+      "https://widget.spreaker.com/player?episode_id="  
+      +  
+      encodeURIComponent(id)  
+      +  
+      "&theme=dark"  
+      +  
+      "&playlist=show"  
+      +  
+      "&playlist_id="  
+      +  
+      SHOW_ID  
+      +  
+      "&autoplay=false"  
+      +  
+      "&chapters-image=true";  
+  
+  }  
+  
+  else{  
+  
+    src =  
+      "https://widget.spreaker.com/player?show_id="  
+      +  
+      SHOW_ID  
+      +  
+      "&theme=dark"  
+      +  
+      "&playlist=show"  
+      +  
+      "&playlist-continuous=true"  
+      +  
+      "&chapters-image=true";  
+  
+  }  
+  
+  return src;  
+  
+}  
+  
+  
+/* ==================================================  
+   SHOW FALLBACK  
+================================================== */  
+  
+function showFallback(id){  
+  
+  customPlayer.style.display =  
+    "none";  
+  
+  spreakerFallback.style.display =  
+    "block";  
+  
+  mainPlayer.src =  
+    getSpreakerURL(id);  
+  
+}  
+  
+  
+/* ==================================================  
+   CUSTOM PLAYER  
+================================================== */  
+  
+function showCustomPlayer(){  
+  
+  customPlayer.style.display =  
+    "block";  
+  
+  spreakerFallback.style.display =  
+    "none";  
+  
+}  
+  
+  
+/* ==================================================  
+   POSSIBLE AUDIO URLS  
+================================================== */  
+  
+function findAudioURL(ep){  
+  
+  if(!ep)  
+    return null;  
+  
+  const possible = [  
+  
+    ep.audio_url,  
+    ep.audioUrl,  
+  
+    ep.mp3_url,  
+    ep.mp3Url,  
+  
+    ep.download_url,  
+    ep.downloadUrl,  
+  
+    ep.media_url,  
+    ep.mediaUrl,  
+  
+    ep.stream_url,  
+    ep.streamUrl,  
+  
+    ep.audio?.url,  
+  
+    ep.media?.url,  
+  
+    ep.file?.url,  
+  
+    ep.download?.url  
+  
+  ];  
+  
+  for(  
+    const url of possible  
+  ){  
+  
+    if(  
+      typeof url === "string"  
+      &&  
+      /^https?:\/\//i.test(url)  
+    ){  
+  
+      return url;  
+  
+    }  
+  
+  }  
+  
+  return null;  
+  
+}  
+  
+  
+/* ==================================================  
+   LOAD CUSTOM AUDIO  
+================================================== */  
+  
+function loadCustomAudio(ep){  
+  
+  const audioURL =  
+    findAudioURL(ep);  
+  
+  if(!audioURL){  
+  
+    showFallback(curId);  
+  
+    return false;  
+  
+  }  
+  
+  audio.src =  
+    audioURL;  
+  
+  audio.load();  
+  
+  playerTitle.textContent =  
+    ep.title ||  
+    "KBLC Daily Devotional";  
+  
+  showCustomPlayer();  
+  
+  return true;  
+  
+}  
+  
+  
+/* ==================================================  
+   PLAY / PAUSE  
+================================================== */  
+  
+playButton.addEventListener(  
+  "click",  
+  function(){  
+  
+    if(audio.paused){  
+  
+      audio.play()  
+      .then(() => {  
+  
+        updatePlayIcon(true);  
+  
+      })  
+      .catch(() => {  
+  
+        updatePlayIcon(false);  
+  
+      });  
+  
+    }  
+  
+    else{  
+  
+      audio.pause();  
+  
+      updatePlayIcon(false);  
+  
+    }  
+  
+  }  
+);  
+  
+  
+/* ==================================================  
+   AUDIO EVENTS  
+================================================== */  
+  
+audio.addEventListener(  
+  "play",  
+  function(){  
+  
+    updatePlayIcon(true);  
+  
+  }  
+);  
+  
+audio.addEventListener(  
+  "pause",  
+  function(){  
+  
+    updatePlayIcon(false);  
+  
+  }  
+);  
+  
+audio.addEventListener(  
+  "ended",  
+  function(){  
+  
+    updatePlayIcon(false);  
+  
+    progress.value =  
+      0;  
+  
+  }  
+);  
+  
+audio.addEventListener(  
+  "loadedmetadata",  
+  function(){  
+  
+    duration.textContent =  
+      formatTime(audio.duration);  
+  
+  }  
+);  
+  
+audio.addEventListener(  
+  "timeupdate",  
+  function(){  
+  
+    if(  
+      Number.isFinite(audio.duration)  
+      &&  
+      audio.duration > 0  
+    ){  
+  
+      progress.value =  
+        (  
+          audio.currentTime /  
+          audio.duration  
+        ) * 100;  
+  
+    }  
+  
+    currentTime.textContent =  
+      formatTime(  
+        audio.currentTime  
+      );  
+  
+  }  
+);  
+  
+  
+/* ==================================================  
+   PROGRESS CONTROL  
+================================================== */  
+  
+progress.addEventListener(  
+  "input",  
+  function(){  
+  
+    if(  
+      Number.isFinite(audio.duration)  
+      &&  
+      audio.duration > 0  
+    ){  
+  
+      audio.currentTime =  
+        (  
+          progress.value / 100  
+        )  
+        *  
+        audio.duration;  
+  
+    }  
+  
+  }  
+);  
+  
+  
+/* ==================================================  
+   VOLUME  
+================================================== */  
+  
+volume.addEventListener(  
+  "input",  
+  function(){  
+  
+    audio.volume =  
+      volume.value;  
+  
+  }  
+);  
+  
+  
+/* ==================================================  
+   PLAYER ERROR  
+================================================== */  
+  
+audio.addEventListener(  
+  "error",  
+  function(){  
+  
+    showFallback(curId);  
+  
+  }  
+);  
+  
+  
+/* ==================================================  
+   FETCH EPISODE  
+================================================== */  
+  
+async function fetchEpisode(id){  
+  
+  if(!id)  
+    return null;  
+  
+  const urls = [  
+  
+    "https://api.spreaker.com/v2/episodes/"  
+    +  
+    id,  
+  
+    "https://corsproxy.io/?"  
+    +  
+    encodeURIComponent(  
+      "https://api.spreaker.com/v2/episodes/"  
+      +  
+      id  
+    ),  
+  
+    "https://api.allorigins.win/get?url="  
+    +  
+    encodeURIComponent(  
+      "https://api.spreaker.com/v2/episodes/"  
+      +  
+      id  
+    )  
+  
+  ];  
+  
+  for(  
+    const url of urls  
+  ){  
+  
+    try{  
+  
+      const r =  
+        await fetch(url);  
+  
+      if(!r.ok)  
+        continue;  
+  
+      let j =  
+        await r.json();  
+  
+      if(j.contents){  
+  
+        try{  
+  
+          j =  
+            JSON.parse(  
+              j.contents  
+            );  
+  
+        }  
+        catch(e){}  
+  
+      }  
+  
+      const ep =  
+        j.response?.episode  
+        ||  
+        j.response  
+        ||  
+        j.episode  
+        ||  
+        j;  
+  
+      if(  
+        ep  
+        &&  
+        (  
+          ep.title  
+          ||  
+          ep.description  
+        )  
+      ){  
+  
+        return ep;  
+  
+      }  
+  
+    }  
+  
+    catch(e){  
+  
+      console.log(  
+        "Episode request failed:",  
+        e  
+      );  
+  
+    }  
+  
+  }  
+  
+  return null;  
+  
+}  
+  
+  
+/* ==================================================  
+   CLEAN DESCRIPTION  
+================================================== */  
+  
+function clean(raw){  
+  
+  return (raw || "")  
+  
+    .replace(  
+      /<br\s*\/?>/gi,  
+      "\n"  
+    )  
+  
+    .replace(  
+      /<\/p>/gi,  
+      "\n\n"  
+    )  
+  
+    .replace(  
+      /<[^>]+>/g,  
+      ""  
+    )  
+  
+    .trim();  
+  
+}  
+  
+  
+/* ==================================================  
+   ESCAPE HTML  
+================================================== */  
+  
+function escapeHTML(value){  
+  
+  return String(value)  
+  
+    .replace(  
+      /&/g,  
+      "&amp;"  
+    )  
+  
+    .replace(  
+      /</g,  
+      "&lt;"  
+    )  
+  
+    .replace(  
+      />/g,  
+      "&gt;"  
+    )  
+  
+    .replace(  
+      /"/g,  
+      "&quot;"  
+    )  
+  
+    .replace(  
+      /'/g,  
+      "&#039;"  
+    );  
+  
+}  
+  
+  
+/* ==================================================  
+   RENDER EPISODES  
+================================================== */  
+  
+function render(items){  
+  
+  const list =  
+    document.getElementById(  
+      "list"  
+    );  
+  
+  if(!items.length){  
+  
+    list.innerHTML =  
+  
+      '<div class="no-results">' +  
+      'No devotionals found.' +  
+      '</div>';  
+  
+    return;  
+  
+  }  
+  
+  list.innerHTML =  
+  
+    items.map(  
+      item => {  
+  
+        const id =  
+          String(  
+            item.episode_id ||  
+            item.id  
+          );  
+  
+        const active =  
+          id === curId  
+          ? "episode-active"  
+          : "";  
+  
+        return `  
+  
+          <div  
+            class="episode-item ${active}"  
+            onclick="location.href='?episode_id=${encodeURIComponent(id)}'"  
+          >  
+  
+            <b>  
+              ${escapeHTML(  
+                item.title ||  
+                "Untitled devotional"  
+              )}  
+            </b>  
+  
+            <br>  
+  
+            <small>  
+  
+              ${escapeHTML(  
+                (  
+                  item.published_at ||  
+                  ""  
+                ).slice(0,10)  
+              )}  
+  
+            </small>  
+  
+          </div>  
+  
+        `;  
+  
+      }  
+    ).join("");  
+  
+}  
+  
+  
+/* ==================================================  
+   SEARCH  
+================================================== */  
+  
+function search(){  
+  
+  const q =  
+  
+    document  
+      .getElementById(  
+        "episodeSearch"  
+      )  
+      .value  
+      .toLowerCase()  
+      .trim();  
+  
+  if(!q){  
+  
+    render(allEpisodes);  
+  
+    return;  
+  
+  }  
+  
+  const filtered =  
+  
+    allEpisodes.filter(  
+      episode => {  
+  
+        const title =  
+  
+          (  
+            episode.title ||  
+            ""  
+          )  
+          .toLowerCase();  
+  
+        const description =  
+  
+          (  
+            episode.description ||  
+            episode.html_description ||  
+            ""  
+          )  
+          .toLowerCase();  
+  
+        return (  
+  
+          title.includes(q)  
+  
+          ||  
+  
+          description.includes(q)  
+  
+        );  
+  
+      }  
+    );  
+  
+  render(filtered);  
+  
+}  
+  
+  
+document  
+  .getElementById(  
+    "episodeSearch"  
+  )  
+  .addEventListener(  
+    "input",  
+    search  
+  );  
+  
+  
+/* ==================================================  
+   MINIMIZE  
+================================================== */  
+  
+function toggleDevotionals(){  
+  
+  const content =  
+    document.getElementById(  
+      "devotionalContent"  
+    );  
+  
+  const button =  
+    document.getElementById(  
+      "minimizeBtn"  
+    );  
+  
+  const hidden =  
+    content.style.display ===  
+    "none";  
+  
+  if(hidden){  
+  
+    content.style.display =  
+      "block";  
+  
+    button.textContent =  
+      "−";  
+  
+    button.title =  
+      "Minimize";  
+  
+  }  
+  
+  else{  
+  
+    content.style.display =  
+      "none";  
+  
+    button.textContent =  
+      "+";  
+  
+    button.title =  
+      "Expand";  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   NEW DEVOTIONAL NOTIFICATION  
+================================================== */  
+  
+const NEW_EPISODE_STORAGE_KEY =  
+  "kblc_latest_episode_id";  
+  
+  
+const NOTIFICATION_ENABLED_KEY =  
+  "kblc_episode_notifications_enabled";  
+  
+  
+const NOTIFICATION_CHECK_INTERVAL =  
+  60000;  
+  
+  
+let notificationAudioContext =  
+  null;  
+  
+  
+let notificationEnabled =  
+  localStorage.getItem(  
+    NOTIFICATION_ENABLED_KEY  
+  ) === "true";  
+  
+  
+let knownLatestEpisodeId =  
+  localStorage.getItem(  
+    NEW_EPISODE_STORAGE_KEY  
+  );  
+  
+  
+let newestEpisodeForNotification =  
+  null;  
+  
+  
+/* ==================================================  
+   NOTIFICATION BUTTON  
+================================================== */  
+  
+const notificationBtn =  
+  document.getElementById(  
+    "notificationBtn"  
+  );  
+  
+  
+function updateNotificationButton(){  
+  
+  if(!notificationBtn)  
+    return;  
+  
+  const span =  
+    notificationBtn.querySelector(  
+      "span"  
+    );  
+  
+  if(notificationEnabled){  
+  
+    if(span){  
+  
+      span.textContent =  
+        "New Devotional Alerts Enabled";  
+  
+    }  
+  
+    notificationBtn.classList.add(  
+      "enabled"  
+    );  
+  
+  }  
+  
+  else{  
+  
+    if(span){  
+  
+      span.textContent =  
+        "Enable New Devotional Alerts";  
+  
+    }  
+  
+    notificationBtn.classList.remove(  
+      "enabled"  
+    );  
+  
+  }  
+  
+}  
+  
+  
+updateNotificationButton();  
+  
+  
+/* ==================================================  
+   PREPARE SOUND  
+================================================== */  
+  
+function prepareNotificationSound(){  
+  
+  try{  
+  
+    if(!notificationAudioContext){  
+  
+      const AudioContext =  
+        window.AudioContext ||  
+        window.webkitAudioContext;  
+  
+      if(!AudioContext)  
+        return;  
+  
+      notificationAudioContext =  
+        new AudioContext();  
+  
+    }  
+  
+    if(  
+      notificationAudioContext.state ===  
+      "suspended"  
+    ){  
+  
+      notificationAudioContext.resume();  
+  
+    }  
+  
+  }  
+  
+  catch(error){  
+  
+    console.log(  
+      "Notification audio error:",  
+      error  
+    );  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   PLAY NEW DEVOTIONAL SOUND  
+================================================== */  
+  
+function playNewEpisodeSound(){  
+  
+  try{  
+  
+    prepareNotificationSound();  
+  
+    if(!notificationAudioContext)  
+      return;  
+  
+    const ctx =  
+      notificationAudioContext;  
+  
+    const now =  
+      ctx.currentTime;  
+  
+  
+    const oscillator1 =  
+      ctx.createOscillator();  
+  
+    const gain1 =  
+      ctx.createGain();  
+  
+    oscillator1.type =  
+      "sine";  
+  
+    oscillator1.frequency.setValueAtTime(  
+      880,  
+      now  
+    );  
+  
+    gain1.gain.setValueAtTime(  
+      0.0001,  
+      now  
+    );  
+  
+    gain1.gain.exponentialRampToValueAtTime(  
+      0.18,  
+      now + 0.02  
+    );  
+  
+    gain1.gain.exponentialRampToValueAtTime(  
+      0.0001,  
+      now + 0.25  
+    );  
+  
+    oscillator1.connect(gain1);  
+  
+    gain1.connect(  
+      ctx.destination  
+    );  
+  
+    oscillator1.start(now);  
+  
+    oscillator1.stop(  
+      now + 0.25  
+    );  
+  
+  
+    const oscillator2 =  
+      ctx.createOscillator();  
+  
+    const gain2 =  
+      ctx.createGain();  
+  
+    oscillator2.type =  
+      "sine";  
+  
+    oscillator2.frequency.setValueAtTime(  
+      1174.66,  
+      now + 0.18  
+    );  
+  
+    gain2.gain.setValueAtTime(  
+      0.0001,  
+      now + 0.18  
+    );  
+  
+    gain2.gain.exponentialRampToValueAtTime(  
+      0.18,  
+      now + 0.20  
+    );  
+  
+    gain2.gain.exponentialRampToValueAtTime(  
+      0.0001,  
+      now + 0.50  
+    );  
+  
+    oscillator2.connect(gain2);  
+  
+    gain2.connect(  
+      ctx.destination  
+    );  
+  
+    oscillator2.start(  
+      now + 0.18  
+    );  
+  
+    oscillator2.stop(  
+      now + 0.50  
+    );  
+  
+  }  
+  
+  catch(error){  
+  
+    console.log(  
+      "Could not play notification:",  
+      error  
+    );  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   ENABLE DEVOTIONAL ALERTS  
+================================================== */  
+  
+if(notificationBtn){  
+  
+  notificationBtn.addEventListener(  
+    "click",  
+    function(){  
+  
+      prepareNotificationSound();  
+  
+      notificationEnabled =  
+        true;  
+  
+      localStorage.setItem(  
+        NOTIFICATION_ENABLED_KEY,  
+        "true"  
+      );  
+  
+      updateNotificationButton();  
+  
+      setTimeout(  
+        playNewEpisodeSound,  
+        100  
+      );  
+  
+    }  
+  );  
+  
+}  
+  
+  
+/* ==================================================  
+   SHOW NEW DEVOTIONAL  
+================================================== */  
+  
+function showNewEpisodeAlert(ep){  
+  
+  if(!ep)  
+    return;  
+  
+  newestEpisodeForNotification =  
+    ep;  
+  
+  const alertBox =  
+    document.getElementById(  
+      "newEpisodeAlert"  
+    );  
+  
+  const title =  
+    document.getElementById(  
+      "newEpisodeTitle"  
+    );  
+  
+  if(title){  
+  
+    title.textContent =  
+      ep.title ||  
+      "New KBLC Daily Devotional";  
+  
+  }  
+  
+  if(alertBox){  
+  
+    alertBox.classList.add(  
+      "show"  
+    );  
+  
+  }  
+  
+  if(notificationEnabled){  
+  
+    playNewEpisodeSound();  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   CLOSE ALERT  
+================================================== */  
+  
+const closeEpisodeAlert =  
+  document.getElementById(  
+    "closeEpisodeAlert"  
+  );  
+  
+  
+if(closeEpisodeAlert){  
+  
+  closeEpisodeAlert.addEventListener(  
+    "click",  
+    function(){  
+  
+      document  
+        .getElementById(  
+          "newEpisodeAlert"  
+        )  
+        .classList.remove(  
+          "show"  
+        );  
+  
+    }  
+  );  
+  
+}  
+  
+  
+/* ==================================================  
+   OPEN NEW DEVOTIONAL  
+================================================== */  
+  
+const openNewEpisode =  
+  document.getElementById(  
+    "openNewEpisode"  
+  );  
+  
+  
+if(openNewEpisode){  
+  
+  openNewEpisode.addEventListener(  
+    "click",  
+    function(){  
+  
+      if(!newestEpisodeForNotification)  
+        return;  
+  
+      const id =  
+        newestEpisodeForNotification.episode_id ||  
+        newestEpisodeForNotification.id;  
+  
+      if(id){  
+  
+        window.location.href =  
+          "?episode_id=" +  
+          encodeURIComponent(id);  
+  
+      }  
+  
+    }  
+  );  
+  
+}  
+  
+  
+/* ==================================================  
+   CHECK FOR NEW DEVOTIONAL  
+================================================== */  
+  
+async function checkForNewEpisode(){  
+  
+  try{  
+  
+    const response =  
+      await fetch(  
+  
+        "https://api.spreaker.com/v2/shows/"  
+        +  
+        SHOW_ID  
+        +  
+        "/episodes?limit=1"  
+        +  
+        "&_="  
+        +  
+        Date.now(),  
+  
+        {  
+          cache:"no-store"  
+        }  
+  
+      );  
+  
+    if(!response.ok)  
+      return;  
+  
+    const data =  
+      await response.json();  
+  
+    const episodes =  
+      data.response?.items ||  
+      [];  
+  
+    if(!episodes.length)  
+      return;  
+  
+    const latest =  
+      episodes[0];  
+  
+    const latestId =  
+      String(  
+        latest.episode_id ||  
+        latest.id  
+      );  
+  
+  
+    if(!knownLatestEpisodeId){  
+  
+      knownLatestEpisodeId =  
+        latestId;  
+  
+      localStorage.setItem(  
+        NEW_EPISODE_STORAGE_KEY,  
+        latestId  
+      );  
+  
+      return;  
+  
+    }  
+  
+  
+    if(  
+      latestId !==  
+      String(  
+        knownLatestEpisodeId  
+      )  
+    ){  
+  
+      knownLatestEpisodeId =  
+        latestId;  
+  
+      localStorage.setItem(  
+        NEW_EPISODE_STORAGE_KEY,  
+        latestId  
+      );  
+  
+      showNewEpisodeAlert(  
+        latest  
+      );  
+  
+    }  
+  
+  }  
+  
+  catch(error){  
+  
+    console.log(  
+      "New devotional check failed:",  
+      error  
+    );  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   START NEW DEVOTIONAL MONITOR  
+================================================== */  
+  
+setTimeout(  
+  checkForNewEpisode,  
+  5000  
+);  
+  
+setInterval(  
+  checkForNewEpisode,  
+  NOTIFICATION_CHECK_INTERVAL  
+);  
+  
+  
+/* ==================================================  
+   LOAD CONTENT  
+================================================== */  
+  
+async function load(){  
+  
+  try{  
+  
+    const r =  
+  
+      await fetch(  
+  
+        "https://api.spreaker.com/v2/shows/"  
+        +  
+        SHOW_ID  
+        +  
+        "/episodes?limit=100"  
+  
+      );  
+  
+    if(!r.ok){  
+  
+      throw new Error(  
+        "Could not load episodes"  
+      );  
+  
+    }  
+  
+    const j =  
+      await r.json();  
+  
+    allEpisodes =  
+      j.response?.items ||  
+      [];  
+  
+  
+    if(  
+      !curId  
+      &&  
+      allEpisodes.length  
+    ){  
+  
+      curId =  
+        String(  
+          allEpisodes[0].episode_id ||  
+          allEpisodes[0].id  
+        );  
+  
+    }  
+  
+  
+    render(  
+      allEpisodes  
+    );  
+  
+  
+    const ep =  
+      await fetchEpisode(  
+        curId  
+      );  
+  
+  
+    if(ep){  
+  
+      document  
+        .getElementById("title")  
+        .textContent =  
+          ep.title ||  
+          "KBLC Daily Devotional";  
+  
+  
+      playerTitle.textContent =  
+        ep.title ||  
+        "KBLC Daily Devotional";  
+  
+  
+      document  
+        .getElementById("read")  
+        .textContent =  
+  
+          clean(  
+            ep.description ||  
+            ep.html_description  
+          )  
+  
+          ||  
+  
+          "No description available for this devotional.";  
+  
+  
+      const loaded =  
+        loadCustomAudio(ep);  
+  
+      if(!loaded){  
+  
+        showFallback(  
+          curId  
+        );  
+  
+      }  
+  
+    }  
+  
+    else{  
+  
+      document  
+        .getElementById("read")  
+        .textContent =  
+  
+          "The devotional audio is available above. " +  
+          "The written devotional could not be loaded at this time.";  
+  
+      showFallback(  
+        curId  
+      );  
+  
+    }  
+  
+  }  
+  
+  catch(error){  
+  
+    console.log(  
+      "Loading error:",  
+      error  
+    );  
+  
+    document  
+      .getElementById("read")  
+      .textContent =  
+  
+        "The devotional audio is available above. " +  
+        "The written devotional could not be loaded at this time.";  
+  
+    showFallback(  
+      curId  
+    );  
+  
+  }  
+  
+}  
+  
+  
+/* ==================================================  
+   START  
+================================================== */  
+  
+updatePlayIcon(false);  
+  
+load();  
+  
+</script>  </body>  </html>
