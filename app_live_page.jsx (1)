@@ -1,0 +1,92 @@
+'use client';
+import { useEffect, useRef, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+
+function PrayerRoom() {
+  const roomRef = useRef(null);
+  const searchParams = useSearchParams();
+  const roomID = searchParams.get('room') || 'sge-main';
+  const isHost = searchParams.get('host') === 'sge2024';
+
+  useEffect(() => {
+    async function joinRoom() {
+      const userID = 'sge_' + Date.now();
+      const userName = isHost ? 'SGE HOST 🙏' : 'Intercessor_' + userID.slice(-4);
+
+      // Get token from your API
+      const res = await fetch(`/api/token?roomID=${roomID}&userID=${userID}&userName=${userName}`);
+      const data = await res.json();
+
+      const { ZegoUIKitPrebuilt } = await import('@zegocloud/zego-uikit-prebuilt');
+      const zp = ZegoUIKitPrebuilt.create(data.token);
+
+      zp.joinRoom({
+        container: roomRef.current,
+        scenario: {
+          mode: ZegoUIKitPrebuilt.LiveStreaming,
+          config: {
+            role: isHost ? ZegoUIKitPrebuilt.Host : ZegoUIKitPrebuilt.Audience,
+          },
+        },
+        turnOnMicrophoneWhenJoining: isHost ? true : false,
+        turnOnCameraWhenJoining: false,
+        showMyCameraToggleButton: false,
+        showAudioVideoSettingsButton: true,
+        showScreenSharingButton: false,
+        showTextChat: true,
+        showUserList: true,
+        useFrontFacingCamera: false,
+        layout: 'Auto',
+        sharedLinks: [
+          {
+            name: 'Invite to SGE PRAYER HUB',
+            url: `${window.location.origin}/live?room=${roomID}`,
+          },
+        ],
+        branding: {
+          logoURL: '/logo.png',
+        },
+        onJoinRoom: () => {
+          console.log('Joined SGE PRAYER HUB:', roomID);
+        },
+      });
+    }
+
+    joinRoom();
+  }, [roomID, isHost]);
+
+  return (
+    <div style={{ background: '#08080a', minHeight: '100vh' }}>
+      <div style={{ 
+        padding: '12px 16px', 
+        background: isHost ? '#7c3aed' : '#14141c', 
+        color: 'white', 
+        display: 'flex', 
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        fontSize: '14px',
+        fontWeight: '600'
+      }}>
+        <span>🙏 SGE PRAYER HUB: {roomID.toUpperCase()} {isHost ? '• YOU ARE HOST' : '• LISTENER'}</span>
+        <a href="/" style={{ color: 'white', textDecoration: 'none', background: 'rgba(0,0,0,0.3)', padding: '6px 12px', borderRadius: '20px' }}>✕ Leave</a>
+      </div>
+      
+      {/* Instructions */}
+      {!isHost && (
+        <div style={{ background: '#1e1b2e', color: '#a78bfa', padding: '8px', textAlign: 'center', fontSize: '12px' }}>
+          🎧 You are in listening mode. Raise hand to request to pray. Host must approve.
+        </div>
+      )}
+
+      <div ref={roomRef} style={{ width: '100vw', height: 'calc(100vh - 48px)' }} />
+    </div>
+  );
+}
+
+export default function LivePage() {
+  return (
+    <Suspense fallback={<div style={{ color: 'white', textAlign: 'center', paddingTop: '50px' }}>Loading SGE PRAYER HUB...</div>}>
+      <PrayerRoom />
+    </Suspense>
+  );
+}
