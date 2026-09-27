@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@zegocloud/zego_server_assistant": "^2.1.0"
+  }
+}
