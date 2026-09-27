@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SGE PRAYER HUB</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:opsz,wght@700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --bg: #121212;
+      --card: #202020;
+      --card2: #181818;
+      --blue: #1687ff;
+      --text: #ededed;
+      --heading: #ffffff;
+      --muted: #a7a7a7;
+      --border: rgba(255,255,255,.09);
+    }
+
+    body.light-theme {
+      --bg: #f5f8fc;
+      --card: #ffffff;
+      --card2: #eef4fb;
+      --blue: #0878e8;
+      --text: #20242a;
+      --heading: #11151a;
+      --muted: #657080;
+      --border: rgba(0,0,0,.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 90px;
+      transition: .25s;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("kblc-logo.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: min(560px,72vw);
+      opacity: .035;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    header {
+      height: 72px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(18,18,18,.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+    }
+
+    body.light-theme header {
+      background: rgba(245,248,252,.94);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--heading);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .brand span {
+      font-family: "Fraunces", serif;
+      font-size: 19px;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      right: 18px;
+      top: 16px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    main {
+      width: min(850px,92%);
+      margin: auto;
+      padding: 40px 0;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 25px 0 32px;
+    }
+
+    .hero-logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      color: var(--heading);
+      font-family: "Fraunces", serif;
+      font-size: clamp(34px,7vw,58px);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .hub-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.3);
+    }
+
+    .hub-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .hub-title h2 {
+      color: var(--heading);
+      font-size: 22px;
+      margin-bottom: 7px;
+    }
+
+    .hub-title p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--heading);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      height: 52px;
+      padding: 0 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      outline: none;
+      background: var(--card2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .field input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(22,135,255,.12);
+    }
+
+    .host-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      margin: 5px 0 20px;
+      border-radius: 15px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+    }
+
+    .host-text strong {
+      display: block;
+      color: var(--heading);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .host-text small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .switch {
+      position: relative;
+      width: 48px;
+      height: 26px;
+    }
+
+    .switch input {
+      display: none;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      border-radius: 30px;
+      background: #555;
+      transition: .2s;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: .2s;
+    }
+
+    .switch input:checked + .slider {
+      background: var(--blue);
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(22px);
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .action {
+      height: 54px;
+      border: 0;
+      border-radius: 15px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 14px;
+      transition: .15s;
+    }
+
+    .action:hover {
+      transform: translateY(-2px);
+    }
+
+    .create-btn {
+      background: var(--blue);
+      color: white;
+    }
+
+    .join-btn {
+      background: var(--card2);
+      color: var(--heading);
+      border: 1px solid var(--border);
+    }
+
+    #status {
+      display: none;
+      margin-top: 18px;
+      padding: 13px 15px;
+      border-radius: 12px;
+      background: rgba(22,135,255,.10);
+      border: 1px solid rgba(22,135,255,.20);
+      color: var(--text);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .info {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .info-card {
+      text-align: center;
+      padding: 17px 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--card);
+    }
+
+    .info-card .icon {
+      font-size: 23px;
+      margin-bottom: 7px;
+    }
+
+    .info-card strong {
+      display: block;
+      color: var(--heading);
+      font-size: 12px;
+    }
+
+    .info-card span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    footer strong {
+      display: block;
+      color: var(--heading);
+      margin-bottom: 5px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 72px;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background: rgba(18,18,18,.96);
+      border-top: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+    }
+
+    body.light-theme .bottom-nav {
+      background: rgba(245,248,252,.96);
+    }
+
+    .nav-icon {
+      width: 78px;
+      height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 13px;
+    }
+
+    .nav-icon:hover,
+    .nav-icon.active {
+      color: var(--blue);
+      background: rgba(22,135,255,.08);
+    }
+
+    .nav-icon .icon {
+      width: 21px;
+      height: 21px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-icon small {
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    @media (max-width:600px) {
+
+      header {
+        height: 68px;
+      }
+
+      .brand span {
+        font-size: 16px;
+      }
+
+      .brand img {
+        width: 37px;
+        height: 37px;
+      }
+
+      main {
+        width: 92%;
+        padding-top: 25px;
+      }
+
+      .hero-logo {
+        width: 75px;
+        height: 75px;
+      }
+
+      .hub-card {
+        padding: 20px;
+      }
+
+      .buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .info {
+        grid-template-columns: 1fr;
+      }
+
+      .bottom-nav {
+        height: 68px;
+      }
+
+      .nav-icon {
+        width: 67px;
+      }
+
+      .nav-icon small {
+        font-size: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <a href="index.html" class="brand">
+    <img src="kblc-logo.png" alt="KBLC Logo">
+    <span>SGE PRAYER HUB</span>
+  </a>
+
+  <button
+    class="theme-toggle"
+    id="themeToggle"
+    aria-label="Toggle theme"
+  >☾</button>
+
+</header>
+
+
+<main>
+
+  <section class="hero">
+
+    <img
+      src="kblc-logo.png"
+      alt="SGE Prayer Hub"
+      class="hero-logo"
+    >
+
+    <h1>SGE PRAYER HUB</h1>
+
+    <p>
+      Connect • Pray • Encourage • Grow
+      <br>
+      Join a live prayer room and connect with others in faith.
+    </p>
+
+  </section>
+
+
+  <section class="hub-card">
+
+    <div class="hub-title">
+      <h2>Enter the Prayer Hub</h2>
+
+      <p>
+        Create a room or join an existing live prayer room.
+      </p>
+    </div>
+
+
+    <div class="field">
+
+      <label for="name">Your Name</label>
+
+      <input
+        id="name"
+        type="text"
+        placeholder="Enter your name"
+        maxlength="40"
+        autocomplete="name"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label for="room">Prayer Room ID</label>
+
+      <input
+        id="room"
+        type="text"
+        placeholder="Example: morning-prayer"
+        maxlength="40"
+      >
+
+    </div>
+
+
+    <div class="host-option">
+
+      <div class="host-text">
+
+        <strong>Host this prayer room</strong>
+
+        <small>
+          Hosts can manage the live room.
+        </small>
+
+      </div>
+
+      <label class="switch">
+
+        <input
+          type="checkbox"
+          id="host"
+        >
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+
+    <div class="buttons">
+
+      <button
+        class="action create-btn"
+        onclick="enterRoom(true)"
+      >
+        ✨ Create Prayer Room
+      </button>
+
+      <button
+        class="action join-btn"
+        onclick="enterRoom(false)"
+      >
+        🎙️ Join Prayer Room
+      </button>
+
+    </div>
+
+
+    <div id="status"></div>
+
+  </section>
+
+
+  <section class="info">
+
+    <div class="info-card">
+      <div class="icon">🎙️</div>
+      <strong>Live Audio</strong>
+      <span>Talk and pray together</span>
+    </div>
+
+    <div class="info-card">
+      <div class="icon">🙏</div>
+      <strong>Prayer</strong>
+      <span>Build one another up</span>
+    </div>
+
+    <div class="info-card">
+      <div class="icon">🌍</div>
+      <strong>Community</strong>
+      <span>Connect with believers</span>
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+
+  <strong>SGE PRAYER HUB</strong>
+
+  Connect • Pray • Encourage • Grow
+
+  <br><br>
+
+  © <span id="year"></span> KBLC DAILY DEVOTIONAL
+
+</footer>
+
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav class="bottom-nav">
+
+  <a
+    href="index.html"
+    class="nav-icon"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+    >
+      <path d="M3 10.5L12 3l9 7.5"></path>
+      <path d="M5 10v10h14V10"></path>
+      <path d="M9 20v-6h6v6"></path>
+    </svg>
+
+    <small>Home</small>
+
+  </a>
+
+
+  <a
+    href="reviews.html"
+    class="nav-icon"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+    >
+      <path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3z"></path>
+    </svg>
+
+    <small>Reviews</small>
+
+  </a>
+
+
+  <a
+    href="notes.html"
+    class="nav-icon"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+    >
+      <path d="M5 4h14v16H5z"></path>
+      <path d="M8 8h8"></path>
+      <path d="M8 12h8"></path>
+      <path d="M8 16h5"></path>
+    </svg>
+
+    <small>Notes</small>
+
+  </a>
+
+
+  <a
+    href="contact.html"
+    class="nav-icon"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+    >
+      <path d="M4 5h16v11H8l-4 4V5z"></path>
+      <path d="M8 9h8"></path>
+      <path d="M8 12h5"></path>
+    </svg>
+
+    <small>Contact</small>
+
+  </a>
+
+
+  <a
+    href="sge-prayer-hub.html"
+    class="nav-icon active"
+  >
+
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+    >
+
+      <rect
+        x="9"
+        y="3"
+        width="6"
+        height="11"
+        rx="3"
+      ></rect>
+
+      <path d="M5 11a7 7 0 0 0 14 0"></path>
+
+      <path d="M12 18v3"></path>
+
+      <path d="M8 21h8"></path>
+
+    </svg>
+
+    <small>Prayer Hub</small>
+
+  </a>
+
+</nav>
+
+
+<script>
+
+  /* YEAR */
+
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+
+  /* THEME */
+
+  const themeToggle =
+    document.getElementById("themeToggle");
+
+  if (
+    localStorage.getItem("sge-theme") === "light"
+  ) {
+
+    document.body.classList.add("light-theme");
+
+    themeToggle.textContent = "☀";
+
+  }
+
+
+  themeToggle.addEventListener("click", function() {
+
+    document.body.classList.toggle("light-theme");
+
+    const isLight =
+      document.body.classList.contains("light-theme");
+
+    localStorage.setItem(
+      "sge-theme",
+      isLight ? "light" : "dark"
+    );
+
+    themeToggle.textContent =
+      isLight ? "☀" : "☾";
+
+  });
+
+
+  /* ENTER PRAYER ROOM */
+
+  function enterRoom(hostMode) {
+
+    const name =
+      document
+        .getElementById("name")
+        .value
+        .trim();
+
+    let room =
+      document
+        .getElementById("room")
+        .value
+        .trim();
+
+    const status =
+      document.getElementById("status");
+
+
+    if (!name) {
+
+      status.textContent =
+        "Please enter your name.";
+
+      status.style.display = "block";
+
+      document
+        .getElementById("name")
+        .focus();
+
+      return;
+    }
+
+
+    /*
+      Automatically create a room ID
+      when the user chooses Create.
+    */
+
+    if (!room && hostMode) {
+
+      room =
+        "prayer-" +
+        Math.random()
+          .toString(36)
+          .substring(2,8);
+
+      document
+        .getElementById("room")
+        .value = room;
+
+    }
+
+
+    if (!room) {
+
+      status.textContent =
+        "Please enter a Prayer Room ID.";
+
+      status.style.display = "block";
+
+      document
+        .getElementById("room")
+        .focus();
+
+      return;
+    }
+
+
+    status.textContent =
+      hostMode
+        ? "Opening your prayer room..."
+        : "Joining prayer room...";
+
+    status.style.display = "block";
+
+
+    /*
+      IMPORTANT:
+
+      Replace this placeholder with the
+      actual URL of your deployed
+      ZEGOCLOUD SGE PRAYER HUB app.
+
+      Example:
+
+      const SGE_PRAYER_HUB_URL =
+        "https://sge-prayer-hub.vercel.app/";
+    */
+
+    const SGE_PRAYER_HUB_URL =
+      "https://YOUR-SGE-PRAYER-HUB-DOMAIN.vercel.app/";
+
+
+    const url =
+      SGE_PRAYER_HUB_URL +
+      "?room=" +
+      encodeURIComponent(room) +
+      "&name=" +
+      encodeURIComponent(name) +
+      "&host=" +
+      (hostMode ? "1" : "0");
+
+
+    window.location.href = url;
+
+  }
+
+
+  /* ENTER KEY */
+
+  document
+    .getElementById("room")
+    .addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+
+        enterRoom(
+          document
+            .getElementById("host")
+            .checked
+        );
+
+      }
+
+    });
+
+</script>
+
+</body>
+</html>
