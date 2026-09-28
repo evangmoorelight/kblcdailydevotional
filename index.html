@@ -23,26 +23,19 @@
 
   --bg:#121212;
   --bg-secondary:#181818;
-
   --card:#202020;
   --card-secondary:#191919;
-
   --blue:#1687ff;
-
   --text:#EDEDED;
   --heading:#FFFFFF;
   --muted:#A7A7A7;
-
   --line:#303030;
   --input:#151515;
   --episode:#181818;
-
   --header-bg:rgba(18,18,18,.94);
   --nav-bg:rgba(18,18,18,.96);
-
   --player-bg:#090909;
   --player-inner:#111111;
-
   --watermark-opacity:.055;
 
   --shadow:
@@ -50,46 +43,29 @@
 
 }
 
-
-/* ==================================================
-   LIGHT THEME
-================================================== */
-
 body.light-theme{
 
   --bg:#F5F8FC;
   --bg-secondary:#FFFFFF;
-
   --card:#FFFFFF;
   --card-secondary:#F7F9FC;
-
   --blue:#0878E8;
-
   --text:#202733;
   --heading:#111827;
   --muted:#657080;
-
   --line:#DDE4EC;
   --input:#F4F7FA;
   --episode:#F5F8FC;
-
   --header-bg:rgba(255,255,255,.94);
   --nav-bg:rgba(255,255,255,.96);
-
   --player-bg:#EEF3F8;
   --player-inner:#FFFFFF;
-
   --watermark-opacity:.045;
 
   --shadow:
     0 14px 40px rgba(30,60,90,.10);
 
 }
-
-
-/* ==================================================
-   GLOBAL
-================================================== */
 
 *{
   box-sizing:border-box;
@@ -102,7 +78,6 @@ html{
 body{
 
   margin:0;
-
   padding-bottom:82px;
 
   font-family:
@@ -127,21 +102,13 @@ body{
 
 }
 
-
-/* ==================================================
-   LOGO WATERMARK
-================================================== */
-
 body::before{
 
   content:"";
 
   position:fixed;
-
   inset:0;
-
   z-index:-1;
-
   pointer-events:none;
 
   background-image:
@@ -163,11 +130,6 @@ body::before{
 
 }
 
-
-/* ==================================================
-   SVG ICONS
-================================================== */
-
 .icon{
 
   width:20px;
@@ -176,36 +138,22 @@ body::before{
   display:block;
 
   fill:none;
-
   stroke:currentColor;
-
   stroke-width:2;
-
   stroke-linecap:round;
-
   stroke-linejoin:round;
 
 }
 
 .icon-fill{
-
   fill:currentColor;
-
   stroke:none;
-
 }
-
-
-/* ==================================================
-   HEADER
-================================================== */
 
 header{
 
   position:sticky;
-
   top:0;
-
   z-index:1000;
 
   height:72px;
@@ -222,29 +170,18 @@ header{
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
   padding:
     8px 70px;
 
-  transition:
-    background .3s ease,
-    border-color .3s ease;
-
 }
-
-
-/* ==================================================
-   CENTERED BRAND
-================================================== */
 
 .brand{
 
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
   gap:10px;
@@ -259,15 +196,11 @@ header{
 
   text-align:center;
 
-  transition:
-    color .3s ease;
-
 }
 
 .brand img{
 
   width:46px;
-
   height:46px;
 
   border-radius:50%;
@@ -286,24 +219,17 @@ header{
 
 }
 
-
-/* ==================================================
-   THEME BUTTON
-================================================== */
-
 .theme-toggle{
 
   position:absolute;
 
   right:18px;
-
   top:50%;
 
   transform:
     translateY(-50%);
 
   width:44px;
-
   height:44px;
 
   border-radius:50%;
@@ -319,13 +245,9 @@ header{
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
   cursor:pointer;
-
-  transition:
-    .25s ease;
 
 }
 
@@ -348,11 +270,6 @@ header{
 
 }
 
-
-/* ==================================================
-   OLD TOP NAV HIDDEN
-================================================== */
-
 .top-nav{
   display:none;
 }
@@ -360,11 +277,6 @@ header{
 #status{
   display:none;
 }
-
-
-/* ==================================================
-   BOTTOM NAVIGATION
-================================================== */
 
 .bottom-nav{
 
@@ -381,7 +293,6 @@ header{
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
   gap:8px;
@@ -402,12 +313,7 @@ header{
   padding:
     6px 10px;
 
-  transition:
-    background .3s ease,
-    border-color .3s ease;
-
 }
-
 
 .bottom-nav .nav-icon{
 
@@ -431,15 +337,11 @@ header{
   flex-direction:column;
 
   align-items:center;
-
   justify-content:center;
 
   gap:4px;
 
-  transition:.2s;
-
 }
-
 
 .bottom-nav .nav-icon .icon{
 
@@ -448,17 +350,13 @@ header{
 
 }
 
-
 .bottom-nav .nav-icon small{
 
   font-size:8px;
-
   font-weight:800;
-
   line-height:10px;
 
 }
-
 
 .bottom-nav .nav-icon:hover{
 
@@ -468,7 +366,6 @@ header{
     rgba(22,135,255,.10);
 
 }
-
 
 .bottom-nav .nav-icon.active{
 
@@ -483,11 +380,6 @@ header{
 
 }
 
-
-/* ==================================================
-   CONTAINER
-================================================== */
-
 .container{
 
   width:
@@ -496,11 +388,6 @@ header{
   margin:auto;
 
 }
-
-
-/* ==================================================
-   HERO
-================================================== */
 
 .hero{
 
@@ -511,11 +398,9 @@ header{
 
 }
 
-
 .hero-logo{
 
   width:82px;
-
   height:82px;
 
   border-radius:50%;
@@ -532,7 +417,6 @@ header{
 
 }
 
-
 .today-badge{
 
   background:
@@ -548,7 +432,6 @@ header{
   border-radius:30px;
 
   font-size:10px;
-
   font-weight:800;
 
   border:
@@ -556,7 +439,6 @@ header{
     rgba(22,135,255,.2);
 
 }
-
 
 .hero h1{
 
@@ -578,13 +460,9 @@ header{
 
 }
 
-
 .hero h1 span{
-
   color:var(--blue);
-
 }
-
 
 .hero p{
 
@@ -601,17 +479,11 @@ header{
 
 }
 
-
-/* ==================================================
-   VISITOR COUNTER
-================================================== */
-
 .visitor-counter{
 
   display:inline-flex;
 
   align-items:center;
-
   justify-content:center;
 
   gap:8px;
@@ -632,14 +504,7 @@ header{
   color:var(--muted);
 
   font-size:11px;
-
   font-weight:700;
-
-  box-shadow:
-    0 8px 25px
-    rgba(0,0,0,.08);
-
-  transition:.25s ease;
 
 }
 
@@ -654,7 +519,6 @@ header{
 .visitor-dot{
 
   width:8px;
-
   height:8px;
 
   border-radius:50%;
@@ -684,11 +548,6 @@ header{
 
 }
 
-
-/* ==================================================
-   CARDS
-================================================== */
-
 .card{
 
   background:
@@ -700,8 +559,7 @@ header{
     );
 
   border:
-    1px solid
-    var(--line);
+    1px solid var(--line);
 
   border-radius:18px;
 
@@ -711,9 +569,6 @@ header{
 
   box-shadow:
     var(--shadow);
-
-  transition:
-    .3s ease;
 
 }
 
@@ -726,9 +581,7 @@ header{
 
 .card h2,
 .card h3{
-
   color:var(--heading);
-
 }
 
 .card h2{
@@ -750,11 +603,6 @@ header{
   font-size:21px;
 
 }
-
-
-/* ==================================================
-   CUSTOM PLAYER
-================================================== */
 
 .player{
 
@@ -790,7 +638,6 @@ header{
 
 }
 
-
 .player-top{
 
   display:flex;
@@ -804,7 +651,6 @@ header{
 .player-logo{
 
   width:52px;
-
   height:52px;
 
   border-radius:12px;
@@ -820,7 +666,6 @@ header{
 .player-info{
 
   min-width:0;
-
   flex:1;
 
 }
@@ -830,7 +675,6 @@ header{
   color:var(--blue);
 
   font-size:9px;
-
   font-weight:800;
 
   letter-spacing:.7px;
@@ -846,7 +690,6 @@ header{
   color:var(--heading);
 
   font-size:13px;
-
   font-weight:800;
 
   white-space:nowrap;
@@ -857,11 +700,9 @@ header{
 
 }
 
-
 .play-button{
 
   width:48px;
-
   height:48px;
 
   border-radius:50%;
@@ -875,14 +716,11 @@ header{
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
   cursor:pointer;
 
   flex-shrink:0;
-
-  transition:.2s;
 
 }
 
@@ -893,31 +731,16 @@ header{
 
 }
 
-.play-button:hover{
-
-  transform:scale(1.06);
-
-  box-shadow:
-    0 0 0 5px
-    rgba(22,135,255,.10);
-
-}
-
-
 .progress-area{
-
   margin-top:18px;
-
 }
 
 .progress{
 
   width:100%;
-
   height:5px;
 
   appearance:none;
-
   -webkit-appearance:none;
 
   background:
@@ -926,7 +749,6 @@ header{
   border-radius:10px;
 
   outline:none;
-
   cursor:pointer;
 
 }
@@ -934,11 +756,9 @@ header{
 .progress::-webkit-slider-thumb{
 
   appearance:none;
-
   -webkit-appearance:none;
 
   width:13px;
-
   height:13px;
 
   border-radius:50%;
@@ -950,7 +770,6 @@ header{
 .progress::-moz-range-thumb{
 
   width:13px;
-
   height:13px;
 
   border-radius:50%;
@@ -961,13 +780,11 @@ header{
 
 }
 
-
 .player-bottom{
 
   display:flex;
 
   align-items:center;
-
   justify-content:space-between;
 
   margin-top:9px;
@@ -979,7 +796,6 @@ header{
   color:var(--muted);
 
   font-size:9px;
-
   font-weight:700;
 
 }
@@ -997,7 +813,6 @@ header{
 .volume-icon{
 
   width:17px;
-
   height:17px;
 
   color:var(--muted);
@@ -1005,7 +820,6 @@ header{
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
 }
@@ -1020,36 +834,25 @@ header{
 .volume{
 
   width:70px;
-
   height:4px;
 
   accent-color:var(--blue);
 
 }
 
-
 .spreaker-fallback{
-
   display:none;
-
 }
 
 .spreaker-fallback iframe{
 
   width:100%;
-
   height:200px;
 
   border:0;
-
   display:block;
 
 }
-
-
-/* ==================================================
-   BADGE
-================================================== */
 
 .badge{
 
@@ -1064,7 +867,6 @@ header{
   border-radius:20px;
 
   font-size:10px;
-
   font-weight:800;
 
   border:
@@ -1072,11 +874,6 @@ header{
     rgba(22,135,255,.2);
 
 }
-
-
-/* ==================================================
-   READING
-================================================== */
 
 .read{
 
@@ -1089,11 +886,6 @@ header{
   color:var(--text);
 
 }
-
-
-/* ==================================================
-   DEVOTIONAL HEADER
-================================================== */
 
 .devotional-header{
 
@@ -1110,20 +902,12 @@ header{
 }
 
 .devotional-header h3{
-
   margin:0;
-
 }
-
-
-/* ==================================================
-   MINIMIZE BUTTON
-================================================== */
 
 .minimize-btn{
 
   width:38px;
-
   height:38px;
 
   border-radius:50%;
@@ -1141,33 +925,12 @@ header{
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
   font-size:18px;
-
   font-weight:800;
 
-  transition:.2s;
-
 }
-
-.minimize-btn:hover{
-
-  background:var(--blue);
-
-  border-color:var(--blue);
-
-  color:#fff;
-
-  transform:scale(1.05);
-
-}
-
-
-/* ==================================================
-   SEARCH
-================================================== */
 
 .search-box{
 
@@ -1203,14 +966,10 @@ header{
 
   font-size:13px;
 
-  transition:.2s;
-
 }
 
 .search-box input::placeholder{
-
   color:var(--muted);
-
 }
 
 .search-box input:focus{
@@ -1229,7 +988,6 @@ header{
   position:absolute;
 
   right:15px;
-
   top:50%;
 
   transform:
@@ -1246,16 +1004,9 @@ header{
 }
 
 .search-icon .icon{
-
   width:18px;
   height:18px;
-
 }
-
-
-/* ==================================================
-   EPISODES
-================================================== */
 
 .episode-item{
 
@@ -1273,8 +1024,6 @@ header{
 
   margin-top:8px;
 
-  transition:.2s;
-
 }
 
 .episode-item:hover{
@@ -1284,9 +1033,6 @@ header{
 
   border-color:
     rgba(22,135,255,.35);
-
-  transform:
-    translateY(-1px);
 
 }
 
@@ -1299,15 +1045,8 @@ header{
 }
 
 .episode-item small{
-
   color:var(--muted);
-
 }
-
-
-/* ==================================================
-   ACTIVE EPISODE
-================================================== */
 
 .episode-active{
 
@@ -1318,11 +1057,6 @@ header{
     var(--blue)!important;
 
 }
-
-
-/* ==================================================
-   NO RESULTS
-================================================== */
 
 .no-results{
 
@@ -1336,11 +1070,6 @@ header{
   font-size:13px;
 
 }
-
-
-/* ==================================================
-   NOTIFICATION
-================================================== */
 
 .notification-area{
 
@@ -1377,12 +1106,9 @@ header{
     sans-serif;
 
   font-size:11px;
-
   font-weight:800;
 
   cursor:pointer;
-
-  transition:.2s;
 
   display:flex;
 
@@ -1393,10 +1119,8 @@ header{
 }
 
 .notification-btn .icon{
-
   width:17px;
   height:17px;
-
 }
 
 .notification-btn:hover{
@@ -1405,9 +1129,6 @@ header{
     var(--blue);
 
   color:#fff;
-
-  transform:
-    translateY(-1px);
 
 }
 
@@ -1419,11 +1140,6 @@ header{
   color:#fff;
 
 }
-
-
-/* ==================================================
-   NEW DEVOTIONAL POPUP
-================================================== */
 
 .new-episode-alert{
 
@@ -1455,15 +1171,10 @@ header{
     0 15px 45px
     rgba(0,0,0,.25);
 
-  animation:
-    newEpisodeIn .3s ease;
-
 }
 
 .new-episode-alert.show{
-
   display:block;
-
 }
 
 .new-episode-alert-top{
@@ -1479,7 +1190,6 @@ header{
 .new-episode-alert-icon{
 
   width:42px;
-
   height:42px;
 
   border-radius:50%;
@@ -1490,26 +1200,20 @@ header{
   display:flex;
 
   align-items:center;
-
   justify-content:center;
 
   color:var(--blue);
 
-  flex-shrink:0;
-
 }
 
 .new-episode-alert-icon .icon{
-
   width:20px;
   height:20px;
-
 }
 
 .new-episode-alert-text{
 
   min-width:0;
-
   flex:1;
 
 }
@@ -1519,7 +1223,6 @@ header{
   color:var(--blue);
 
   font-size:9px;
-
   font-weight:800;
 
   text-transform:uppercase;
@@ -1533,7 +1236,6 @@ header{
   color:var(--heading);
 
   font-size:12px;
-
   font-weight:800;
 
   margin-top:3px;
@@ -1549,26 +1251,17 @@ header{
 .new-episode-alert-close{
 
   border:0;
-
   background:none;
 
   color:var(--muted);
 
   cursor:pointer;
 
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
 }
 
 .new-episode-alert-close .icon{
-
   width:18px;
   height:18px;
-
 }
 
 .new-episode-alert-open{
@@ -1595,34 +1288,6 @@ header{
 
 }
 
-
-@keyframes newEpisodeIn{
-
-  from{
-
-    opacity:0;
-
-    transform:
-      translateY(15px);
-
-  }
-
-  to{
-
-    opacity:1;
-
-    transform:
-      translateY(0);
-
-  }
-
-}
-
-
-/* ==================================================
-   FOOTER
-================================================== */
-
 footer{
 
   text-align:center;
@@ -1635,11 +1300,6 @@ footer{
   font-size:11px;
 
 }
-
-
-/* ==================================================
-   MOBILE
-================================================== */
 
 @media(max-width:650px){
 
@@ -1655,7 +1315,6 @@ footer{
   .brand{
 
     font-size:14px;
-
     gap:8px;
 
   }
@@ -1663,7 +1322,6 @@ footer{
   .brand img{
 
     width:40px;
-
     height:40px;
 
   }
@@ -1673,7 +1331,6 @@ footer{
     right:10px;
 
     width:40px;
-
     height:40px;
 
   }
@@ -1702,15 +1359,12 @@ footer{
   .bottom-nav .nav-icon .icon{
 
     width:19px;
-
     height:19px;
 
   }
 
   .bottom-nav .nav-icon small{
-
     font-size:7px;
-
   }
 
   .hero{
@@ -1718,20 +1372,15 @@ footer{
     padding:
       42px 0 22px;
 
-    text-align:center;
-
   }
 
   .hero h1{
-
     font-size:43px;
-
   }
 
   .hero-logo{
 
     width:68px;
-
     height:68px;
 
   }
@@ -1762,15 +1411,12 @@ footer{
   }
 
   .custom-player{
-
     padding:15px;
-
   }
 
   .player-logo{
 
     width:46px;
-
     height:46px;
 
   }
@@ -1778,21 +1424,16 @@ footer{
   .play-button{
 
     width:44px;
-
     height:44px;
 
   }
 
   .player-title{
-
     font-size:12px;
-
   }
 
   .volume{
-
     width:55px;
-
   }
 
   .new-episode-alert{
@@ -1808,22 +1449,12 @@ footer{
 
 }
 
-
-/* ==================================================
-   SCROLLBAR
-================================================== */
-
 ::-webkit-scrollbar{
-
   width:9px;
-
 }
 
 ::-webkit-scrollbar-track{
-
-  background:
-    var(--bg);
-
+  background:var(--bg);
 }
 
 ::-webkit-scrollbar-thumb{
@@ -1836,10 +1467,7 @@ footer{
 }
 
 ::-webkit-scrollbar-thumb:hover{
-
-  background:
-    var(--muted);
-
+  background:var(--muted);
 }
 
 </style>
@@ -1847,11 +1475,6 @@ footer{
 </head>
 
 <body>
-
-
-<!-- ==================================================
-     CENTERED HEADER
-================================================== -->
 
 <header>
 
@@ -1867,9 +1490,6 @@ footer{
 </span>
 
 </div>
-
-
-<!-- THEME SWITCH -->
 
 <button
 class="theme-toggle"
@@ -1898,14 +1518,7 @@ title="Switch theme"
 </header>
 
 
-<!-- ==================================================
-     BOTTOM NAVIGATION
-================================================== -->
-
 <nav class="bottom-nav">
-
-
-<!-- HOME -->
 
 <a
 href="index.html"
@@ -1921,21 +1534,15 @@ aria-label="Home"
 >
 
 <path d="M3 10.5L12 3l9 7.5"></path>
-
 <path d="M5 9.5V21h14V9.5"></path>
-
 <path d="M9 21v-7h6v7"></path>
 
 </svg>
 
-<small>
-Home
-</small>
+<small>Home</small>
 
 </a>
 
-
-<!-- REVIEWS -->
 
 <a
 href="reviews.html"
@@ -1955,21 +1562,15 @@ aria-label="Reviews"
 </path>
 
 <path d="M8 11h.01"></path>
-
 <path d="M12 11h.01"></path>
-
 <path d="M16 11h.01"></path>
 
 </svg>
 
-<small>
-Reviews
-</small>
+<small>Reviews</small>
 
 </a>
 
-
-<!-- NOTES -->
 
 <a
 href="notes.html"
@@ -1985,23 +1586,16 @@ aria-label="My Notes"
 >
 
 <path d="M5 3h14v18H5z"></path>
-
 <path d="M8 7h8"></path>
-
 <path d="M8 11h8"></path>
-
 <path d="M8 15h5"></path>
 
 </svg>
 
-<small>
-Notes
-</small>
+<small>Notes</small>
 
 </a>
 
-
-<!-- CONTACT -->
 
 <a
 href="contact.html"
@@ -2017,28 +1611,21 @@ aria-label="Contact Us"
 >
 
 <path d="M5 4h14v16H5z"></path>
-
 <path d="M8 8h8"></path>
-
 <path d="M8 12h8"></path>
-
 <path d="M8 16h5"></path>
 
 </svg>
 
-<small>
-Contact
-</small>
+<small>Contact</small>
 
 </a>
 
 
-<!-- ==================================================
-     SGE PRAYER HUB
-================================================== -->
+<!-- SGE PRAYER HUB -->
 
 <a
-href="sge-prayer-hub.html"
+href="https://sge-prayer-hubs.vercel.app/"
 class="nav-icon"
 title="SGE Prayer Hub"
 aria-label="SGE Prayer Hub"
@@ -2078,16 +1665,10 @@ Prayer Hub
 
 </a>
 
-
 </nav>
 
 
 <div class="container">
-
-
-<!-- ==================================================
-     HERO
-================================================== -->
 
 <section class="hero">
 
@@ -2097,7 +1678,6 @@ src="kblc-logo.png"
 alt="KBLC Daily Devotional"
 >
 
-
 <div class="today-badge">
 
 TODAY •
@@ -2105,7 +1685,6 @@ TODAY •
 <span id="todayDate"></span>
 
 </div>
-
 
 <h1>
 
@@ -2117,7 +1696,6 @@ WORD
 
 </h1>
 
-
 <p>
 
 Welcome to KBLC Daily Devotional —
@@ -2127,11 +1705,6 @@ Take a moment each day to listen,
 read, reflect and grow in God's Word.
 
 </p>
-
-
-<!-- ==================================================
-     VISITOR COUNTER
-================================================== -->
 
 <div
 class="visitor-counter"
@@ -2156,16 +1729,10 @@ visitors
 
 </div>
 
-
 </section>
 
 
-<!-- ==================================================
-     MAIN DEVOTIONAL
-================================================== -->
-
 <div class="card">
-
 
 <div
 style="
@@ -2190,26 +1757,20 @@ DAILY DEVOTIONAL
 </div>
 
 
-<!-- CUSTOM PLAYER -->
-
 <div class="player">
-
 
 <div
 class="custom-player"
 id="customPlayer"
 >
 
-
 <div class="player-top">
-
 
 <img
 class="player-logo"
 src="kblc-logo.png"
 alt="KBLC"
 >
-
 
 <div class="player-info">
 
@@ -2225,7 +1786,6 @@ KBLC Daily Devotional
 </div>
 
 </div>
-
 
 <button
 class="play-button"
@@ -2253,12 +1813,10 @@ stroke="none">
 
 </div>
 
-
 <audio
 id="audioPlayer"
 preload="metadata"
 ></audio>
-
 
 <div class="progress-area">
 
@@ -2274,7 +1832,6 @@ step="0.1"
 
 </div>
 
-
 <div class="player-bottom">
 
 <span
@@ -2283,7 +1840,6 @@ id="currentTime"
 >
 0:00
 </span>
-
 
 <div class="volume-area">
 
@@ -2324,7 +1880,6 @@ aria-label="Volume"
 
 </div>
 
-
 <span
 class="time"
 id="duration"
@@ -2335,9 +1890,6 @@ id="duration"
 </div>
 
 </div>
-
-
-<!-- SPREAKER FALLBACK -->
 
 <div
 class="spreaker-fallback"
@@ -2356,10 +1908,6 @@ frameborder="0"
 
 </div>
 
-
-<!-- ==================================================
-     NOTIFICATION
-================================================== -->
 
 <div class="notification-area">
 
@@ -2392,12 +1940,9 @@ Enable New Devotional Alerts
 </div>
 
 
-<!-- READING -->
-
 <h3>
 Read
 </h3>
-
 
 <div
 class="read"
@@ -2409,12 +1954,7 @@ id="read"
 </div>
 
 
-<!-- ==================================================
-     ALL DEVOTIONALS
-================================================== -->
-
 <div class="card">
-
 
 <div class="devotional-header">
 
@@ -2434,9 +1974,7 @@ title="Minimize"
 
 </div>
 
-
 <div id="devotionalContent">
-
 
 <div class="search-box">
 
@@ -2471,21 +2009,14 @@ d="m16 16 5 5">
 
 </div>
 
-
 <div id="list">
-
 Loading devotional list...
-
 </div>
 
 </div>
 
 </div>
 
-
-<!-- ==================================================
-     FOOTER
-================================================== -->
 
 <footer>
 
@@ -2510,18 +2041,12 @@ Kingdom Builders Lovelife Church INC.
 </div>
 
 
-<!-- ==================================================
-     NEW DEVOTIONAL POPUP
-================================================== -->
-
 <div
 class="new-episode-alert"
 id="newEpisodeAlert"
 >
 
-
 <div class="new-episode-alert-top">
-
 
 <div class="new-episode-alert-icon">
 
@@ -2541,7 +2066,6 @@ d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9">
 
 </div>
 
-
 <div class="new-episode-alert-text">
 
 <div class="new-episode-alert-label">
@@ -2557,7 +2081,6 @@ New KBLC Daily Devotional available
 
 </div>
 
-
 <button
 class="new-episode-alert-close"
 id="closeEpisodeAlert"
@@ -2572,7 +2095,6 @@ aria-hidden="true"
 >
 
 <path d="M6 6l12 12"></path>
-
 <path d="M18 6L6 18"></path>
 
 </svg>
@@ -2580,7 +2102,6 @@ aria-hidden="true"
 </button>
 
 </div>
-
 
 <button
 class="new-episode-alert-open"
@@ -2595,10 +2116,6 @@ Listen Now
 </div>
 
 
-<!-- ==================================================
-     COUNTERAPI
-================================================== -->
-
 <script
 src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js">
 </script>
@@ -2606,16 +2123,12 @@ src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js">
 
 <script>
 
-/* ==================================================
-   VISITOR COUNTER - NO FIREBASE
-================================================== */
+/* VISITOR COUNTER */
 
 (function(){
 
   const counterElement =
-    document.getElementById(
-      "visitorCount"
-    );
+    document.getElementById("visitorCount");
 
   if(
     !counterElement ||
@@ -2624,25 +2137,18 @@ src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js">
     return;
   }
 
-
   const counter = new Counter({
-
-    workspace:
-      "kblc-daily-devotional"
-
+    workspace:"kblc-daily-devotional"
   });
-
 
   const SESSION_KEY =
     "kblc_visitor_counted";
-
 
   async function updateVisitorCount(){
 
     try{
 
       let result;
-
 
       if(
         !sessionStorage.getItem(
@@ -2654,7 +2160,6 @@ src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js">
           await counter.up(
             "website-visitors"
           );
-
 
         sessionStorage.setItem(
           SESSION_KEY,
@@ -2672,18 +2177,13 @@ src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js">
 
       }
 
-
       const count =
-
         result?.value ??
         result?.data ??
         0;
 
-
       counterElement.textContent =
-
-        Number(count)
-          .toLocaleString();
+        Number(count).toLocaleString();
 
     }
 
@@ -2701,37 +2201,30 @@ src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js">
 
   }
 
-
   updateVisitorCount();
 
 })();
 
 
-/* ==================================================
-   THEME SYSTEM
-================================================== */
+/* THEME */
 
 const THEME_STORAGE_KEY =
   "kblc_theme";
-
 
 const themeToggle =
   document.getElementById(
     "themeToggle"
   );
 
-
 const themeIcon =
   document.getElementById(
     "themeIcon"
   );
 
-
 function updateThemeIcon(){
 
   if(!themeIcon)
     return;
-
 
   if(
     document.body.classList.contains(
@@ -2748,19 +2241,12 @@ function updateThemeIcon(){
       </circle>
 
       <path d="M12 2v2"></path>
-
       <path d="M12 20v2"></path>
-
       <path d="m4.93 4.93 1.41 1.41"></path>
-
       <path d="m17.66 17.66 1.41 1.41"></path>
-
       <path d="M2 12h2"></path>
-
       <path d="M20 12h2"></path>
-
       <path d="m6.34 17.66-1.41 1.41"></path>
-
       <path d="m19.07 4.93-1.41 1.41"></path>
 
     `;
@@ -2798,7 +2284,6 @@ function updateThemeIcon(){
 
 }
 
-
 function applyTheme(theme){
 
   if(theme === "light"){
@@ -2821,12 +2306,10 @@ function applyTheme(theme){
 
 }
 
-
 const savedTheme =
   localStorage.getItem(
     THEME_STORAGE_KEY
   );
-
 
 if(savedTheme){
 
@@ -2851,7 +2334,6 @@ else{
   );
 
 }
-
 
 if(themeToggle){
 
@@ -2884,9 +2366,7 @@ if(themeToggle){
 }
 
 
-/* ==================================================
-   SPREAKER SHOW
-================================================== */
+/* SPREAKER */
 
 const SHOW_ID = "7392727";
 
@@ -2899,11 +2379,6 @@ let curId =
 params.get("episode_id");
 
 let allEpisodes = [];
-
-
-/* ==================================================
-   ELEMENTS
-================================================== */
 
 const audio =
 document.getElementById(
@@ -2961,9 +2436,7 @@ document.getElementById(
 );
 
 
-/* ==================================================
-   DATE
-================================================== */
+/* DATE */
 
 document
 .getElementById("todayDate")
@@ -2979,16 +2452,13 @@ new Date()
   }
 );
 
-
 document
 .getElementById("year")
 .textContent =
 new Date().getFullYear();
 
 
-/* ==================================================
-   FORMAT TIME
-================================================== */
+/* FORMAT TIME */
 
 function formatTime(seconds){
 
@@ -2997,9 +2467,7 @@ function formatTime(seconds){
     ||
     seconds < 0
   ){
-
     return "0:00";
-
   }
 
   const minutes =
@@ -3015,9 +2483,7 @@ function formatTime(seconds){
 }
 
 
-/* ==================================================
-   UPDATE PLAY ICON
-================================================== */
+/* PLAY ICON */
 
 function updatePlayIcon(playing){
 
@@ -3079,9 +2545,7 @@ function updatePlayIcon(playing){
 }
 
 
-/* ==================================================
-   SPREAKER FALLBACK URL
-================================================== */
+/* SPREAKER URL */
 
 function getSpreakerURL(id){
 
@@ -3129,11 +2593,6 @@ function getSpreakerURL(id){
 
 }
 
-
-/* ==================================================
-   SHOW FALLBACK
-================================================== */
-
 function showFallback(id){
 
   customPlayer.style.display =
@@ -3147,11 +2606,6 @@ function showFallback(id){
 
 }
 
-
-/* ==================================================
-   CUSTOM PLAYER
-================================================== */
-
 function showCustomPlayer(){
 
   customPlayer.style.display =
@@ -3163,9 +2617,7 @@ function showCustomPlayer(){
 }
 
 
-/* ==================================================
-   POSSIBLE AUDIO URLS
-================================================== */
+/* AUDIO URL */
 
 function findAudioURL(ep){
 
@@ -3176,25 +2628,17 @@ function findAudioURL(ep){
 
     ep.audio_url,
     ep.audioUrl,
-
     ep.mp3_url,
     ep.mp3Url,
-
     ep.download_url,
     ep.downloadUrl,
-
     ep.media_url,
     ep.mediaUrl,
-
     ep.stream_url,
     ep.streamUrl,
-
     ep.audio?.url,
-
     ep.media?.url,
-
     ep.file?.url,
-
     ep.download?.url
 
   ];
@@ -3218,11 +2662,6 @@ function findAudioURL(ep){
   return null;
 
 }
-
-
-/* ==================================================
-   LOAD CUSTOM AUDIO
-================================================== */
 
 function loadCustomAudio(ep){
 
@@ -3253,9 +2692,7 @@ function loadCustomAudio(ep){
 }
 
 
-/* ==================================================
-   PLAY / PAUSE
-================================================== */
+/* PLAY / PAUSE */
 
 playButton.addEventListener(
   "click",
@@ -3289,25 +2726,19 @@ playButton.addEventListener(
 );
 
 
-/* ==================================================
-   AUDIO EVENTS
-================================================== */
+/* AUDIO EVENTS */
 
 audio.addEventListener(
   "play",
   function(){
-
     updatePlayIcon(true);
-
   }
 );
 
 audio.addEventListener(
   "pause",
   function(){
-
     updatePlayIcon(false);
-
   }
 );
 
@@ -3359,11 +2790,6 @@ audio.addEventListener(
   }
 );
 
-
-/* ==================================================
-   PROGRESS CONTROL
-================================================== */
-
 progress.addEventListener(
   "input",
   function(){
@@ -3386,11 +2812,6 @@ progress.addEventListener(
   }
 );
 
-
-/* ==================================================
-   VOLUME
-================================================== */
-
 volume.addEventListener(
   "input",
   function(){
@@ -3400,11 +2821,6 @@ volume.addEventListener(
 
   }
 );
-
-
-/* ==================================================
-   PLAYER ERROR
-================================================== */
 
 audio.addEventListener(
   "error",
@@ -3416,9 +2832,7 @@ audio.addEventListener(
 );
 
 
-/* ==================================================
-   FETCH EPISODE
-================================================== */
+/* FETCH EPISODE */
 
 async function fetchEpisode(id){
 
@@ -3520,9 +2934,7 @@ async function fetchEpisode(id){
 }
 
 
-/* ==================================================
-   CLEAN DESCRIPTION
-================================================== */
+/* CLEAN */
 
 function clean(raw){
 
@@ -3548,9 +2960,7 @@ function clean(raw){
 }
 
 
-/* ==================================================
-   ESCAPE HTML
-================================================== */
+/* ESCAPE HTML */
 
 function escapeHTML(value){
 
@@ -3584,9 +2994,7 @@ function escapeHTML(value){
 }
 
 
-/* ==================================================
-   RENDER EPISODES
-================================================== */
+/* RENDER */
 
 function render(items){
 
@@ -3598,7 +3006,6 @@ function render(items){
   if(!items.length){
 
     list.innerHTML =
-
       '<div class="no-results">' +
       'No devotionals found.' +
       '</div>';
@@ -3660,9 +3067,7 @@ function render(items){
 }
 
 
-/* ==================================================
-   SEARCH
-================================================== */
+/* SEARCH */
 
 function search(){
 
@@ -3707,13 +3112,9 @@ function search(){
           .toLowerCase();
 
         return (
-
           title.includes(q)
-
           ||
-
           description.includes(q)
-
         );
 
       }
@@ -3722,7 +3123,6 @@ function search(){
   render(filtered);
 
 }
-
 
 document
   .getElementById(
@@ -3734,9 +3134,7 @@ document
   );
 
 
-/* ==================================================
-   MINIMIZE
-================================================== */
+/* MINIMIZE */
 
 function toggleDevotionals(){
 
@@ -3783,51 +3181,37 @@ function toggleDevotionals(){
 }
 
 
-/* ==================================================
-   NEW DEVOTIONAL NOTIFICATION
-================================================== */
+/* NOTIFICATIONS */
 
 const NEW_EPISODE_STORAGE_KEY =
   "kblc_latest_episode_id";
 
-
 const NOTIFICATION_ENABLED_KEY =
   "kblc_episode_notifications_enabled";
-
 
 const NOTIFICATION_CHECK_INTERVAL =
   60000;
 
-
 let notificationAudioContext =
   null;
-
 
 let notificationEnabled =
   localStorage.getItem(
     NOTIFICATION_ENABLED_KEY
   ) === "true";
 
-
 let knownLatestEpisodeId =
   localStorage.getItem(
     NEW_EPISODE_STORAGE_KEY
   );
 
-
 let newestEpisodeForNotification =
   null;
-
-
-/* ==================================================
-   NOTIFICATION BUTTON
-================================================== */
 
 const notificationBtn =
   document.getElementById(
     "notificationBtn"
   );
-
 
 function updateNotificationButton(){
 
@@ -3871,13 +3255,8 @@ function updateNotificationButton(){
 
 }
 
-
 updateNotificationButton();
 
-
-/* ==================================================
-   PREPARE SOUND
-================================================== */
 
 function prepareNotificationSound(){
 
@@ -3920,10 +3299,6 @@ function prepareNotificationSound(){
 }
 
 
-/* ==================================================
-   PLAY NEW DEVOTIONAL SOUND
-================================================== */
-
 function playNewEpisodeSound(){
 
   try{
@@ -3938,7 +3313,6 @@ function playNewEpisodeSound(){
 
     const now =
       ctx.currentTime;
-
 
     const oscillator1 =
       ctx.createOscillator();
@@ -3970,17 +3344,13 @@ function playNewEpisodeSound(){
     );
 
     oscillator1.connect(gain1);
-
-    gain1.connect(
-      ctx.destination
-    );
+    gain1.connect(ctx.destination);
 
     oscillator1.start(now);
 
     oscillator1.stop(
       now + 0.25
     );
-
 
     const oscillator2 =
       ctx.createOscillator();
@@ -4012,10 +3382,7 @@ function playNewEpisodeSound(){
     );
 
     oscillator2.connect(gain2);
-
-    gain2.connect(
-      ctx.destination
-    );
+    gain2.connect(ctx.destination);
 
     oscillator2.start(
       now + 0.18
@@ -4038,10 +3405,6 @@ function playNewEpisodeSound(){
 
 }
 
-
-/* ==================================================
-   ENABLE DEVOTIONAL ALERTS
-================================================== */
 
 if(notificationBtn){
 
@@ -4071,10 +3434,6 @@ if(notificationBtn){
 
 }
 
-
-/* ==================================================
-   SHOW NEW DEVOTIONAL
-================================================== */
 
 function showNewEpisodeAlert(ep){
 
@@ -4119,15 +3478,10 @@ function showNewEpisodeAlert(ep){
 }
 
 
-/* ==================================================
-   CLOSE ALERT
-================================================== */
-
 const closeEpisodeAlert =
   document.getElementById(
     "closeEpisodeAlert"
   );
-
 
 if(closeEpisodeAlert){
 
@@ -4149,15 +3503,10 @@ if(closeEpisodeAlert){
 }
 
 
-/* ==================================================
-   OPEN NEW DEVOTIONAL
-================================================== */
-
 const openNewEpisode =
   document.getElementById(
     "openNewEpisode"
   );
-
 
 if(openNewEpisode){
 
@@ -4185,10 +3534,6 @@ if(openNewEpisode){
 
 }
 
-
-/* ==================================================
-   CHECK FOR NEW DEVOTIONAL
-================================================== */
 
 async function checkForNewEpisode(){
 
@@ -4235,7 +3580,6 @@ async function checkForNewEpisode(){
         latest.id
       );
 
-
     if(!knownLatestEpisodeId){
 
       knownLatestEpisodeId =
@@ -4249,7 +3593,6 @@ async function checkForNewEpisode(){
       return;
 
     }
-
 
     if(
       latestId !==
@@ -4286,10 +3629,6 @@ async function checkForNewEpisode(){
 }
 
 
-/* ==================================================
-   START NEW DEVOTIONAL MONITOR
-================================================== */
-
 setTimeout(
   checkForNewEpisode,
   5000
@@ -4301,16 +3640,13 @@ setInterval(
 );
 
 
-/* ==================================================
-   LOAD CONTENT
-================================================== */
+/* LOAD */
 
 async function load(){
 
   try{
 
     const r =
-
       await fetch(
 
         "https://api.spreaker.com/v2/shows/"
@@ -4336,7 +3672,6 @@ async function load(){
       j.response?.items ||
       [];
 
-
     if(
       !curId
       &&
@@ -4351,17 +3686,14 @@ async function load(){
 
     }
 
-
     render(
       allEpisodes
     );
-
 
     const ep =
       await fetchEpisode(
         curId
       );
-
 
     if(ep){
 
@@ -4371,11 +3703,9 @@ async function load(){
           ep.title ||
           "KBLC Daily Devotional";
 
-
       playerTitle.textContent =
         ep.title ||
         "KBLC Daily Devotional";
-
 
       document
         .getElementById("read")
@@ -4389,7 +3719,6 @@ async function load(){
           ||
 
           "No description available for this devotional.";
-
 
       const loaded =
         loadCustomAudio(ep);
@@ -4444,9 +3773,7 @@ async function load(){
 }
 
 
-/* ==================================================
-   START
-================================================== */
+/* START */
 
 updatePlayIcon(false);
 
