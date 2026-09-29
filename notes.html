@@ -1,12 +1,2992 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>KBLC My Notes</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:opsz,wght@700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#121212;--green:#1DB954;--text:#EDEDED;--muted:#999;--line:#303030}*{box-sizing:border-box}body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text)}header{padding:10px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(18,18,18,.92);backdrop-filter:blur(15px);z-index:5}.brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif}.brand img{width:44px;height:44px;border-radius:50%}nav{display:flex;gap:18px}nav a{color:#fff;text-decoration:none;font-size:12px;font-weight:700}nav a:hover{color:var(--green)}.container{width:min(800px,92%);margin:auto}.hero{padding:60px 0 25px}.hero h1{font-family:'Fraunces',serif;font-size:45px}.hero h1 span{color:var(--green)}.hero p{color:var(--muted);line-height:1.7}.card{background:#202020;border:1px solid var(--line);border-radius:18px;padding:25px}textarea{width:100%;min-height:400px;resize:vertical;background:#151515;color:#fff;border:1px solid #353535;border-radius:14px;padding:18px;font-family:inherit;font-size:14px;line-height:1.8;outline:none}textarea:focus{border-color:var(--green)}button{margin-top:15px;background:var(--green);border:0;border-radius:25px;padding:13px 20px;font-weight:800;cursor:pointer}.status{color:var(--green);font-size:12px;margin-left:10px}@media(max-width:650px){nav{display:none}.hero h1{font-size:38px}}
-</style></head><body>
-<header><div class="brand"><img src="kblc-logo.png"><span>KBLC DAILY DEVOTIONAL</span></div><nav><a href="index.html">Home</a><a href="reviews.html">Reviews</a><a href="notes.html">My Notes</a><a href="contact.html">Contact Us</a></nav></header>
-<div class="container"><div class="hero"><h1>My <span>Notes.</span></h1><p>Keep your personal thoughts, prayers, Bible verses and reflections from the daily devotional.</p></div><div class="card"><textarea id="notes" placeholder="Start writing your devotional notes here..."></textarea><button onclick="saveNotes()">💾 Save Notes</button><span class="status" id="status"></span></div></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width,initial-scale=1.0"
+
+«»
+
+<title>KBLC My Notes</title><link
+  href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fraunces:opsz,wght@700&display=swap"
+  rel="stylesheet"
+><style>
+
+/* ==========================================
+   THEME VARIABLES
+========================================== */
+
+:root{
+  --bg:#121212;
+  --blue:#1687ff;
+  --blue-dark:#0878E8;
+  --text:#EDEDED;
+  --muted:#999;
+  --line:#303030;
+  --card:#202020;
+  --input:#151515;
+  --danger:#ff7070;
+  --header-bg:rgba(18,18,18,.94);
+  --saved:#171717;
+  --button-dark:#303030;
+  --picture-bg:#F5F9FD;
+}
+
+
+/* ==========================================
+   LIGHT THEME
+========================================== */
+
+body.light-theme{
+  --bg:#F5F8FC;
+  --text:#171717;
+  --muted:#666;
+  --line:#DCE3EC;
+  --card:#FFFFFF;
+  --input:#F4F7FA;
+  --header-bg:rgba(255,255,255,.94);
+  --saved:#F7F9FC;
+  --button-dark:#E8EDF3;
+  --picture-bg:#F5F9FD;
+}
+
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:
+    background .25s ease,
+    color .25s ease;
+}
+
+
+/* ==========================================
+   ADMIN PASSWORD SCREEN
+========================================== */
+
+#adminGate{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(22,135,255,.16),
+      transparent 40%
+    ),
+    #101010;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.admin-box{
+  width:min(430px,100%);
+  background:#1d1d1d;
+  border:1px solid #333;
+  border-radius:24px;
+  padding:35px 25px;
+  text-align:center;
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.5);
+}
+
+.admin-logo{
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:50%;
+  border:3px solid #1687ff;
+  margin-bottom:18px;
+  box-shadow:
+    0 0 30px rgba(22,135,255,.25);
+}
+
+.admin-box h1{
+  font-family:'Fraunces',serif;
+  color:#fff;
+  margin:0 0 8px;
+  font-size:30px;
+}
+
+.admin-box p{
+  color:#999;
+  font-size:13px;
+  line-height:1.7;
+  margin:0 0 22px;
+}
+
+.admin-box input{
+  width:100%;
+  margin-bottom:10px;
+  background:#111;
+  color:#fff;
+  border:1px solid #3b3b3b;
+  padding:16px;
+  border-radius:13px;
+  text-align:center;
+  font-size:16px;
+}
+
+.admin-box input:focus{
+  border-color:#1687ff;
+  box-shadow:
+    0 0 0 3px rgba(22,135,255,.12);
+}
+
+.admin-login-btn{
+  width:100%;
+  margin-top:8px;
+  background:#1687ff;
+  color:#000;
+  font-size:14px;
+  padding:15px 20px;
+}
+
+.admin-error{
+  min-height:20px;
+  color:#ff7070;
+  font-size:12px;
+  font-weight:700;
+  margin-top:12px;
+}
+
+#protectedContent{
+  display:none;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header{
+  padding:10px 20px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  background:var(--header-bg);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+  z-index:50;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:'Fraunces',serif;
+  font-size:17px;
+  font-weight:700;
+}
+
+.brand img{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  border:2px solid var(--blue);
+  box-shadow:0 0 15px rgba(22,135,255,.25);
+}
+
+nav{
+  display:flex;
+  gap:18px;
+  align-items:center;
+}
+
+nav a{
+  color:var(--text);
+  text-decoration:none;
+  font-size:12px;
+  font-weight:700;
+  transition:.2s;
+}
+
+nav a:hover{
+  color:var(--blue);
+}
+
+
+/* ==========================================
+   THEME TOGGLE
+========================================== */
+
+.theme-toggle{
+  width:44px;
+  height:44px;
+  padding:0;
+  margin:0;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--button-dark);
+  color:var(--text);
+  border:1px solid var(--line);
+  font-size:20px;
+  box-shadow:none;
+}
+
+.theme-toggle:hover{
+  opacity:1;
+  transform:rotate(10deg);
+}
+
+
+/* ==========================================
+   MAIN
+========================================== */
+
+.container{
+  width:min(800px,92%);
+  margin:auto;
+  padding-bottom:70px;
+}
+
+.hero{
+  padding:60px 0 25px;
+}
+
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-size:45px;
+  margin:0 0 15px;
+}
+
+.hero h1 span{
+  color:var(--blue);
+}
+
+.hero p{
+  color:var(--muted);
+  line-height:1.7;
+  margin:0;
+}
+
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:25px;
+  margin-bottom:25px;
+  box-shadow:0 8px 30px rgba(0,0,0,.12);
+  transition:
+    background .25s ease,
+    border .25s ease;
+}
+
+.section-title{
+  font-family:'Fraunces',serif;
+  font-size:25px;
+  margin:0 0 18px;
+}
+
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+input{
+  width:100%;
+  background:var(--input);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:15px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+  margin-bottom:14px;
+}
+
+input::placeholder,
+textarea::placeholder{
+  color:#777;
+}
+
+input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 2px rgba(22,135,255,.12);
+}
+
+textarea{
+  width:100%;
+  min-height:300px;
+  resize:vertical;
+  background:var(--input);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+  font-family:inherit;
+  font-size:14px;
+  line-height:1.8;
+  outline:none;
+}
+
+textarea:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 2px rgba(22,135,255,.12);
+}
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+button{
+  margin-top:15px;
+  background:var(--blue);
+  color:#000;
+  border:0;
+  border-radius:25px;
+  padding:13px 20px;
+  font-weight:800;
+  cursor:pointer;
+  font-family:inherit;
+  transition:.2s;
+}
+
+button:hover{
+  opacity:.9;
+  transform:translateY(-1px);
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+.secondary-btn{
+  background:var(--button-dark);
+  color:var(--text);
+}
+
+.share-btn{
+  background:#1687ff;
+  color:#000;
+}
+
+.picture-btn{
+  background:#075ebd;
+  color:#fff;
+}
+
+.save-picture-btn{
+  background:#214d72;
+  color:#fff;
+}
+
+.delete-btn{
+  background:#3a2020;
+  color:#ff8c8c;
+}
+
+.status{
+  display:inline-block;
+  color:var(--blue);
+  font-size:12px;
+  margin-left:10px;
+}
+
+
+/* ==========================================
+   SAVED NOTES
+========================================== */
+
+.saved-note{
+  background:var(--saved);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:14px;
+}
+
+.saved-note:last-child{
+  margin-bottom:0;
+}
+
+.note-title{
+  font-weight:800;
+  font-size:16px;
+  margin-bottom:8px;
+  word-break:break-word;
+}
+
+.note-date{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:12px;
+}
+
+.note-preview{
+  color:var(--text);
+  opacity:.8;
+  font-size:13px;
+  line-height:1.7;
+  white-space:pre-wrap;
+  max-height:90px;
+  overflow:hidden;
+}
+
+.note-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.note-actions button{
+  margin-top:0;
+  padding:9px 14px;
+  font-size:12px;
+}
+
+.empty{
+  text-align:center;
+  padding:30px 10px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.search-box{
+  margin-bottom:20px;
+}
+
+
+/* ==========================================
+   PICTURE PREVIEW MODAL
+========================================== */
+
+.picture-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.88);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:100;
+}
+
+.picture-modal.show{
+  display:flex;
+}
+
+.picture-modal-content{
+  width:min(540px,100%);
+  max-height:92vh;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px;
+  overflow:auto;
+}
+
+.picture-modal-title{
+  font-family:'Fraunces',serif;
+  font-size:22px;
+  margin-bottom:15px;
+}
+
+
+/* ==========================================
+   A4 PREVIEW
+========================================== */
+
+#picturePreview{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:12px;
+  background:#F5F9FD;
+}
+
+
+/* ==========================================
+   MODAL ACTIONS
+========================================== */
+
+.modal-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.modal-actions button{
+  flex:1;
+  min-width:120px;
+  margin-top:0;
+}
+
+.close-modal{
+  background:#303030;
+  color:#fff;
+}
+
+
+/* ==========================================
+   WATERMARK NOTE
+========================================== */
+
+.watermark-info{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+
+/* ==========================================
+   HIDDEN CANVAS
+========================================== */
+
+#shareCanvas{
+  display:none;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:650px){
+
+  header{
+    padding:9px 14px;
+  }
+
+  .brand{
+    font-size:14px;
+    gap:9px;
+  }
+
+  .brand img{
+    width:42px;
+    height:42px;
+  }
+
+  nav{
+    display:none;
+  }
+
+  .theme-toggle{
+    width:40px;
+    height:40px;
+    font-size:18px;
+  }
+
+  .hero{
+    padding:45px 0 20px;
+  }
+
+  .hero h1{
+    font-size:38px;
+  }
+
+  .card{
+    padding:18px;
+  }
+
+  textarea{
+    min-height:280px;
+  }
+
+  .note-actions button{
+    flex:1;
+    min-width:100px;
+  }
+
+  .status{
+    display:block;
+    margin:12px 0 0;
+  }
+
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media(max-width:420px){
+
+  .brand span{
+    font-size:12px;
+  }
+
+  .note-actions{
+    flex-direction:column;
+  }
+
+  .note-actions button{
+    width:100%;
+  }
+
+}
+
+</style></head><body><!-- ==========================================
+     ADMIN PASSWORD GATE
+========================================== --><div id="adminGate">  <div class="admin-box"><img
+  src="kblc-logo.png"
+  alt="KBLC Logo"
+  class="admin-logo"
+>
+
+<h1>
+  KBLC My Notes
+</h1>
+
+<p>
+  Enter the admin password to access the KBLC Notes website.
+</p>
+
+<input
+  type="password"
+  id="adminPassword"
+  placeholder="Enter admin password"
+  autocomplete="off"
+  onkeydown="if(event.key==='Enter') checkAdminPassword()"
+>
+
+<button
+  class="admin-login-btn"
+  onclick="checkAdminPassword()"
+>
+  🔐 Enter My Notes
+</button>
+
+<div
+  class="admin-error"
+  id="adminError"
+></div>
+
+  </div></div><!-- ==========================================
+     PROTECTED WEBSITE
+========================================== --><div id="protectedContent"><!-- ==========================================
+     HEADER
+========================================== --><header>  <div class="brand"><img
+  src="kblc-logo.png"
+  alt="KBLC Logo"
+>
+
+<span>
+  KBLC DAILY DEVOTIONAL
+</span>
+
+  </div>  <nav><a href="index.html">
+  Home
+</a>
+
+<a href="reviews.html">
+  Reviews
+</a>
+
+<a href="notes.html">
+  My Notes
+</a>
+
+<a href="contact.html">
+  Contact Us
+</a>
+
+  </nav><button
+class="theme-toggle"
+id="themeToggle"
+onclick="toggleTheme()"
+aria-label="Toggle dark and light mode"
+title="Toggle theme"
+
+«»
+
+🌙
+
+  </button></header><!-- ==========================================
+     MAIN
+========================================== --><div class="container">  <div class="hero"><h1>
+  My <span>Notes.</span>
+</h1>
+
+<p>
+  Keep your personal thoughts, prayers, Bible verses and reflections
+  from the daily devotional. Save them and come back to them whenever
+  you want.
+</p>
+
+  </div>  <!-- NOTE EDITOR -->  <div class="card"><h2
+  class="section-title"
+  id="editorTitle"
+>
+  ✍️ Write a Note
+</h2>
+
+<input
+  type="text"
+  id="noteTitle"
+  placeholder="Note title (e.g. Today's Devotional)"
+  maxlength="100"
+>
+
+<textarea
+  id="notes"
+  placeholder="Start writing your devotional notes here..."
+></textarea>
+
+<button onclick="saveNote()">
+  💾 Save Note
+</button>
+
+<button
+  class="secondary-btn"
+  onclick="clearEditor()"
+>
+  ✨ New Note
+</button>
+
+<span
+  class="status"
+  id="status"
+></span>
+
+  </div>  <!-- SAVED NOTES -->  <div class="card"><h2 class="section-title">
+  📚 Saved Notes
+</h2>
+
+<input
+  class="search-box"
+  type="text"
+  id="searchNotes"
+  placeholder="🔎 Search your saved notes..."
+  oninput="displayNotes()"
+>
+
+<div id="savedNotes"></div>
+
+  </div></div><!-- ==========================================
+     PICTURE MODAL
+========================================== --><div
+  class="picture-modal"
+  id="pictureModal"
+>  <div class="picture-modal-content"><div class="picture-modal-title">
+  🖼️ High-Resolution A4 Note Picture
+</div>
+
+<canvas
+  id="picturePreview"
+></canvas>
+
+<div class="watermark-info">
+  A4 portrait • 3508 × 4961 px • Light mode • KBLC watermark • Automatic text fitting • High-resolution PNG
+</div>
+
+<div class="modal-actions">
+
+  <button
+    class="save-picture-btn"
+    onclick="savePreviewPicture()"
+  >
+    💾 Save Picture
+  </button>
+
+  <button
+    class="picture-btn"
+    onclick="sharePreviewPicture()"
+  >
+    📤 Share Picture
+  </button>
+
+  <button
+    class="close-modal"
+    onclick="closePictureModal()"
+  >
+    ✕ Close
+  </button>
+
+</div>
+
+  </div></div><!-- ==========================================
+     HIDDEN HIGH-RESOLUTION A4 CANVAS
+========================================== --><canvas id="shareCanvas"></canvas>
+
 <script>
-const KEY="kblc_daily_notes",notes=document.getElementById("notes");notes.value=localStorage.getItem(KEY)||"";
-function saveNotes(){localStorage.setItem(KEY,notes.value);document.getElementById("status").textContent="✓ Notes saved";setTimeout(()=>document.getElementById("status").textContent="",2500)}
-</script></body></html>
+
+
+/* ==========================================
+   ADMIN PASSWORD
+========================================== */
+
+const ADMIN_PASSWORD = "kbnation";
+
+const ADMIN_SESSION_KEY =
+  "kblc_admin_authenticated";
+
+
+function checkAdminPassword(){
+
+  const input =
+    document.getElementById(
+      "adminPassword"
+    );
+
+  const error =
+    document.getElementById(
+      "adminError"
+    );
+
+  const password =
+    input.value;
+
+
+  if(password === ADMIN_PASSWORD){
+
+    sessionStorage.setItem(
+      ADMIN_SESSION_KEY,
+      "true"
+    );
+
+    unlockWebsite();
+
+  }else{
+
+    error.textContent =
+      "❌ Incorrect password. Please try again.";
+
+    input.value = "";
+
+    input.focus();
+
+  }
+
+}
+
+
+function unlockWebsite(){
+
+  const gate =
+    document.getElementById(
+      "adminGate"
+    );
+
+  const content =
+    document.getElementById(
+      "protectedContent"
+    );
+
+
+  gate.style.display =
+    "none";
+
+  content.style.display =
+    "block";
+
+}
+
+
+function checkAdminAccess(){
+
+  const authenticated =
+    sessionStorage.getItem(
+      ADMIN_SESSION_KEY
+    );
+
+
+  if(authenticated === "true"){
+
+    unlockWebsite();
+
+  }else{
+
+    const input =
+      document.getElementById(
+        "adminPassword"
+      );
+
+    if(input){
+
+      setTimeout(
+        () => input.focus(),
+        200
+      );
+
+    }
+
+  }
+
+}
+
+
+/* ==========================================
+   THEME
+========================================== */
+
+const THEME_KEY =
+  "kblc_notes_theme";
+
+
+function applyTheme(){
+
+  const savedTheme =
+    localStorage.getItem(
+      THEME_KEY
+    );
+
+  if(savedTheme === "light"){
+
+    document.body.classList.add(
+      "light-theme"
+    );
+
+  }else{
+
+    document.body.classList.remove(
+      "light-theme"
+    );
+
+  }
+
+  updateThemeButton();
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle(
+    "light-theme"
+  );
+
+  const isLight =
+    document.body.classList.contains(
+      "light-theme"
+    );
+
+  localStorage.setItem(
+    THEME_KEY,
+    isLight ? "light" : "dark"
+  );
+
+  updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+  const button =
+    document.getElementById(
+      "themeToggle"
+    );
+
+  if(!button) return;
+
+  const isLight =
+    document.body.classList.contains(
+      "light-theme"
+    );
+
+  if(isLight){
+
+    button.textContent = "☀️";
+
+    button.title =
+      "Switch to dark mode";
+
+    button.setAttribute(
+      "aria-label",
+      "Switch to dark mode"
+    );
+
+  }else{
+
+    button.textContent = "🌙";
+
+    button.title =
+      "Switch to light mode";
+
+    button.setAttribute(
+      "aria-label",
+      "Switch to light mode"
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   STORAGE
+========================================== */
+
+const NOTES_KEY =
+  "kblc_daily_saved_notes";
+
+
+let notesList =
+  JSON.parse(
+    localStorage.getItem(
+      NOTES_KEY
+    ) || "[]"
+  );
+
+let editingId = null;
+
+let currentPictureBlob = null;
+
+let currentPictureFilename =
+  "KBLC-note-A4.png";
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const notes =
+  document.getElementById("notes");
+
+const noteTitle =
+  document.getElementById("noteTitle");
+
+const status =
+  document.getElementById("status");
+
+const savedNotes =
+  document.getElementById("savedNotes");
+
+const searchNotes =
+  document.getElementById("searchNotes");
+
+const editorTitle =
+  document.getElementById("editorTitle");
+
+const pictureModal =
+  document.getElementById("pictureModal");
+
+const picturePreview =
+  document.getElementById("picturePreview");
+
+
+/* ==========================================
+   STORAGE
+========================================== */
+
+function saveToStorage(){
+
+  localStorage.setItem(
+    NOTES_KEY,
+    JSON.stringify(notesList)
+  );
+
+}
+
+
+/* ==========================================
+   SAVE NOTE
+========================================== */
+
+function saveNote(){
+
+  const title =
+    noteTitle.value.trim()
+    || "Untitled Note";
+
+  const content =
+    notes.value.trim();
+
+  if(!content){
+
+    alert(
+      "Please write something in your note before saving."
+    );
+
+    notes.focus();
+
+    return;
+
+  }
+
+  const now =
+    new Date().toLocaleString();
+
+
+  if(editingId !== null){
+
+    const index =
+      notesList.findIndex(
+        note => note.id === editingId
+      );
+
+    if(index !== -1){
+
+      notesList[index].title =
+        title;
+
+      notesList[index].content =
+        content;
+
+      notesList[index].updated =
+        now;
+
+    }
+
+    editingId = null;
+
+    editorTitle.textContent =
+      "✍️ Write a Note";
+
+  }else{
+
+    const newNote = {
+
+      id:Date.now(),
+
+      title:title,
+
+      content:content,
+
+      created:now,
+
+      updated:now
+
+    };
+
+    notesList.unshift(
+      newNote
+    );
+
+  }
+
+
+  saveToStorage();
+
+  displayNotes();
+
+  showStatus(
+    "✓ Note saved successfully"
+  );
+
+  clearEditor(false);
+
+}
+
+
+/* ==========================================
+   DISPLAY NOTES
+========================================== */
+
+function displayNotes(){
+
+  const search =
+    searchNotes.value
+      .toLowerCase()
+      .trim();
+
+  const filtered =
+    notesList.filter(
+      note =>
+
+        String(note.title)
+          .toLowerCase()
+          .includes(search)
+
+        ||
+
+        String(note.content)
+          .toLowerCase()
+          .includes(search)
+    );
+
+
+  if(filtered.length === 0){
+
+    savedNotes.innerHTML = `
+
+      <div class="empty">
+
+        ${
+          notesList.length === 0
+          ? "📝 You don't have any saved notes yet."
+          : "🔎 No notes found."
+        }
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  savedNotes.innerHTML =
+    filtered.map(note => {
+
+      const preview =
+        escapeHTML(
+          note.content
+        );
+
+
+      return `
+
+        <div class="saved-note">
+
+          <div class="note-title">
+            ${escapeHTML(note.title)}
+          </div>
+
+          <div class="note-date">
+            🕒 ${
+              escapeHTML(
+                note.updated ||
+                note.created ||
+                ""
+              )
+            }
+          </div>
+
+          <div class="note-preview">
+            ${preview}
+          </div>
+
+          <div class="note-actions">
+
+            <button
+              onclick="viewNote(${note.id})"
+            >
+              👁️ View
+            </button>
+
+            <button
+              class="secondary-btn"
+              onclick="editNote(${note.id})"
+            >
+              ✏️ Edit
+            </button>
+
+            <button
+              class="share-btn"
+              onclick="shareNote(${note.id})"
+            >
+              📤 Share
+            </button>
+
+            <button
+              class="picture-btn"
+              onclick="shareNoteAsPicture(${note.id})"
+            >
+              🖼️ Share Picture
+            </button>
+
+            <button
+              class="save-picture-btn"
+              onclick="saveNoteAsPicture(${note.id})"
+            >
+              💾 Save Picture
+            </button>
+
+            <button
+              class="delete-btn"
+              onclick="deleteNote(${note.id})"
+            >
+              🗑️ Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* ==========================================
+   VIEW NOTE
+========================================== */
+
+function viewNote(id){
+
+  const note =
+    notesList.find(
+      item => item.id === id
+    );
+
+  if(!note) return;
+
+  alert(
+    note.title +
+    "\n\n" +
+    note.content
+  );
+
+}
+
+
+/* ==========================================
+   EDIT NOTE
+========================================== */
+
+function editNote(id){
+
+  const note =
+    notesList.find(
+      item => item.id === id
+    );
+
+  if(!note) return;
+
+  editingId = id;
+
+  noteTitle.value =
+    note.title;
+
+  notes.value =
+    note.content;
+
+  editorTitle.textContent =
+    "✏️ Edit Note";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* ==========================================
+   DELETE NOTE
+========================================== */
+
+function deleteNote(id){
+
+  const note =
+    notesList.find(
+      item => item.id === id
+    );
+
+  if(!note) return;
+
+  const confirmed =
+    confirm(
+      `Delete "${note.title}"?\n\nThis cannot be undone.`
+    );
+
+  if(!confirmed) return;
+
+  notesList =
+    notesList.filter(
+      item => item.id !== id
+    );
+
+  saveToStorage();
+
+  displayNotes();
+
+  showStatus(
+    "✓ Note deleted"
+  );
+
+  if(editingId === id){
+
+    clearEditor(false);
+
+  }
+
+}
+
+
+/* ==========================================
+   CLEAR EDITOR
+========================================== */
+
+function clearEditor(
+  showMessage = true
+){
+
+  noteTitle.value = "";
+
+  notes.value = "";
+
+  editingId = null;
+
+  editorTitle.textContent =
+    "✍️ Write a Note";
+
+  if(showMessage){
+
+    showStatus(
+      "✓ New note ready"
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+function showStatus(message){
+
+  status.textContent =
+    message;
+
+  setTimeout(() => {
+
+    status.textContent = "";
+
+  },2500);
+
+}
+
+
+/* ==========================================
+   ESCAPE HTML
+========================================== */
+
+function escapeHTML(text){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.textContent =
+    String(text ?? "");
+
+  return div.innerHTML.replace(
+    /\n/g,
+    "<br>"
+  );
+
+}
+
+
+/* ==========================================
+   HIGH-QUALITY TEXT WRAPPING
+========================================== */
+
+function wrapText(
+  ctx,
+  text,
+  maxWidth
+){
+
+  const paragraphs =
+    String(text).split("\n");
+
+  const lines = [];
+
+
+  paragraphs.forEach(paragraph => {
+
+    if(
+      paragraph.trim() === ""
+    ){
+
+      lines.push("");
+
+      return;
+
+    }
+
+
+    const words =
+      paragraph.trim().split(/\s+/);
+
+    let line = "";
+
+
+    words.forEach(word => {
+
+      const test =
+        line
+          ? line + " " + word
+          : word;
+
+
+      if(
+        ctx.measureText(test).width >
+        maxWidth
+      ){
+
+        if(line){
+
+          lines.push(line);
+
+          line = word;
+
+        }else{
+
+          let partial = "";
+
+
+          for(
+            const character of word
+          ){
+
+            const testPart =
+              partial + character;
+
+
+            if(
+              ctx.measureText(testPart).width >
+              maxWidth &&
+              partial
+            ){
+
+              lines.push(partial);
+
+              partial = character;
+
+            }else{
+
+              partial = testPart;
+
+            }
+
+          }
+
+
+          line = partial;
+
+        }
+
+      }else{
+
+        line = test;
+
+      }
+
+    });
+
+
+    if(line){
+
+      lines.push(line);
+
+    }
+
+  });
+
+
+  return lines;
+
+}
+
+
+/* ==========================================
+   SANITIZE FILE NAME
+========================================== */
+
+function sanitizeFilename(name){
+
+  return String(name)
+
+    .replace(
+      /[^a-z0-9_\-]/gi,
+      "-"
+    )
+
+    .replace(
+      /-+/g,
+      "-"
+    )
+
+    .replace(
+      /^-+|-+$/g,
+      ""
+    )
+
+    .substring(
+      0,
+      60
+    )
+
+    || "note";
+
+}
+
+
+/* ==========================================
+   LOAD IMAGE
+========================================== */
+
+function loadImage(src){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const image =
+        new Image();
+
+      image.onload =
+        () => resolve(image);
+
+      image.onerror =
+        () => reject(
+          new Error(
+            "Unable to load image"
+          )
+        );
+
+      image.src = src;
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   CALCULATE BODY LAYOUT
+   AUTOMATICALLY FITS ALL WORDS
+========================================== */
+
+function calculateBodyLayout(
+  ctx,
+  content,
+  maxWidth,
+  availableHeight
+){
+
+  /*
+    Start large and progressively reduce
+    the font until every wrapped line fits.
+  */
+
+  let fontSize = 108;
+
+  const minimumFontSize = 28;
+
+  let result = null;
+
+
+  while(fontSize >= minimumFontSize){
+
+    const lineHeight =
+      Math.round(
+        fontSize * 1.34
+      );
+
+
+    ctx.font =
+      `700 ${fontSize}px 'Plus Jakarta Sans'`;
+
+
+    const lines =
+      wrapText(
+        ctx,
+        content,
+        maxWidth
+      );
+
+
+    let requiredHeight = 0;
+
+
+    lines.forEach(line => {
+
+      if(line === ""){
+
+        requiredHeight +=
+          Math.round(
+            lineHeight * .55
+          );
+
+      }else{
+
+        requiredHeight +=
+          lineHeight;
+
+      }
+
+    });
+
+
+    if(
+      requiredHeight <= availableHeight
+    ){
+
+      result = {
+
+        fontSize,
+        lineHeight,
+        lines,
+        requiredHeight
+
+      };
+
+      break;
+
+    }
+
+
+    fontSize -= 2;
+
+  }
+
+
+  /*
+    Extremely long notes may still exceed
+    the page at the minimum font size.
+    In that situation, use the smallest
+    readable size and calculate all lines.
+    Nothing is intentionally deleted.
+  */
+
+  if(!result){
+
+    fontSize =
+      minimumFontSize;
+
+    const lineHeight =
+      Math.round(
+        fontSize * 1.32
+      );
+
+    ctx.font =
+      `700 ${fontSize}px 'Plus Jakarta Sans'`;
+
+    const lines =
+      wrapText(
+        ctx,
+        content,
+        maxWidth
+      );
+
+    let requiredHeight = 0;
+
+    lines.forEach(line => {
+
+      requiredHeight +=
+        line === ""
+        ? Math.round(lineHeight * .55)
+        : lineHeight;
+
+    });
+
+
+    result = {
+
+      fontSize,
+      lineHeight,
+      lines,
+      requiredHeight
+
+    };
+
+  }
+
+
+  return result;
+
+}
+
+
+/* ==========================================
+   CREATE HIGH-RESOLUTION A4 NOTE IMAGE
+   LIGHT MODE
+========================================== */
+
+async function createNoteImage(note){
+
+  const canvas =
+    document.getElementById(
+      "shareCanvas"
+    );
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  /* ========================================
+     A4 PORTRAIT
+  ======================================== */
+
+  const width = 3508;
+
+  const height = 4961;
+
+  const padding = 260;
+
+  const contentWidth =
+    width - (padding * 2);
+
+
+  canvas.width =
+    width;
+
+  canvas.height =
+    height;
+
+
+  /* ========================================
+     COLORS
+  ======================================== */
+
+  const backgroundColor =
+    "#F5F9FD";
+
+  const cardColor =
+    "#FFFFFF";
+
+  const mainText =
+    "#111111";
+
+  const bodyText =
+    "#202020";
+
+  const mutedText =
+    "#5F6872";
+
+  const divider =
+    "#D6E0EA";
+
+  const blue =
+    "#0878E8";
+
+
+  /* ========================================
+     BACKGROUND
+  ======================================== */
+
+  ctx.fillStyle =
+    backgroundColor;
+
+  ctx.fillRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  /* ========================================
+     TOP BLUE BAR
+  ======================================== */
+
+  ctx.fillStyle =
+    blue;
+
+  ctx.fillRect(
+    0,
+    0,
+    width,
+    42
+  );
+
+
+  /* ========================================
+     WHITE A4 CARD
+  ======================================== */
+
+  const cardX = 120;
+
+  const cardY = 120;
+
+  const cardWidth =
+    width - 240;
+
+  const cardHeight =
+    height - 240;
+
+  const radius = 55;
+
+
+  ctx.save();
+
+  ctx.beginPath();
+
+  ctx.roundRect(
+    cardX,
+    cardY,
+    cardWidth,
+    cardHeight,
+    radius
+  );
+
+  ctx.fillStyle =
+    cardColor;
+
+  ctx.fill();
+
+  ctx.restore();
+
+
+  /* ========================================
+     WATERMARK
+  ======================================== */
+
+  try{
+
+    const watermarkLogo =
+      await loadImage(
+        "kblc-logo.png"
+      );
+
+    const watermarkSize =
+      1550;
+
+    const watermarkX =
+      (width - watermarkSize) / 2;
+
+    const watermarkY =
+      (height - watermarkSize) / 2;
+
+
+    ctx.save();
+
+    ctx.globalAlpha =
+      0.045;
+
+    ctx.drawImage(
+      watermarkLogo,
+      watermarkX,
+      watermarkY,
+      watermarkSize,
+      watermarkSize
+    );
+
+    ctx.restore();
+
+  }catch(error){
+
+    console.warn(
+      "KBLC watermark could not be loaded.",
+      error
+    );
+
+  }
+
+
+  /* ========================================
+     HEADER LOGO
+  ======================================== */
+
+  try{
+
+    const logo =
+      await loadImage(
+        "kblc-logo.png"
+      );
+
+    const logoSize = 250;
+
+
+    ctx.drawImage(
+      logo,
+      padding,
+      260,
+      logoSize,
+      logoSize
+    );
+
+  }catch(error){
+
+    console.warn(
+      "KBLC logo could not be loaded.",
+      error
+    );
+
+  }
+
+
+  /* ========================================
+     BRAND
+  ======================================== */
+
+  ctx.fillStyle =
+    mainText;
+
+  ctx.font =
+    "800 76px 'Plus Jakarta Sans'";
+
+
+  ctx.fillText(
+    "KBLC DAILY DEVOTIONAL",
+    padding + 320,
+    365
+  );
+
+
+  /* ========================================
+     MY NOTES
+  ======================================== */
+
+  ctx.fillStyle =
+    blue;
+
+  ctx.font =
+    "800 52px 'Plus Jakarta Sans'";
+
+
+  ctx.fillText(
+    "MY NOTES",
+    padding + 320,
+    435
+  );
+
+
+  /* ========================================
+     DIVIDER
+  ======================================== */
+
+  ctx.strokeStyle =
+    divider;
+
+  ctx.lineWidth = 4;
+
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    padding,
+    610
+  );
+
+  ctx.lineTo(
+    width - padding,
+    610
+  );
+
+  ctx.stroke();
+
+
+  /* ========================================
+     NOTE TITLE
+     AUTOMATICALLY FIT
+  ======================================== */
+
+  let titleFontSize = 112;
+
+  const titleMinimum = 58;
+
+  let titleLines;
+
+
+  while(titleFontSize >= titleMinimum){
+
+    ctx.font =
+      `800 ${titleFontSize}px 'Plus Jakarta Sans'`;
+
+    titleLines =
+      wrapText(
+        ctx,
+        note.title,
+        contentWidth
+      );
+
+
+    if(titleLines.length <= 3){
+
+      break;
+
+    }
+
+    titleFontSize -= 4;
+
+  }
+
+
+  const titleLineHeight =
+    Math.round(
+      titleFontSize * 1.2
+    );
+
+
+  let y = 810;
+
+
+  ctx.fillStyle =
+    mainText;
+
+
+  titleLines.forEach(
+    line => {
+
+      ctx.fillText(
+        line,
+        padding,
+        y
+      );
+
+      y += titleLineHeight;
+
+    }
+  );
+
+
+  /* ========================================
+     DATE
+  ======================================== */
+
+  y += 35;
+
+
+  ctx.fillStyle =
+    mutedText;
+
+  ctx.font =
+    "600 42px 'Plus Jakarta Sans'";
+
+
+  ctx.fillText(
+    note.updated ||
+    note.created ||
+    "",
+    padding,
+    y
+  );
+
+
+  /* ========================================
+     BLUE SECTION MARK
+  ======================================== */
+
+  y += 75;
+
+
+  ctx.fillStyle =
+    blue;
+
+
+  ctx.fillRect(
+    padding,
+    y,
+    150,
+    10
+  );
+
+
+  y += 100;
+
+
+  /* ========================================
+     FOOTER
+     SOCIAL MEDIA HANDLES REMOVED
+  ======================================== */
+
+  const footerHeight =
+    430;
+
+  const footerLineY =
+    height - footerHeight;
+
+
+  /*
+    Available body space ends before
+    the footer. The automatic fitting
+    system uses this exact height.
+  */
+
+  const availableBodyHeight =
+    footerLineY - y - 60;
+
+
+  /* ========================================
+     BODY TEXT AUTOMATIC FIT
+  ======================================== */
+
+  const bodyLayout =
+    calculateBodyLayout(
+      ctx,
+      note.content,
+      contentWidth,
+      availableBodyHeight
+    );
+
+
+  ctx.fillStyle =
+    bodyText;
+
+  ctx.font =
+    `700 ${bodyLayout.fontSize}px 'Plus Jakarta Sans'`;
+
+
+  bodyLayout.lines.forEach(
+    line => {
+
+      if(line === ""){
+
+        y +=
+          Math.round(
+            bodyLayout.lineHeight * .55
+          );
+
+        return;
+
+      }
+
+
+      ctx.fillText(
+        line,
+        padding,
+        y
+      );
+
+
+      y +=
+        bodyLayout.lineHeight;
+
+    }
+  );
+
+
+  /* ========================================
+     FOOTER LINE
+  ======================================== */
+
+  ctx.strokeStyle =
+    divider;
+
+  ctx.lineWidth = 4;
+
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    padding,
+    footerLineY
+  );
+
+  ctx.lineTo(
+    width - padding,
+    footerLineY
+  );
+
+  ctx.stroke();
+
+
+  /* ========================================
+     TAGLINE ONLY
+     NO SOCIAL MEDIA HANDLES
+  ======================================== */
+
+  ctx.fillStyle =
+    blue;
+
+  ctx.font =
+    "800 48px 'Plus Jakarta Sans'";
+
+
+  ctx.fillText(
+    "Listen • Read • Reflect • Grow",
+    padding,
+    footerLineY + 105
+  );
+
+
+  /* ========================================
+     BOTTOM BRANDING
+  ======================================== */
+
+  ctx.textAlign =
+    "center";
+
+
+  ctx.fillStyle =
+    mutedText;
+
+  ctx.font =
+    "600 34px 'Plus Jakarta Sans'";
+
+
+  ctx.fillText(
+    "KBLC DAILY DEVOTIONAL",
+    width / 2,
+    height - 250
+  );
+
+
+  ctx.font =
+    "600 32px 'Plus Jakarta Sans'";
+
+
+  ctx.fillText(
+    "Kingdom Builders Lovelife Church INC.",
+    width / 2,
+    height - 190
+  );
+
+
+  ctx.textAlign =
+    "left";
+
+
+  return canvas;
+
+}
+
+
+/* ==========================================
+   CANVAS → PNG
+========================================== */
+
+function canvasToBlob(canvas){
+
+  return new Promise(
+    resolve => {
+
+      canvas.toBlob(
+        blob => {
+          resolve(blob);
+        },
+        "image/png",
+        1
+      );
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   PREPARE PICTURE
+========================================== */
+
+async function preparePicture(note){
+
+  const canvas =
+    await createNoteImage(note);
+
+
+  const blob =
+    await canvasToBlob(canvas);
+
+
+  if(!blob){
+
+    throw new Error(
+      "Could not create image."
+    );
+
+  }
+
+
+  currentPictureBlob =
+    blob;
+
+
+  currentPictureFilename =
+    "KBLC-" +
+    sanitizeFilename(note.title) +
+    "-A4.png";
+
+
+  const previewContext =
+    picturePreview.getContext("2d");
+
+
+  picturePreview.width =
+    canvas.width;
+
+  picturePreview.height =
+    canvas.height;
+
+
+  previewContext.clearRect(
+    0,
+    0,
+    picturePreview.width,
+    picturePreview.height
+  );
+
+
+  previewContext.drawImage(
+    canvas,
+    0,
+    0
+  );
+
+
+  return blob;
+
+}
+
+
+/* ==========================================
+   OPEN PICTURE PREVIEW
+========================================== */
+
+async function openPicturePreview(id){
+
+  const note =
+    notesList.find(
+      item => item.id === id
+    );
+
+
+  if(!note) return;
+
+
+  try{
+
+    showStatus(
+      "Creating high-resolution A4 picture..."
+    );
+
+
+    await preparePicture(note);
+
+
+    pictureModal.classList.add(
+      "show"
+    );
+
+
+    showStatus(
+      "✓ High-resolution A4 picture ready"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to create the picture."
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   CLOSE MODAL
+========================================== */
+
+function closePictureModal(){
+
+  pictureModal.classList.remove(
+    "show"
+  );
+
+}
+
+
+/* ==========================================
+   SAVE NOTE AS PICTURE
+========================================== */
+
+async function saveNoteAsPicture(id){
+
+  const note =
+    notesList.find(
+      item => item.id === id
+    );
+
+
+  if(!note) return;
+
+
+  try{
+
+    showStatus(
+      "Creating high-resolution A4 picture..."
+    );
+
+
+    const blob =
+      await preparePicture(note);
+
+
+    await downloadPicture(
+      blob,
+      currentPictureFilename
+    );
+
+
+    showStatus(
+      "✓ High-resolution A4 picture saved"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to save the picture."
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   DOWNLOAD PICTURE
+========================================== */
+
+async function downloadPicture(
+  blob,
+  filename
+){
+
+  if(
+    "showSaveFilePicker" in window
+  ){
+
+    try{
+
+      const handle =
+        await window.showSaveFilePicker({
+
+          suggestedName:
+            filename,
+
+          types:[
+            {
+              description:
+                "PNG Image",
+
+              accept:{
+                "image/png":[
+                  ".png"
+                ]
+              }
+            }
+          ]
+
+        });
+
+
+      const writable =
+        await handle.createWritable();
+
+
+      await writable.write(blob);
+
+      await writable.close();
+
+
+      return true;
+
+    }catch(error){
+
+      if(
+        error.name ===
+        "AbortError"
+      ){
+
+        return false;
+
+      }
+
+    }
+
+  }
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const link =
+    document.createElement("a");
+
+
+  link.href = url;
+
+  link.download = filename;
+
+  link.style.display = "none";
+
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  link.remove();
+
+
+  setTimeout(
+    () => {
+
+      URL.revokeObjectURL(url);
+
+    },
+    3000
+  );
+
+
+  return true;
+
+}
+
+
+/* ==========================================
+   SAVE FROM PREVIEW
+========================================== */
+
+async function savePreviewPicture(){
+
+  if(!currentPictureBlob)
+    return;
+
+
+  try{
+
+    await downloadPicture(
+      currentPictureBlob,
+      currentPictureFilename
+    );
+
+
+    showStatus(
+      "✓ Picture saved"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to save the picture."
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   SHARE NOTE AS A4 PICTURE
+========================================== */
+
+async function shareNoteAsPicture(id){
+
+  const note =
+    notesList.find(
+      item => item.id === id
+    );
+
+
+  if(!note) return;
+
+
+  try{
+
+    showStatus(
+      "Preparing high-resolution A4 picture..."
+    );
+
+
+    const blob =
+      await preparePicture(note);
+
+
+    const file =
+      new File(
+        [blob],
+        currentPictureFilename,
+        {
+          type:"image/png"
+        }
+      );
+
+
+    if(
+
+      navigator.share &&
+
+      navigator.canShare &&
+
+      navigator.canShare({
+        files:[file]
+      })
+
+    ){
+
+      try{
+
+        await navigator.share({
+
+          title:
+            note.title,
+
+          text:
+            "KBLC DAILY DEVOTIONAL",
+
+          files:[
+            file
+          ]
+
+        });
+
+
+        showStatus(
+          "✓ Share menu opened"
+        );
+
+
+        return;
+
+      }catch(error){
+
+        if(
+          error.name ===
+          "AbortError"
+        ){
+
+          return;
+
+        }
+
+      }
+
+    }
+
+
+    await downloadPicture(
+      blob,
+      currentPictureFilename
+    );
+
+
+    alert(
+      "Your browser does not support direct picture sharing. The high-resolution A4 picture has been saved to your device. You can now share it from your Gallery."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to prepare the picture for sharing."
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   SHARE PREVIEW PICTURE
+========================================== */
+
+async function sharePreviewPicture(){
+
+  if(!currentPictureBlob)
+    return;
+
+
+  try{
+
+    const file =
+      new File(
+        [currentPictureBlob],
+        currentPictureFilename,
+        {
+          type:"image/png"
+        }
+      );
+
+
+    if(
+
+      navigator.share &&
+
+      navigator.canShare &&
+
+      navigator.canShare({
+        files:[file]
+      })
+
+    ){
+
+      try{
+
+        await navigator.share({
+
+          title:
+            "KBLC My Note",
+
+          text:
+            "KBLC DAILY DEVOTIONAL",
+
+          files:[
+            file
+          ]
+
+        });
+
+
+        return;
+
+      }catch(error){
+
+        if(
+          error.name ===
+          "AbortError"
+        ){
+
+          return;
+
+        }
+
+      }
+
+    }
+
+
+    await downloadPicture(
+      currentPictureBlob,
+      currentPictureFilename
+    );
+
+
+    alert(
+      "Picture sharing is not supported by this browser. The high-resolution A4 picture has been saved so you can share it from your Gallery."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Unable to share the picture."
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   SHARE NOTE AS TEXT
+========================================== */
+
+async function shareNote(id){
+
+  const note =
+    notesList.find(
+      item => item.id === id
+    );
+
+
+  if(!note) return;
+
+
+  const shareText =
+`${note.title}
+
+${note.content}
+
+KBLC DAILY DEVOTIONAL
+Listen • Read • Reflect • Grow`;
+
+
+  if(navigator.share){
+
+    try{
+
+      await navigator.share({
+
+        title:
+          note.title,
+
+        text:
+          shareText
+
+      });
+
+
+      return;
+
+    }catch(error){
+
+      if(
+        error.name ===
+        "AbortError"
+      ){
+
+        return;
+
+      }
+
+    }
+
+  }
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      shareText
+    );
+
+
+    alert(
+      "Note copied. You can paste it anywhere you want to share it."
+    );
+
+  }catch(error){
+
+    alert(
+      shareText
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   CLOSE MODAL WHEN BACKGROUND CLICKED
+========================================== */
+
+pictureModal.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target === pictureModal
+    ){
+
+      closePictureModal();
+
+    }
+
+  }
+);
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+applyTheme();
+
+displayNotes();
+
+checkAdminAccess();
+
+</script></div></body>
+</html>
