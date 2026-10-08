@@ -281,6 +281,11 @@ header{
   display:none;
 }
 
+
+/* ==================================================
+   BOTTOM NAVIGATION
+================================================== */
+
 .bottom-nav{
 
   position:fixed;
@@ -291,7 +296,7 @@ header{
 
   z-index:9999;
 
-  height:72px;
+  min-height:72px;
 
   display:flex;
 
@@ -344,6 +349,9 @@ header{
 
   gap:4px;
 
+  transition:
+    .2s ease;
+
 }
 
 .bottom-nav .nav-icon .icon{
@@ -383,6 +391,11 @@ header{
 
 }
 
+
+/* ==================================================
+   CONTAINER
+================================================== */
+
 .container{
 
   width:
@@ -391,6 +404,11 @@ header{
   margin:auto;
 
 }
+
+
+/* ==================================================
+   HERO
+================================================== */
 
 .hero{
 
@@ -551,6 +569,11 @@ header{
 
 }
 
+
+/* ==================================================
+   CARDS
+================================================== */
+
 .card{
 
   background:
@@ -606,6 +629,65 @@ header{
   font-size:21px;
 
 }
+
+
+/* ==================================================
+   EVENT
+================================================== */
+
+.event-card-top{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+
+}
+
+.event-card-top h2{
+  margin:0;
+}
+
+.event-flyer-link{
+  display:block;
+  margin-top:16px;
+}
+
+.event-flyer{
+
+  width:100%;
+  height:auto;
+
+  display:block;
+
+  border-radius:14px;
+
+  border:
+    1px solid var(--line);
+
+}
+
+.event-info{
+
+  margin-top:16px;
+
+  line-height:1.8;
+
+  font-size:14px;
+
+  color:var(--text);
+
+}
+
+.event-info strong{
+  color:var(--heading);
+}
+
+
+/* ==================================================
+   PLAYER
+================================================== */
 
 .player{
 
@@ -857,6 +939,11 @@ header{
   display:block;
 
 }
+
+
+/* ==================================================
+   GENERAL
+================================================== */
 
 .badge{
 
@@ -1305,6 +1392,11 @@ footer{
 
 }
 
+
+/* ==================================================
+   MOBILE
+================================================== */
+
 @media(max-width:650px){
 
   header{
@@ -1343,10 +1435,12 @@ footer{
 
     height:68px;
 
-    padding:
-      5px 8px;
+    min-height:68px;
 
-    gap:3px;
+    padding:
+      5px 5px;
+
+    gap:2px;
 
   }
 
@@ -1354,7 +1448,12 @@ footer{
 
     height:56px;
 
-    max-width:80px;
+    max-width:none;
+
+    min-width:0;
+
+    padding:
+      5px 4px;
 
     border-radius:12px;
 
@@ -1368,7 +1467,11 @@ footer{
   }
 
   .bottom-nav .nav-icon small{
+
     font-size:7px;
+
+    white-space:nowrap;
+
   }
 
   .hero{
@@ -1522,6 +1625,10 @@ d="M21 12.8A8.5 8.5 0 1 1 11.2 3
 </header>
 
 
+<!-- ==================================================
+     BOTTOM NAVIGATION
+================================================== -->
+
 <nav class="bottom-nav">
 
 <a
@@ -1601,6 +1708,58 @@ aria-hidden="true"
 </a>
 
 
+<!-- ==================================================
+     SERMONS
+================================================== -->
+
+<a
+href="https://pstbillmatt.vercel.app/"
+class="nav-icon"
+title="Sermons"
+aria-label="Sermons"
+>
+
+<svg
+class="icon"
+viewBox="0 0 24 24"
+aria-hidden="true"
+>
+
+<!-- Microphone -->
+
+<rect
+x="9"
+y="3"
+width="6"
+height="11"
+rx="3">
+</rect>
+
+<!-- Microphone outer curve -->
+
+<path
+d="M5 11a7 7 0 0 0 14 0">
+</path>
+
+<!-- Stand -->
+
+<path
+d="M12 18v3">
+</path>
+
+<path
+d="M8 21h8">
+</path>
+
+</svg>
+
+<small>
+Sermons
+</small>
+
+</a>
+
+
 <a
 href="contact.html"
 class="nav-icon"
@@ -1626,7 +1785,9 @@ aria-hidden="true"
 </a>
 
 
-<!-- SGE PRAYER HUB -->
+<!-- ==================================================
+     SGE PRAYER HUB
+================================================== -->
 
 <a
 href="https://sge-prayer-hubs.vercel.app/"
@@ -1714,8 +1875,6 @@ read, reflect and grow in God's Word.
 </p>
 
 
-<!-- SHARED SITE COUNTER -->
-
 <div
 class="visitor-counter"
 id="visitorCounter"
@@ -1742,35 +1901,68 @@ site visits
 </section>
 
 
-<style>
-.event-card-top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.event-card-top h2{margin:0}
-.event-flyer-link{display:block;margin-top:16px}
-.event-flyer{width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--line)}
-.event-info{margin-top:16px;line-height:1.8;font-size:14px;color:var(--text)}
-.event-info strong{color:var(--heading)}
-</style>
+<!-- ==================================================
+     UPCOMING EVENT
+================================================== -->
 
 <div class="card">
 
 <div class="event-card-top">
-<h2>Kingdom Power Camp Meeting '26</h2>
-<span class="badge">UPCOMING EVENT</span>
+
+<h2>
+Kingdom Power Camp Meeting '26
+</h2>
+
+<span class="badge">
+UPCOMING EVENT
+</span>
+
 </div>
 
-<a class="event-flyer-link" href="kblc-camp-meeting-2026.jpg" target="_blank" rel="noopener">
-<img class="event-flyer" src="kblc-camp-meeting-2026.jpg" alt="Kingdom Power Camp Meeting '26 - Dominion in the Market Place, Wed 4th - Sun 9th Nov 2026" loading="lazy">
+<a
+class="event-flyer-link"
+href="kblc-camp-meeting-2026.jpg"
+target="_blank"
+rel="noopener"
+>
+
+<img
+class="event-flyer"
+src="kblc-camp-meeting-2026.jpg"
+alt="Kingdom Power Camp Meeting '26 - Dominion in the Market Place, Wed 4th - Sun 9th Nov 2026"
+loading="lazy"
+>
+
 </a>
 
 <div class="event-info">
-<strong>Theme:</strong> Dominion in the Market Place<br>
-<strong>Date:</strong> Wed 4th – Sun 9th November 2026<br>
-<strong>Venue:</strong> 1, Otamere Street, Through Adodo Street, Opp Glofes Filling Station, Evbomore Quarter, Isihor, Benin City.<br>
-<strong>Contact:</strong> 08086690553 / 08062339861
-</div>
+
+<strong>Theme:</strong>
+Dominion in the Market Place
+
+<br>
+
+<strong>Date:</strong>
+Wed 4th – Sun 9th November 2026
+
+<br>
+
+<strong>Venue:</strong>
+1, Otamere Street, Through Adodo Street, Opp Glofes Filling Station, Evbomore Quarter, Isihor, Benin City.
+
+<br>
+
+<strong>Contact:</strong>
+08086690553 / 08062339861
 
 </div>
 
+</div>
+
+
+<!-- ==================================================
+     DAILY DEVOTIONAL
+================================================== -->
 
 <div class="card">
 
@@ -2002,6 +2194,10 @@ id="read"
 </div>
 
 
+<!-- ==================================================
+     ALL DEVOTIONALS
+================================================== -->
+
 <div class="card">
 
 <div class="devotional-header">
@@ -2091,6 +2287,10 @@ Kingdom Builders Lovelife Church INC.
 </div>
 
 
+<!-- ==================================================
+     NEW EPISODE ALERT
+================================================== -->
+
 <div
 class="new-episode-alert"
 id="newEpisodeAlert"
@@ -2171,7 +2371,6 @@ Listen Now
 
 /* ==================================================
    SHARED SITE COUNTER
-   COUNTERAPI — NO VERCEL
 ================================================== */
 
 (function(){
@@ -2184,14 +2383,6 @@ Listen Now
   if(!counterElement){
     return;
   }
-
-  /*
-   * Fixed namespace and key.
-   *
-   * This makes the counter shared by everyone
-   * instead of creating a separate counter for
-   * each visitor or browser.
-   */
 
   const COUNTER_NAMESPACE =
     "kblcdailydevotional";
@@ -2224,13 +2415,6 @@ Listen Now
     try{
 
       let response;
-
-      /*
-       * Count this browser session once.
-       *
-       * The actual total is stored online by
-       * CounterAPI and is therefore shared.
-       */
 
       if(
         !sessionStorage.getItem(
@@ -2268,11 +2452,6 @@ Listen Now
       }
 
       else{
-
-        /*
-         * Read the existing total without
-         * increasing it again.
-         */
 
         response =
           await fetch(
