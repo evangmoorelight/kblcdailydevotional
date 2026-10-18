@@ -1144,7 +1144,7 @@ read, reflect and grow in God's Word.
 
 <span>
 
-<strong id="visitorCount">0</strong>
+<strong id="visitorCount">500</strong>
 
 site visits
 
@@ -1449,7 +1449,7 @@ Kingdom Builders Lovelife Church INC.
 
 
 /* ==================================================
-   SHARED SITE COUNTER
+   SHARED SITE COUNTER (starts at 500)
 ================================================== */
 
 (function(){
@@ -1460,72 +1460,61 @@ Kingdom Builders Lovelife Church INC.
     return;
   }
 
-  const COUNTER_NAMESPACE = "kblcdailydevotional";
-  const COUNTER_ACTION = "view";
-  const COUNTER_KEY = "site-visits";
-  const SESSION_KEY = "kblc_site_visit_counted";
+  const BASE_COUNT = 500;
 
-  const COUNTER_API =
-    "https://counterapi.com/api/"
+  const COUNTER_NAMESPACE = "kblcdailydevotional";
+  const COUNTER_KEY = "site-visits-v2";
+  const SESSION_KEY = "kblc_site_visit_counted_v2";
+
+  const COUNTER_BASE =
+    "https://api.counterapi.dev/v1/"
     + encodeURIComponent(COUNTER_NAMESPACE)
-    + "/"
-    + encodeURIComponent(COUNTER_ACTION)
     + "/"
     + encodeURIComponent(COUNTER_KEY);
 
+  function showCount(n){
+    counterElement.textContent = (BASE_COUNT + n).toLocaleString();
+  }
+
+  // Show the default straight away
+  showCount(0);
 
   async function updateSiteCount(){
 
     try{
 
-      let response;
+      const alreadyCounted = sessionStorage.getItem(SESSION_KEY);
 
-      if(!sessionStorage.getItem(SESSION_KEY)){
+      // "/up" adds 1 visit, plain URL only reads the number
+      const url = alreadyCounted ? COUNTER_BASE : COUNTER_BASE + "/up";
 
-        response = await fetch(
-          COUNTER_API,
-          {
-            method:"GET",
-            cache:"no-store",
-            headers:{ "Accept":"application/json" }
-          }
-        );
+      let response = await fetch(url, { cache:"no-store" });
 
-        if(!response.ok){
-          throw new Error("CounterAPI increment failed: " + response.status);
-        }
-
-        sessionStorage.setItem(SESSION_KEY, "true");
-
+      // Counter not created yet and only reading: start it
+      if(!response.ok && alreadyCounted){
+        response = await fetch(COUNTER_BASE + "/up", { cache:"no-store" });
       }
 
-      else{
+      if(!response.ok){
+        throw new Error("Counter request failed: " + response.status);
+      }
 
-        response = await fetch(
-          COUNTER_API + "?readOnly=true",
-          {
-            method:"GET",
-            cache:"no-store",
-            headers:{ "Accept":"application/json" }
-          }
-        );
-
-        if(!response.ok){
-          throw new Error("CounterAPI read failed: " + response.status);
-        }
-
+      if(!alreadyCounted){
+        sessionStorage.setItem(SESSION_KEY, "true");
       }
 
       const data = await response.json();
 
-      const count = Number(data.value);
+      const count = Number(
+        data.count !== undefined ? data.count : data.value
+      );
 
       if(Number.isFinite(count)){
-        counterElement.textContent = count.toLocaleString();
+        showCount(count);
       }
 
       else{
-        throw new Error("CounterAPI returned an invalid count");
+        throw new Error("Counter returned an invalid count");
       }
 
     }
@@ -1534,12 +1523,11 @@ Kingdom Builders Lovelife Church INC.
 
       console.log("Shared site counter unavailable:", error);
 
-      counterElement.textContent = "—";
+      showCount(0);
 
     }
 
   }
-
 
   updateSiteCount();
 
