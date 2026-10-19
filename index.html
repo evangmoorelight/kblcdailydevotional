@@ -1169,7 +1169,7 @@ body.splash-active{overflow:hidden}
 
           <div class="visitor-counter" id="visitorCounter" aria-live="polite">
             <span class="visitor-dot" aria-hidden="true"></span>
-            <span><strong id="visitorCount">500</strong> site visits</span>
+            <span><strong id="visitorCount">500</strong> app visits</span>
           </div>
         </div>
 
@@ -1430,23 +1430,31 @@ body.splash-active{overflow:hidden}
   });
 })();
 
-/* SHARED SITE COUNTER: increments on each page load */
+/* APP VISIT COUNTER: increments on each app open */
 (function(){
   const counterElement = document.getElementById("visitorCount");
   if(!counterElement) return;
 
   const BASE_COUNT = 500;
+  const LOCAL_KEY = "kblc_local_app_visits";
   const COUNTER_BASE =
     "https://api.counterapi.dev/v1/kblcdailydevotional/site-visits-v2";
 
   counterElement.textContent = BASE_COUNT.toLocaleString();
 
-  async function updateSiteCount(){
+  function localFallback(){
+    let n = 0;
     try{
-      const response = await fetch(COUNTER_BASE + "/up",{
-        cache:"no-store"
-      });
+      n = Number(localStorage.getItem(LOCAL_KEY)) || 0;
+      n += 1;
+      localStorage.setItem(LOCAL_KEY,String(n));
+    }catch(error){}
+    counterElement.textContent = (BASE_COUNT + n).toLocaleString();
+  }
 
+  async function updateAppCount(){
+    try{
+      const response = await fetch(COUNTER_BASE + "/up",{cache:"no-store"});
       if(!response.ok) throw new Error("Counter request failed");
 
       const data = await response.json();
@@ -1454,13 +1462,16 @@ body.splash-active{overflow:hidden}
 
       if(Number.isFinite(count)){
         counterElement.textContent = (BASE_COUNT + count).toLocaleString();
+      }else{
+        localFallback();
       }
     }catch(error){
-      console.log("Shared site counter unavailable:",error);
+      console.log("Shared app counter unavailable:",error);
+      localFallback();
     }
   }
 
-  updateSiteCount();
+  updateAppCount();
 })();
 
 /* THEME */
