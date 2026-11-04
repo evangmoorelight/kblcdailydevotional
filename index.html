@@ -83,8 +83,10 @@ footer{text-align:center;padding:28px 10px;color:var(--muted);font-size:10px;lin
 
 
 /* Screenshot-inspired devotional app layout: KBLC blue and white palette. */
-body{background:#fff!important;color:#182b3d!important;padding-bottom:100px!important}
-body:before{display:none!important}
+body{background:#fff!important;color:#182b3d!important;padding-bottom:24px!important}
+body:before{display:block!important;z-index:0!important;opacity:.045!important;background:url("kblc-logo.png") center 52%/min(560px,82vw) no-repeat!important}
+main.container,header,footer{position:relative;z-index:1}
+#splash,.new-episode-alert{z-index:2100}
 header{min-height:58px!important;height:58px!important;padding:7px 16px!important;background:#fff!important;border-bottom:1px solid #edf2f8!important;box-shadow:0 2px 10px #082b6010!important}
 .brand{display:none!important}
 .header-left{position:absolute;left:14px}
@@ -141,95 +143,61 @@ header:after{content:"Today";position:absolute;left:50%;transform:translateX(-50
 .page-controls{margin:0 0 25px!important}
 #allDevotionals{margin:18px 16px 35px!important}
 footer{padding:20px 16px 35px!important}
-.bottom-nav{position:fixed;z-index:1500;left:0;right:0;bottom:0;min-height:82px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;background:#061b2a;border-top:1px solid #163c55;box-shadow:0 -5px 20px #00111e25}
-.bottom-nav-item{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#aebdca;text-decoration:none;font-size:11px;font-weight:700}
-.bottom-nav-icon{width:42px;height:36px;display:flex;align-items:center;justify-content:center}
-.bottom-nav-icon svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.bottom-nav-item.active{color:#fff}
-.bottom-nav-item.active .bottom-nav-icon{width:54px;height:48px;border:3px solid #14517a;border-radius:13px;background:#0b2b43}
-.bottom-nav-item.active .bottom-nav-icon svg{width:27px;height:27px;fill:#fff;stroke:#fff}
-.bottom-nav-item.donate{color:#ffbf21}
-.bottom-nav-item.donate .bottom-nav-icon svg{stroke:#ffbf21}
+
 #splash{z-index:3000}
 @media(min-width:761px){.reference-date{padding-top:28px}.section-heading-text h2{margin-top:58px!important}.player-column{max-width:620px;align-self:center;margin-top:55px!important}.reading-column{max-width:760px;align-self:center}}
 @media(max-width:380px){.reference-date span{margin-bottom:35px}.section-heading-text h2{margin-top:55px!important}.player-column{margin-top:50px!important;padding:0 6%!important}.play-button{height:72px!important}.book-page{font-size:15px!important}}
 
 
-/* Final devotional reading layout: no bottom tab bar or tab icons. */
-.bottom-nav,.bottom-nav-item,.bottom-nav-icon{display:none!important;visibility:hidden!important}
-body{padding-bottom:24px!important}
-html{scroll-padding-bottom:20px}
+/* KBLC centered church identity, watermark, date privacy and A4 export icon */
+header:after{content:none!important}
+header .brand{display:none!important}
+.church-masthead{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px 16px 18px;background:#fff}
+.church-logo-glow{width:112px;height:112px;padding:8px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#fff 46%,#eaf4ff 60%,#8cc8ff 78%,#1687ff 100%);box-shadow:0 0 0 5px #1687ff20,0 0 20px 8px #1687ff66,0 0 42px 15px #0758b944,0 0 72px 22px #1687ff22;animation:churchGlow 3.2s ease-in-out infinite alternate}
+.church-logo-glow img{width:100%;height:100%;border-radius:50%;object-fit:contain;background:#fff;box-shadow:inset 0 0 0 1px #d7eaff}
+@keyframes churchGlow{from{filter:drop-shadow(0 0 3px #1687ff55);transform:scale(1)}to{filter:drop-shadow(0 0 12px #1687ff99);transform:scale(1.025)}}
+.church-name{margin-top:12px;color:#073b8e;font-size:clamp(13px,3.5vw,18px);font-weight:900;line-height:1.35;letter-spacing:.75px}
+#dailyDevotional .reference-date,.today-badge,.episode-item small{display:none!important}
+.book-page{position:relative!important;isolation:isolate!important}
+.book-page:before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:url('kblc-logo.png') center 48%/min(430px,72vw) auto no-repeat;opacity:.065}
+.book-page .book-head span:last-child{display:none!important}
+.share-devotional-btn{font-size:0!important;min-width:48px;min-height:48px;padding:3px!important;color:#0758b9!important}
+.share-devotional-btn:after{content:none!important;display:none!important}
+.share-devotional-btn .export-pages-icon{display:block;width:43px;height:43px;fill:none;stroke:#0878e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.share-devotional-btn span{display:none!important}
+@media(max-width:520px){.church-masthead{padding:22px 12px 18px}.church-logo-glow{width:100px;height:100px}.church-name{font-size:13px}}
 
 
-/* KBLC logo and devotional description artwork */
-.header-kblc-logo{position:absolute;right:66px;top:8px;width:39px;height:39px;object-fit:contain;border-radius:10px;background:#fff;padding:2px;z-index:3}
-.header-actions{position:relative;z-index:4}
-.description-picture-wrap{width:100%;margin:0 auto 18px;overflow:hidden;border-radius:14px;background:#edf4fc;border:1px solid #d7e7f8;box-shadow:0 5px 18px #0a39701a}
-.description-picture-wrap[hidden]{display:none!important}
-.description-picture-wrap img{display:block;width:100%;max-height:430px;object-fit:contain;background:#f4f8fd}
-@media(max-width:760px){.header-kblc-logo{right:62px;top:9px;width:36px;height:36px}.description-picture-wrap{margin-bottom:15px;border-radius:12px}.description-picture-wrap img{max-height:340px}}
-
-
-/* ===== Compact HD devotional artwork with a soft animated halo ===== */
-.description-picture-wrap{
-  position:relative!important;isolation:isolate;width:min(100%,230px)!important;
-  margin:8px auto 25px!important;padding:7px!important;overflow:visible!important;
-  border:1px solid rgba(22,135,255,.24)!important;border-radius:22px!important;
-  background:linear-gradient(145deg,#ffffff,#eaf4ff)!important;
-  box-shadow:0 8px 24px rgba(7,88,185,.12),0 0 22px rgba(22,135,255,.13)!important;
-}
-.description-picture-wrap:before,.description-picture-wrap:after{
-  content:"";position:absolute;z-index:-1;inset:-9px;border-radius:28px;pointer-events:none;
-  background:conic-gradient(from 0deg,transparent 0 12%,rgba(65,165,255,.38) 16%,transparent 23% 39%,rgba(255,255,255,.9) 44%,transparent 51% 69%,rgba(22,135,255,.3) 76%,transparent 84% 100%);
-  filter:blur(9px);opacity:.7;animation:devotionalHalo 12s linear infinite;
-}
-.description-picture-wrap:after{inset:-15px;opacity:.28;filter:blur(15px);animation-duration:19s;animation-direction:reverse}
-.description-picture-wrap img{
-  position:relative;z-index:1;width:100%!important;height:auto!important;max-height:205px!important;
-  aspect-ratio:4/3;object-fit:contain!important;object-position:center!important;
-  border-radius:16px!important;background:#f5f9ff!important;display:block;
-  image-rendering:auto;filter:contrast(1.035) saturate(1.06);
-  box-shadow:0 3px 12px rgba(0,30,80,.12)!important
-}
-@keyframes devotionalHalo{to{transform:rotate(360deg)}}
-@media(max-width:760px){.description-picture-wrap{width:min(68vw,205px)!important;margin:5px auto 22px!important;padding:6px!important}.description-picture-wrap img{max-height:180px!important;border-radius:14px!important}}
-@media(prefers-reduced-motion:reduce){.description-picture-wrap:before,.description-picture-wrap:after{animation:none!important}}
-
-/* ===== Real dark/light theme styling for the complete devotional reader ===== */
-body.light-theme{--bg:#f5f9ff;--card:#fff;--soft:#edf4fd;--text:#24364d;--heading:#082b60;--muted:#71839b;--line:#d9e5f3;--header:rgba(255,255,255,.96);background:#f5f9ff!important;color:#24364d!important}
-body:not(.light-theme){--bg:#071326;--card:#10213a;--soft:#0c1b30;--text:#dce8f8;--heading:#f4f8ff;--muted:#9aafca;--line:#29415f;--header:rgba(7,19,38,.96);background:radial-gradient(ellipse at 50% -15%,rgba(22,135,255,.16),transparent 55%),#071326!important;color:#dce8f8!important}
-body:not(.light-theme) header{background:rgba(7,19,38,.96)!important;border-bottom-color:#263d5b!important}
-body:not(.light-theme) #dailyDevotional.card{background:#071326!important;color:#dce8f8!important}
-body:not(.light-theme) .reference-date span{color:#9bb8d7!important}
-body:not(.light-theme) .reference-date strong,body:not(.light-theme) .reference-date small{color:#a9c5e3!important}
-body:not(.light-theme) .section-heading-text h2{color:#f4f8ff!important}
-body:not(.light-theme) .description-picture-wrap{background:linear-gradient(145deg,#102746,#0b1b31)!important;border-color:#31577f!important;box-shadow:0 8px 25px #0008,0 0 22px #1687ff30!important}
-body:not(.light-theme) .description-picture-wrap img{background:#10213a!important;box-shadow:0 3px 14px #0008!important}
-body:not(.light-theme) .book{background:#10213a!important;border-color:#31577f!important;box-shadow:0 14px 34px #0005!important}
-body:not(.light-theme) .book-page{background:linear-gradient(145deg,#10213a,#0d1b30)!important;color:#dce8f8!important}
+/* Complete dark-mode support for the reading layout. */
+body:not(.light-theme){background:#071326!important;color:#dce8f8!important}
+body:not(.light-theme):before{opacity:.075!important}
+body:not(.light-theme) header{background:rgba(7,19,38,.96)!important;border-color:#253b59!important}
+body:not(.light-theme) .church-masthead{background:#071326!important}
+body:not(.light-theme) .church-name{color:#a9d2ff!important}
+body:not(.light-theme) #dailyDevotional.card,body:not(.light-theme) #allDevotionals.card{background:#10213a!important;color:#dce8f8!important;border-color:#29415f!important}
+body:not(.light-theme) .reference-date strong{color:#d7eaff!important}
+body:not(.light-theme) .reference-date small,body:not(.light-theme) .reference-date span{color:#9bb8d8!important}
+body:not(.light-theme) .section-heading-text h2{color:#f2f7ff!important}
+body:not(.light-theme) .book-page{background:#10213a!important;color:#dce8f8!important}
 body:not(.light-theme) .book-page p{color:#d3e1f2!important}
-body:not(.light-theme) .book-page strong,body:not(.light-theme) .book-page strong.lead{color:#8fc5ff!important}
-body:not(.light-theme) .book-title{color:#a9d2ff!important}
-body:not(.light-theme) .book-head{background:linear-gradient(135deg,#062653,#0758b9,#1687ff)!important}
-body:not(.light-theme) .verse{background:linear-gradient(135deg,#142f50,#102744)!important;border-color:#31577f!important;border-left-color:#39a0ff!important;color:#d5eaff!important}
-body:not(.light-theme) .verse-ref{color:#91c5fa!important}
-body:not(.light-theme) .sec-label{background:#173454!important;color:#a9d3ff!important}
-body:not(.light-theme) .sec-ico{background:#21466d!important;color:#b8dcff!important}
-body:not(.light-theme) .prayer-section,body:not(.light-theme) .confession-section{background:#122d4b!important;border-color:#31577f!important;color:#c8e2ff!important}
-body:not(.light-theme) .prayer-section p,body:not(.light-theme) .confession-section p{color:#d7eaff!important}
-body:not(.light-theme) .prayer-section .sec-label,body:not(.light-theme) .confession-section .sec-label{background:#1b4269!important;color:#b8dcff!important}
-body:not(.light-theme) .book-foot{border-color:#294766!important;color:#9bcaff!important}
+body:not(.light-theme) .book-page p strong,body:not(.light-theme) .book-page p strong.lead{color:#a9d2ff!important}
+body:not(.light-theme) .book-page blockquote.verse,body:not(.light-theme) .book-page .verse{color:#c7e2ff!important}
+body:not(.light-theme) .book-page .verse-ref{color:#91c5fa!important}
+body:not(.light-theme) .book-page .prayer-section,body:not(.light-theme) .book-page .confession-section{background:#122d4b!important;border-color:#31577f!important;color:#d7eaff!important}
+body:not(.light-theme) .book-page .prayer-section p,body:not(.light-theme) .book-page .confession-section p{color:#d7eaff!important}
 body:not(.light-theme) .player{background:#10213a!important;border-color:#31577f!important}
 body:not(.light-theme) .custom-player{background:linear-gradient(155deg,#10213a,#0b2a4d 60%,#0758b9)!important;color:#eaf5ff!important}
 body:not(.light-theme) .player-title{color:#eaf5ff!important}
 body:not(.light-theme) .time,body:not(.light-theme) .player-note{color:#c0d4ec!important}
-body:not(.light-theme) .share-devotional-btn{color:#8fc5ff!important}
-body:not(.light-theme) .share-devotional-btn:after{color:#8fc5ff!important;border-color:#1687ff!important}
-body:not(.light-theme) .page-controls,body:not(.light-theme) .page-controls *{color:#dce8f8}
+body:not(.light-theme) .play-button .icon{background:#eaf5ff!important;color:#0758b9!important}
+body:not(.light-theme) .speed-button,body:not(.light-theme) .skip-button{background:#173454!important;border-color:#31577f!important;color:#dcecff!important}
+body:not(.light-theme) .episodes-head h3,body:not(.light-theme) footer{color:#dce8f8!important}
+body:not(.light-theme) .search-box input,body:not(.light-theme) .episode-item{background:#0c1b30!important;color:#dce8f8!important;border-color:#29415f!important}
+body:not(.light-theme) .episode-item b{color:#eaf5ff!important}
+body:not(.light-theme) .minimize-btn,body:not(.light-theme) .theme-toggle{background:#132b48!important;color:#c9e4ff!important;border-color:#31577f!important}
+body:not(.light-theme) .notification-btn{background:#173454!important;color:#b8dcff!important;border-color:#31577f!important}
 body:not(.light-theme) .page-btn{background:#173454!important;border-color:#31577f!important;color:#dcecff!important}
-body:not(.light-theme) .card{background:#10213a!important;border-color:#29415f!important;color:#dce8f8!important}
-body:not(.light-theme) .theme-toggle{background:#132b48!important;color:#c9e4ff!important;border-color:#31577f!important}
-body:not(.light-theme) footer{color:#9aafca!important}
+body:not(.light-theme) .book-page:before{opacity:.035!important}
 
 </style>
 </head>
@@ -238,9 +206,9 @@ body:not(.light-theme) footer{color:#9aafca!important}
 <header>
   <div class="header-left">
     <button class="menu-toggle" id="menuToggle" aria-label="Open side menu" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-    <div class="brand"><img src="kblc-logo.png" alt="KBLC Logo"><span>KBLC DAILY DEVOTIONAL</span></div>
+    
   </div>
-  <div class="header-actions"><img class="header-kblc-logo" src="kblc-logo.png" alt="KBLC logo"><button class="theme-toggle" id="themeToggle" aria-label="Switch theme" title="Switch theme"><svg class="icon" id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8Z"/></svg></button></div>
+  <div class="header-actions"><button class="theme-toggle" id="themeToggle" aria-label="Switch theme" title="Switch theme"><svg class="icon" id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8Z"/></svg></button></div>
 </header>
 <div class="menu-overlay" id="menuOverlay"></div>
 <aside class="side-menu" id="sideMenu" aria-label="Main navigation" aria-hidden="true">
@@ -248,6 +216,7 @@ body:not(.light-theme) footer{color:#9aafca!important}
   <div class="menu-section-label">Main menu</div>
   <nav class="side-menu-links">
     <a href="index.html" class="side-link active" aria-current="page"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5M5 9.5V21h14V9.5M9 21v-7h6v7"/></svg></span><span class="side-link-text"><strong>Home</strong><small>Today's devotional</small></span><span class="side-link-arrow">›</span></a>
+    <a href="#allDevotionals" class="side-link"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16M8 2v6M16 9v6M8 16v6"/></svg></span><span class="side-link-text"><strong>Previous Devotionals</strong><small>Browse and search past messages</small></span><span class="side-link-arrow">›</span></a>
     <a href="reviews.html" class="side-link"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H8l-4 3v-6.2A7.5 7.5 0 1 1 20 11.5Z"/></svg></span><span class="side-link-text"><strong>Reviews</strong><small>Share your experience</small></span><span class="side-link-arrow">›</span></a>
     <a href="notes.html" class="side-link"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5"/></svg></span><span class="side-link-text"><strong>My Notes</strong><small>Save your reflections</small></span><span class="side-link-arrow">›</span></a>
     <a href="https://pstbillmatt.vercel.app/" class="side-link" target="_blank" rel="noopener"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/></svg></span><span class="side-link-text"><strong>Sermons</strong><small>Listen to messages</small></span><span class="side-link-arrow">↗</span></a>
@@ -257,6 +226,10 @@ body:not(.light-theme) footer{color:#9aafca!important}
   <div class="menu-footer"><div class="menu-footer-card"><strong>Welcome to KBLC</strong><p>Grow in God's Word every day. Listen, reflect, pray and keep your faith alive.</p></div><div class="menu-footer-copy">© <span id="menuYear"></span> Kingdom Builders Lovelife Church INC.</div></div>
 </aside>
 <main class="container">
+  <section class="church-masthead" aria-label="Kingdom Builders Lovelife Church">
+    <div class="church-logo-glow"><img src="kblc-logo.png" alt="Kingdom Builders Lovelife Church logo"></div>
+    <div class="church-name">KINGDOM BUILDERS<br>LOVELIFE CHURCH INC.</div>
+  </section>
   <section class="hero"><div class="hero-panel"><div class="hero-content">
     <div class="hero-photo"><img src="hero-photo.jpg" alt="Pastors"></div>
     <div class="hero-top"><img class="hero-logo" src="kblc-logo.png" alt="KBLC Logo"><div class="hero-brand-text">Kingdom Builders<br>Lovelife Church</div></div>
@@ -271,8 +244,8 @@ body:not(.light-theme) footer{color:#9aafca!important}
     <div class="devotional-title-row"><div class="section-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22Z"/><path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20"/></svg></div><div class="section-heading-text"><h2 id="title">Loading devotional...</h2><p>Listen to today's message and spend time in the Word.</p></div><span class="badge">DAILY DEVOTIONAL</span></div>
     <div class="devotional-layout">
       <div class="reading-column">
-        <div class="read-heading-row"><div class="read-heading" style="display:flex;align-items:center;gap:10px;margin:0;color:var(--heading);font-size:15px;font-weight:800"><span class="section-icon" style="width:35px;height:35px;border-radius:11px">📖</span>Read Today's Word</div><button class="share-devotional-btn" id="shareDevotional" type="button" title="Share devotional as picture">▧ <span>Share Picture</span></button></div><div class="share-status" id="shareStatus" aria-live="polite"></div>
-        <div class="book"><div class="book-ribbon"></div><div class="description-picture-wrap" id="descriptionPictureWrap" hidden><img id="descriptionPicture" alt="Devotional illustration"></div><div class="book-page" id="read">⏳ Loading today's devotional...</div></div>
+        <div class="read-heading-row"><div class="read-heading" style="display:flex;align-items:center;gap:10px;margin:0;color:var(--heading);font-size:15px;font-weight:800"><span class="section-icon" style="width:35px;height:35px;border-radius:11px">📖</span>Read Today's Word</div><button class="share-devotional-btn" id="shareDevotional" type="button" title="Export devotional as two A4 pages"><svg class="export-pages-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 7h19l7 7v26H14z"/><path d="M33 7v8h7M9 13H7v30h25v-3M20 22h14M20 28h14M20 34h9"/></svg><span>Export A4 Pages</span></button></div><div class="share-status" id="shareStatus" aria-live="polite"></div>
+        <div class="book"><div class="book-ribbon"></div><div class="book-page" id="read">⏳ Loading today's devotional...</div></div>
         <div class="page-controls" id="pageControls" hidden><button class="page-btn" id="prevPage" type="button">← Previous</button><div class="page-indicator"><span id="pageCount">Page 1 of 1</span><div class="page-progress"><span id="pageProgress"></span></div></div><button class="page-btn" id="nextPage" type="button">Next →</button></div>
       </div>
       <div class="player-column">
@@ -337,11 +310,13 @@ body:not(.light-theme) footer{color:#9aafca!important}
   updateSpreakerPlays();
   setInterval(updateSpreakerPlays,300000);
 })();
+/* Devotional state must be initialized before the date updater runs. */
+let devotionalPages=[],pageIndex=0,bookTitle='',bookDate='',shareSections=[];
 /* Theme */
 const themeToggle=document.getElementById('themeToggle'),themeIcon=document.getElementById('themeIcon');function setTheme(t){document.body.classList.toggle('light-theme',t==='light');themeIcon.innerHTML=t==='light'?'<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>':'<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8Z"></path>';themeToggle.title=t==='light'?'Switch to dark mode':'Switch to light mode';document.querySelector('meta[name="theme-color"]').content=t==='light'?'#f0f5fc':'#071326'}let saved=null;try{saved=localStorage.getItem('kblc_theme')}catch(e){}setTheme(saved||((matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark'));themeToggle.addEventListener('click',()=>{const t=document.body.classList.contains('light-theme')?'dark':'light';setTheme(t);try{localStorage.setItem('kblc_theme',t)}catch(e){}});
 /* Spreaker + custom player */
 const SHOW_ID='7392727',params=new URLSearchParams(location.search);let curId=params.get('episode_id'),allEpisodes=[];const audio=document.getElementById('audioPlayer'),playButton=document.getElementById('playButton'),playIcon=document.getElementById('playIcon'),progress=document.getElementById('progress'),volume=document.getElementById('volume'),currentTime=document.getElementById('currentTime'),duration=document.getElementById('duration'),playerTitle=document.getElementById('playerTitle'),customPlayer=document.getElementById('customPlayer'),fallback=document.getElementById('spreakerFallback'),mainPlayer=document.getElementById('mainPlayer'),speedButton=document.getElementById('speedButton');
-document.getElementById('todayDate').textContent=new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});document.getElementById('year').textContent=new Date().getFullYear();document.getElementById('menuYear').textContent=new Date().getFullYear();
+function updateCurrentDate(){const now=new Date();const dateText=now.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});const compact=now.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});const dateNode=document.querySelector('#referenceDate strong');if(dateNode)dateNode.textContent=dateText;const todayNode=document.getElementById('todayDate');if(todayNode)todayNode.textContent=compact;document.getElementById('year').textContent=now.getFullYear();const menuYear=document.getElementById('menuYear');if(menuYear)menuYear.textContent=now.getFullYear();if(bookTitle)bookDate=dateText;}updateCurrentDate();setInterval(updateCurrentDate,60000);
 function fmt(s){if(!Number.isFinite(s)||s<0)return'0:00';return Math.floor(s/60)+':'+Math.floor(s%60).toString().padStart(2,'0')}function fill(){progress.style.setProperty('--pct',progress.value+'%')}function setPlaying(on){customPlayer.classList.toggle('playing',!!on);playIcon.innerHTML=on?'<rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect>':'<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"></path>';playButton.setAttribute('aria-label',on?'Pause':'Play')}
 function spreakerURL(id){return id?'https://widget.spreaker.com/player?episode_id='+encodeURIComponent(id)+'&theme=dark&playlist=show&playlist_id='+SHOW_ID+'&autoplay=false&chapters-image=true':'https://widget.spreaker.com/player?show_id='+SHOW_ID+'&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true'}function showFallback(id){customPlayer.style.display='none';fallback.style.display='block';mainPlayer.src=spreakerURL(id)}function showCustom(){customPlayer.style.display='block';fallback.style.display='none'}
 function findAudio(ep){const urls=[ep?.audio_url,ep?.audioUrl,ep?.mp3_url,ep?.mp3Url,ep?.download_url,ep?.downloadUrl,ep?.media_url,ep?.mediaUrl,ep?.stream_url,ep?.streamUrl,ep?.audio?.url,ep?.media?.url,ep?.file?.url,ep?.download?.url];return urls.find(u=>typeof u==='string'&&/^https?:\/\//i.test(u))||null}function loadAudio(ep){const u=findAudio(ep);if(!u){showFallback(curId);return false}audio.src=u;audio.load();playerTitle.textContent=ep.title||'KBLC Daily Devotional';showCustom();return true}
@@ -352,9 +327,8 @@ function clean(raw){const doc=new DOMParser().parseFromString(String(raw||'').re
 const BOOKS='(?:[1-3]\\s?)?(?:Genesis|Exodus|Leviticus|Numbers|Deuteronomy|Joshua|Judges|Ruth|Samuel|Kings|Chronicles|Ezra|Nehemiah|Esther|Job|Psalms?|Proverbs|Ecclesiastes|Song of Solomon|Isaiah|Jeremiah|Lamentations|Ezekiel|Daniel|Hosea|Joel|Amos|Obadiah|Jonah|Micah|Nahum|Habakkuk|Zephaniah|Haggai|Zechariah|Malachi|Matthew|Mark|Luke|John|Acts|Romans|Corinthians|Galatians|Ephesians|Philippians|Colossians|Thessalonians|Timothy|Titus|Philemon|Hebrews|James|Peter|Jude|Revelation)\\s\\d{1,3}(?::\\d{1,3}(?:\\s?[-–]\\s?\\d{1,3})?)?(?:\\s?\\([A-Za-z]{2,6}\\))?';const refRE=new RegExp('\\b('+BOOKS+')','g'),refOnly=new RegExp('^[()\\-–—\\s]*(?:'+BOOKS+')[)\\s.]*$');
 const labelRE=/^(today['’]?s\s+(?:word|text|scripture|verse|rhema)|scriptures?(?:\s+reading)?|bible\s+(?:reading|text|passage|study)|key\s+text|text|memory\s+verse|key\s+verse|opening\s+scripture|theme|topic|message|meditation|reflection|devotion|exhortation|application|action\s+(?:step|steps|point|points)|prayer(?:\s+points?)?|prayer\s+focus|confession|confessions|declaration|declarations|affirmation|further\s+study|study|conclusion|point\s+to\s+ponder|thought\s+for\s+the\s+day)\s*(?:[:\-–—]\s*(.*))?$/i;
 const meta={scripture:{icon:'📖',name:'Scripture'},message:{icon:'✍️',name:"Today's Message"},prayer:{icon:'🙏',name:'Prayer'},confession:{icon:'🔥',name:'Confession'},action:{icon:'✓',name:'Action Point'}};function typeFor(s){s=s.toLowerCase();if(/scripture|bible|text|verse/.test(s))return'scripture';if(/prayer/.test(s))return'prayer';if(/confession|declaration|affirmation/.test(s))return'confession';if(/action|application|study|ponder/.test(s))return'action';return'message'}function boldRefs(s){return s.replace(refRE,'<strong class="ref">$1</strong>')}function isVerse(s){return /^[“"‘']/.test(s)&&s.length<700&&refRE.test(s)&&(refRE.lastIndex=0,true)}
-let devotionalPages=[],pageIndex=0,bookTitle='',bookDate='',shareSections=[];
 function drawPage(){const target=document.getElementById('read');if(!devotionalPages.length){target.textContent='No description available for this devotional.';document.getElementById('pageControls').hidden=true;return}const page=devotionalPages[pageIndex];target.innerHTML='<div class="book-head"><span>TODAY’S RHEMA WORD • KBLC DAILY DEVOTIONAL</span><span>'+esc(bookDate)+'</span></div><h3 class="book-title">'+esc(bookTitle)+'</h3><div class="book-orn">✦ ✦ ✦</div>'+page.html+'<div class="book-foot">LISTEN • READ • REFLECT • GROW</div>';const controls=document.getElementById('pageControls');controls.hidden=devotionalPages.length<2;document.getElementById('pageCount').textContent='Page '+(pageIndex+1)+' of '+devotionalPages.length;document.getElementById('pageProgress').style.width=((pageIndex+1)/devotionalPages.length*100)+'%';document.getElementById('prevPage').disabled=pageIndex===0;document.getElementById('nextPage').disabled=pageIndex===devotionalPages.length-1}
-function renderBook(text,title,published){bookTitle=title||'KBLC Daily Devotional';const dt=published?new Date(String(published).replace(' ','T')):new Date();bookDate=!isNaN(dt)?dt.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'}):new Date().toLocaleDateString();const rd=document.getElementById('referenceDate');if(rd){rd.querySelector('strong').textContent=bookDate;rd.querySelector('small').textContent='KBLC DAILY DEVOTIONAL';}const lines=String(text||'').split(/\n+/).map(s=>s.trim()).filter(Boolean);if(!lines.length){devotionalPages=[];drawPage();return}const sections=[];let current={type:'message',label:'',paras:[],intro:true};lines.forEach(line=>{const m=line.match(labelRE);if(m){if(current.paras.length||current.label)sections.push(current);current={type:typeFor(m[1]),label:m[1],paras:[],intro:false};if(m[2]?.trim())current.paras.push(m[2].trim())}else current.paras.push(line)});if(current.paras.length||current.label)sections.push(current);
+function renderBook(text,title,published){bookTitle=title||'KBLC Daily Devotional';const dt=new Date();bookDate=dt.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});const rd=document.getElementById('referenceDate');if(rd){rd.querySelector('strong').textContent=bookDate;rd.querySelector('small').textContent='KBLC DAILY DEVOTIONAL';}const lines=String(text||'').split(/\n+/).map(s=>s.trim()).filter(Boolean);if(!lines.length){devotionalPages=[];drawPage();return}const sections=[];let current={type:'message',label:'',paras:[],intro:true};lines.forEach(line=>{const m=line.match(labelRE);if(m){if(current.paras.length||current.label)sections.push(current);current={type:typeFor(m[1]),label:m[1],paras:[],intro:false};if(m[2]?.trim())current.paras.push(m[2].trim())}else current.paras.push(line)});if(current.paras.length||current.label)sections.push(current);
 shareSections=sections.filter(s=>s.paras.length||s.label);devotionalPages=shareSections.map(section=>{const m=meta[section.type],heading=section.intro?m.name:(section.label||m.name),special=section.type==='prayer'?'prayer-section':section.type==='confession'?'confession-section':'';let body='<section class="'+special+'"><h4 class="sec-label"><span class="sec-ico">'+m.icon+'</span>'+esc(heading)+'</h4>';section.paras.forEach((para,i)=>{const e=esc(para);if(refOnly.test(para))body+='<div class="verse-ref">'+boldRefs(e)+'</div>';else if(section.type==='scripture'||isVerse(para))body+='<blockquote class="verse">'+boldRefs(e)+'</blockquote>';else body+='<p>'+(i===0&&section.type==='message'?'<strong class="lead">'+boldRefs(e)+'</strong>':boldRefs(e))+'</p>'});body+='</section>';return{html:body}});pageIndex=0;drawPage()}
 document.getElementById('prevPage').addEventListener('click',()=>{if(pageIndex>0){pageIndex--;drawPage()}});document.getElementById('nextPage').addEventListener('click',()=>{if(pageIndex<devotionalPages.length-1){pageIndex++;drawPage()}});
 function render(items){const list=document.getElementById('list');if(!items.length){list.innerHTML='<div class="no-results">No devotionals found.</div>';return}list.innerHTML=items.map(ep=>{const id=String(ep.episode_id||ep.id),active=id===curId?'episode-active':'',date=(ep.published_at||'').slice(0,10);return'<div class="episode-item '+active+'" role="button" tabindex="0" data-episode-id="'+esc(id)+'"><b>'+esc(ep.title||'Untitled devotional')+'</b><small>'+esc(date||'KBLC Daily Devotional')+'</small></div>'}).join('');list.querySelectorAll('.episode-item').forEach(item=>{const open=()=>{const id=item.dataset.episodeId;if(id)location.href='?episode_id='+encodeURIComponent(id)};item.addEventListener('click',open);item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})})}
@@ -363,31 +337,90 @@ document.getElementById('minimizeBtn').addEventListener('click',()=>{const conte
 /* New episode notifications */
 const NOTIFY_KEY='kblc_episode_notifications_enabled',LATEST_KEY='kblc_latest_episode_id';let notificationEnabled=false,knownLatest=null,newest=null,ctx=null;try{notificationEnabled=localStorage.getItem(NOTIFY_KEY)==='true';knownLatest=localStorage.getItem(LATEST_KEY)}catch(e){}const notifyBtn=document.getElementById('notificationBtn');function updateNotify(){notifyBtn.querySelector('span').textContent=notificationEnabled?'New Devotional Alerts Enabled':'Enable New Devotional Alerts';notifyBtn.classList.toggle('enabled',notificationEnabled)}updateNotify();function ping(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;ctx=ctx||new C();if(ctx.state==='suspended')ctx.resume();[880,1174.66].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime+i*.18;o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.12,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.25);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.26)})}catch(e){}}notifyBtn.addEventListener('click',()=>{notificationEnabled=!notificationEnabled;try{localStorage.setItem(NOTIFY_KEY,String(notificationEnabled))}catch(e){}updateNotify();if(notificationEnabled)ping()});function showAlert(ep){newest=ep;document.getElementById('newEpisodeTitle').textContent=ep.title||'New KBLC Daily Devotional';document.getElementById('newEpisodeAlert').classList.add('show');if(notificationEnabled)ping()}document.getElementById('closeEpisodeAlert').addEventListener('click',()=>document.getElementById('newEpisodeAlert').classList.remove('show'));document.getElementById('openNewEpisode').addEventListener('click',()=>{const id=newest&&(newest.episode_id||newest.id);if(id)location.href='?episode_id='+encodeURIComponent(id)});
 async function checkLatest(){try{const r=await fetch('https://api.spreaker.com/v2/shows/'+SHOW_ID+'/episodes?limit=1&_='+Date.now(),{cache:'no-store'});if(!r.ok)return;const d=await r.json(),ep=d.response?.items?.[0];if(!ep)return;const id=String(ep.episode_id||ep.id);if(!knownLatest){knownLatest=id;localStorage.setItem(LATEST_KEY,id)}else if(id!==String(knownLatest)){knownLatest=id;localStorage.setItem(LATEST_KEY,id);showAlert(ep)}}catch(e){console.log('New devotional check failed',e)}}setTimeout(checkLatest,5000);setInterval(checkLatest,60000);
-function setDevotionalDescriptionPicture(ep){
-  const wrap=document.getElementById('descriptionPictureWrap');
-  const img=document.getElementById('descriptionPicture');
-  if(!wrap||!img)return;
-  const raw=String(ep?.html_description||ep?.description||'');
-  const doc=new DOMParser().parseFromString(raw,'text/html');
-  const embedded=doc.querySelector('img[src],img[data-src],img[srcset]');
-  let bestSrc='';
-  if(embedded){
-    const set=(embedded.getAttribute('srcset')||'').split(',').map(part=>{const bits=part.trim().split(/\s+/);return{url:bits[0],width:parseInt(bits[1])||0}}).filter(x=>x.url);
-    set.sort((a,b)=>b.width-a.width);
-    bestSrc=set[0]?.url||embedded.getAttribute('data-src')||embedded.getAttribute('src')||'';
-  }
-  const candidates=[bestSrc,ep?.image_original_url,ep?.artwork_url,ep?.image_url,ep?.cover_url].filter(Boolean);
-  const src=candidates.find(v=>/^https?:\/\//i.test(v)||v.startsWith('//'));
-  if(!src){wrap.hidden=true;img.removeAttribute('src');return;}
-  img.onload=()=>{wrap.hidden=false;};
-  img.onerror=()=>{wrap.hidden=true;};
-  img.src=src.startsWith('//')?location.protocol+src:src;
-}
-async function load(){try{const r=await fetch('https://api.spreaker.com/v2/shows/'+SHOW_ID+'/episodes?limit=100',{cache:'no-store'});if(!r.ok)throw Error('Could not load episodes');const d=await r.json();allEpisodes=d.response?.items||[];if(!curId&&allEpisodes.length)curId=String(allEpisodes[0].episode_id||allEpisodes[0].id);render(allEpisodes);if(!curId){document.getElementById('title').textContent='No devotional available';document.getElementById('read').textContent='No devotional episodes were found. Please try again later.';showFallback(null);return}const ep=await fetchEpisode(curId);if(ep){document.getElementById('title').textContent=ep.title||'KBLC Daily Devotional';playerTitle.textContent=ep.title||'KBLC Daily Devotional';setDevotionalDescriptionPicture(ep);const desc=clean(ep.description||ep.html_description);if(desc)renderBook(desc,ep.title,ep.published_at);else{document.getElementById('read').textContent='No description available for this devotional.';document.getElementById('pageControls').hidden=true}if(!loadAudio(ep))showFallback(curId)}else{document.getElementById('descriptionPictureWrap').hidden=true;document.getElementById('read').textContent='The devotional audio is available above. The written devotional could not be loaded at this time.';showFallback(curId)}}catch(e){document.getElementById('descriptionPictureWrap').hidden=true;console.log('Loading error:',e);document.getElementById('title').textContent='KBLC Daily Devotional';document.getElementById('read').textContent='The devotional service could not be reached at this time. Please check your internet connection and try again.';showFallback(curId)}}
-/* Share the complete devotional as a PNG picture. */
+async function load(){try{const r=await fetch('https://api.spreaker.com/v2/shows/'+SHOW_ID+'/episodes?limit=100',{cache:'no-store'});if(!r.ok)throw Error('Could not load episodes');const d=await r.json();allEpisodes=d.response?.items||[];if(!curId&&allEpisodes.length)curId=String(allEpisodes[0].episode_id||allEpisodes[0].id);render(allEpisodes);if(!curId){document.getElementById('title').textContent='No devotional available';document.getElementById('read').textContent='No devotional episodes were found. Please try again later.';showFallback(null);return}const ep=await fetchEpisode(curId);if(ep){document.getElementById('title').textContent=ep.title||'KBLC Daily Devotional';playerTitle.textContent=ep.title||'KBLC Daily Devotional';const desc=clean(ep.description||ep.html_description);if(desc)renderBook(desc,ep.title,ep.published_at);else{document.getElementById('read').textContent='No description available for this devotional.';document.getElementById('pageControls').hidden=true}if(!loadAudio(ep))showFallback(curId)}else{document.getElementById('read').textContent='The devotional audio is available above. The written devotional could not be loaded at this time.';showFallback(curId)}}catch(e){console.log('Loading error:',e);document.getElementById('title').textContent='KBLC Daily Devotional';document.getElementById('read').textContent='The devotional service could not be reached at this time. Please check your internet connection and try again.';showFallback(curId)}}
+/* Export the devotional as two crisp A4 portrait PNG pages. */
 function wrapCanvasText(ctx,text,maxWidth){const words=String(text).split(/\s+/);const lines=[];let line='';for(const word of words){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);return lines}
 function drawCanvasRoundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath()}
-async function shareDevotionalPicture(){const btn=document.getElementById('shareDevotional'),status=document.getElementById('shareStatus');if(!shareSections.length){status.textContent='The devotional is still loading.';return}btn.disabled=true;status.textContent='Preparing devotional picture…';try{const W=1080,pad=76,inner=W-pad*2,canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font='800 27px Arial';let y=0;const layout=[];function addText(text,font,size,color,align='left',lineGap=1.55,indent=0){ctx.font=font;const lines=wrapCanvasText(ctx,text,inner-indent);layout.push({kind:'text',lines,font,size,color,align,lineGap,indent,y});y+=lines.length*size*lineGap+size*.55}y=pad+30;addText('KINGDOM BUILDERS LOVELIFE CHURCH','800 24px Arial',24,'#0758b9','center');addText('KBLC DAILY DEVOTIONAL','900 46px Arial',46,'#082b60','center',1.25);addText(bookTitle||'Today’s Devotional','700 34px Georgia',34,'#0758b9','center',1.35);addText(bookDate||new Date().toLocaleDateString(),'600 21px Arial',21,'#64748b','center');y+=22;for(const sec of shareSections){const title=sec.label||meta[sec.type].name;const isPrayer=sec.type==='prayer',isConf=sec.type==='confession';layout.push({kind:'section',title,prayer:isPrayer,confession:isConf,y});y+=64;for(const para of sec.paras){const scripture=sec.type==='scripture'||isVerse(para);const font=scripture?'italic 800 27px Georgia':(isPrayer||isConf?'800 27px Arial':'500 26px Arial');const size=scripture?27:26;ctx.font=font;const lines=wrapCanvasText(ctx,para,inner-42);layout.push({kind:'para',lines,font,size,scripture,prayer:isPrayer,confession:isConf,y});y+=lines.length*size*1.6+23}y+=16}addText('LISTEN • READ • REFLECT • GROW','800 20px Arial',20,'#0758b9','center');y+=pad;const H=Math.min(16000,Math.max(900,y));canvas.width=W;canvas.height=H;ctx.fillStyle='#f1f6fd';ctx.fillRect(0,0,W,H);const grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,'#e7f1ff');grad.addColorStop(1,'#ffffff');ctx.fillStyle=grad;drawCanvasRoundRect(ctx,28,28,W-56,H-56,34);ctx.fill();ctx.strokeStyle='#c7dcf7';ctx.lineWidth=3;drawCanvasRoundRect(ctx,28,28,W-56,H-56,34);ctx.stroke();for(const item of layout){if(item.kind==='text'){ctx.font=item.font;ctx.fillStyle=item.color;ctx.textAlign=item.align;let yy=item.y;for(const line of item.lines){ctx.fillText(line,item.align==='center'?W/2:pad+item.indent,yy);yy+=item.size*item.lineGap}}else if(item.kind==='section'){const color=item.prayer?'#0758b9':item.confession?'#945000':'#0758b9';const bg=item.prayer?'#e5f1ff':item.confession?'#fff0d3':'#eaf2fc';ctx.fillStyle=bg;drawCanvasRoundRect(ctx,pad,item.y-34,inner,52,15);ctx.fill();ctx.font='900 28px Arial';ctx.fillStyle=color;ctx.textAlign='center';ctx.fillText((item.prayer?'🙏  ':'')+(item.confession?'🔥  ':'')+item.title.toUpperCase(),W/2,item.y)}else{ctx.font=item.font;ctx.fillStyle=item.scripture?'#123c72':item.prayer?'#0758b9':item.confession?'#854600':'#263548';ctx.textAlign=item.prayer||item.confession?'center':'left';let yy=item.y;for(const line of item.lines){ctx.fillText(line,item.prayer||item.confession?W/2:pad+22,yy);yy+=item.size*1.6}}}const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Could not create picture')),'image/png'));const file=new File([blob],'KBLC-Devotional.png',{type:'image/png'});if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:bookTitle||'KBLC Daily Devotional',text:'KBLC Daily Devotional — Listen • Read • Reflect • Grow'});status.textContent='Devotional picture ready to share.'}else{const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='KBLC-Devotional.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);status.textContent='Picture saved. Open your Downloads or Gallery to share it.'}}catch(e){if(e.name==='AbortError')status.textContent='Sharing cancelled.';else{console.error(e);status.textContent='Could not create the picture. Please try again.'}}finally{btn.disabled=false}}
+function loadChurchLogo(){return new Promise(resolve=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>resolve(null);im.src='kblc-logo.png'})}
+function drawLogoWatermark(ctx,logo,cx,cy,size){if(!logo)return;ctx.save();ctx.globalAlpha=.055;ctx.drawImage(logo,cx-size/2,cy-size/2,size,size);ctx.restore()}
+async function shareDevotionalPicture(){
+ const btn=document.getElementById('shareDevotional'),status=document.getElementById('shareStatus');
+ if(!shareSections.length){status.textContent='The devotional is still loading.';return}
+ btn.disabled=true;status.textContent='Preparing two clear A4 devotional pages…';
+ try{
+  const W=1240,H=1754,pad=112,inner=W-pad*2,logo=await loadChurchLogo();
+  const bodySize=27,lineHeight=42,contentTop=520,contentBottom=1640,capacity=contentBottom-contentTop;
+  const measure=document.createElement('canvas').getContext('2d');
+  const flow=[];
+  for(const sec of shareSections){
+   const prayer=sec.type==='prayer',confession=sec.type==='confession';
+   flow.push({kind:'section',title:(sec.label||meta[sec.type].name).toUpperCase(),prayer,confession});
+   for(const para of sec.paras){
+    const scripture=sec.type==='scripture'||isVerse(para);
+    const size=scripture?30:bodySize;
+    measure.font=scripture?'italic 800 '+size+'px Georgia':(prayer||confession?'800 '+size+'px Arial':'700 '+size+'px Arial');
+    const lines=wrapCanvasText(measure,para,inner-38);
+    flow.push({kind:'para',lines,scripture,prayer,confession,size,lineHeight:Math.round(size*1.52)});
+   }
+  }
+  // Build two pages, splitting long paragraphs cleanly at line boundaries.
+  const pages=[[],[]];let page=0,used=0,lastSection=null;
+  for(const block of flow){
+   if(block.kind==='section'){
+    const h=64;if(used+h>capacity&&page===0){page=1;used=0}
+    pages[page].push({...block,h});used+=h;lastSection=block;continue;
+   }
+   let offset=0;
+   while(offset<block.lines.length&&page<2){
+    const lh=block.lineHeight,space=capacity-used;
+    let count=Math.floor((space-22)/lh);
+    if(count<1){if(page===0){page=1;used=0;if(lastSection)pages[page].push({...lastSection,h:64,continued:true}),used=64;continue}else{count=1}}
+    count=Math.min(count,block.lines.length-offset);
+    pages[page].push({...block,lines:block.lines.slice(offset,offset+count),h:count*lh+20,continued:offset>0});
+    used+=count*lh+20;offset+=count;
+    if(offset<block.lines.length&&page===0){page=1;used=0;if(lastSection)pages[page].push({...lastSection,h:64,continued:true}),used=64}
+    else if(offset<block.lines.length&&page===1){break}
+   }
+  }
+  // Keep the requested two-page format even for unusually long descriptions.
+  const files=[];
+  for(let pi=0;pi<2;pi++){
+   const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d');
+   ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
+   const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#f4f8ff');bg.addColorStop(1,'#ffffff');ctx.fillStyle=bg;drawCanvasRoundRect(ctx,28,28,W-56,H-56,28);ctx.fill();
+   ctx.strokeStyle='#c9dcf3';ctx.lineWidth=3;drawCanvasRoundRect(ctx,28,28,W-56,H-56,28);ctx.stroke();
+   // Centered glowing logo and church identity.
+   const cx=W/2,cy=128;ctx.save();ctx.shadowColor='#1687ff';ctx.shadowBlur=34;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(cx,cy,76,0,Math.PI*2);ctx.fill();ctx.restore();
+   ctx.strokeStyle='#1687ff';ctx.lineWidth=5;ctx.beginPath();ctx.arc(cx,cy,76,0,Math.PI*2);ctx.stroke();
+   if(logo){ctx.save();ctx.beginPath();ctx.arc(cx,cy,66,0,Math.PI*2);ctx.clip();ctx.drawImage(logo,cx-66,cy-66,132,132);ctx.restore()}
+   ctx.textAlign='center';ctx.fillStyle='#073b8e';ctx.font='900 27px Arial';ctx.fillText('KINGDOM BUILDERS LOVELIFE CHURCH INC.',cx,244);
+   ctx.fillStyle='#0758b9';ctx.font='900 43px Arial';ctx.fillText('KBLC DAILY DEVOTIONAL',cx,310);
+   ctx.fillStyle='#102f56';ctx.font='800 36px Georgia';const titleLines=wrapCanvasText(ctx,bookTitle||'Today’s Devotional',inner);
+   let ty=360;titleLines.slice(0,2).forEach(line=>{ctx.fillText(line,cx,ty);ty+=44});
+   ctx.textAlign='left';ctx.fillStyle='#0758b9';ctx.font='800 17px Arial';ctx.fillText('LISTEN  •  READ  •  REFLECT  •  GROW',pad,ty+25);
+   ctx.strokeStyle='#c9dcf3';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(pad,ty+45);ctx.lineTo(W-pad,ty+45);ctx.stroke();
+   // Very light church-logo watermark behind the devotional text.
+   drawLogoWatermark(ctx,logo,W/2,1080,560);
+   let y=contentTop;
+   for(const item of pages[pi]){
+    if(item.kind==='section'){
+     const color=item.prayer?'#0758b9':item.confession?'#925000':'#0758b9';const fill=item.prayer?'#e7f1ff':item.confession?'#fff0d9':'#edf4fd';
+     ctx.fillStyle=fill;drawCanvasRoundRect(ctx,pad,y,inner,48,12);ctx.fill();ctx.font='900 24px Arial';ctx.fillStyle=color;ctx.textAlign='center';ctx.fillText((item.continued?'CONTINUED • ':'')+(item.prayer?'PRAYER • ':'')+(item.confession?'CONFESSION • ':'')+item.title,cx,y+32);y+=64;
+    }else{
+     const scripture=item.scripture;ctx.font=scripture?'italic 800 '+item.size+'px Georgia':(item.prayer||item.confession?'800 '+item.size+'px Arial':'700 '+item.size+'px Arial');ctx.fillStyle=scripture?'#123c72':item.prayer?'#0758b9':item.confession?'#854600':'#17283d';ctx.textAlign=item.prayer||item.confession?'center':'left';
+     for(const line of item.lines){ctx.fillText(line,item.prayer||item.confession?cx:pad+18,y+item.size);y+=item.lineHeight}y+=20;
+    }
+   }
+   // Page number and subtle footer.
+   ctx.strokeStyle='#d6e3f2';ctx.beginPath();ctx.moveTo(pad,1680);ctx.lineTo(W-pad,1680);ctx.stroke();ctx.textAlign='center';ctx.fillStyle='#66809d';ctx.font='700 18px Arial';ctx.fillText('KINGDOM BUILDERS LOVELIFE CHURCH INC.  •  PAGE '+(pi+1)+' OF 2',cx,1718);
+   const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Could not create A4 picture')),'image/png'));
+   files.push(new File([blob],'KBLC-Devotional-A4-Page-'+(pi+1)+'.png',{type:'image/png'}));
+  }
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files})){await navigator.share({files,title:bookTitle||'KBLC Daily Devotional',text:'KBLC Daily Devotional — two-page A4 edition'});status.textContent='Two A4 devotional pages are ready to share.'}
+  else{for(const file of files){const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000)}status.textContent='Both A4 PNG pages downloaded. Open Downloads or Gallery to share them.'}
+ }catch(e){if(e.name==='AbortError')status.textContent='Sharing cancelled.';else{console.error(e);status.textContent='Could not export the A4 pages. Please try again.'}}
+ finally{btn.disabled=false}
+}
 document.getElementById('shareDevotional').addEventListener('click',shareDevotionalPicture);
 
 setPlaying(false);load();
