@@ -159,14 +159,14 @@ header .brand{display:none!important}
 .church-name{margin-top:12px;color:#073b8e;font-size:clamp(13px,3.5vw,18px);font-weight:900;line-height:1.35;letter-spacing:.75px}
 #dailyDevotional .reference-date,.today-badge,.episode-item small{display:none!important}
 
-/* Compact, clear devotional artwork with a full-width separator beneath it. */
-.devotional-description-image{position:relative;width:min(58vw,205px);margin:13px auto 10px;padding:3px;border-radius:12px;background:linear-gradient(135deg,#fffffff5,#9bcaffb8,#ffffffed);border:1px solid #ffffffed;box-shadow:0 4px 11px #0758b91a,0 0 0 1px #1687ff1c;overflow:hidden}
+/* Compact devotional artwork: smaller display with no artificial blur or sharpening filters. */
+.devotional-description-image{position:relative;width:min(68vw,240px);margin:14px auto 12px;padding:3px;border-radius:13px;background:linear-gradient(135deg,#fffffff5,#9bcaffb8,#ffffffed);border:1px solid #ffffffed;box-shadow:0 4px 12px #0758b91c,0 0 0 1px #1687ff20,inset 0 0 0 1px #ffffffaa;overflow:hidden}
 .devotional-description-image:before{content:none}
-.devotional-description-image img{display:block;width:auto;max-width:100%;height:auto;max-height:175px;margin:0 auto;object-fit:contain;object-position:center;border-radius:9px;background:#edf4fc;filter:none;image-rendering:auto}
-.devotional-image-divider{display:block;width:100%;height:4px;margin:16px auto 21px;border:0;border-radius:4px;background:linear-gradient(90deg,#1687ff,#0758b9 50%,#1687ff);box-shadow:0 2px 7px #0758b922}
-body:not(.light-theme) .devotional-description-image{background:linear-gradient(135deg,#ffffff42,#1687ff55,#ffffff2b);border-color:#ffffff88;box-shadow:0 5px 15px #0005,0 0 0 1px #65b3ff44}
+.devotional-description-image img{display:block;width:auto;max-width:100%;height:auto;max-height:205px;margin:0 auto;object-fit:contain;object-position:center;border-radius:10px;background:#edf4fc;filter:none;image-rendering:auto}
+.devotional-image-divider{width:100%;height:4px;margin:17px auto 22px;border:0;border-radius:4px;background:linear-gradient(90deg,#1687ff,#0758b9 50%,#1687ff);box-shadow:0 2px 7px #0758b922}
+body:not(.light-theme) .devotional-description-image{background:linear-gradient(135deg,#ffffff42,#1687ff55,#ffffff2b);border-color:#ffffff88;box-shadow:0 7px 22px #0005,0 0 0 1px #65b3ff44,inset 0 0 0 1px #ffffff33}
 body:not(.light-theme) .devotional-description-image img{background:#10213a}
-@media(max-width:600px){.devotional-description-image{width:min(62vw,185px);margin:10px auto 8px;padding:3px;border-radius:11px}.devotional-description-image img{max-height:155px;border-radius:8px}.devotional-image-divider{height:3px;margin:13px auto 18px}}
+@media(max-width:600px){.devotional-description-image{width:min(64vw,215px);margin:11px auto 9px;padding:3px;border-radius:12px}.devotional-description-image img{max-height:180px;border-radius:9px}.devotional-image-divider{height:3px;margin:14px auto 19px}}
 
 .book-page{position:relative!important;isolation:isolate!important}
 .book-page:before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:url('kblc-logo.png') center 48%/min(430px,72vw) auto no-repeat;opacity:.065}
@@ -369,14 +369,15 @@ async function load(){try{const r=await fetch('https://api.spreaker.com/v2/shows
 function wrapCanvasText(ctx,text,maxWidth){const words=String(text).split(/\s+/);const lines=[];let line='';for(const word of words){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);return lines}
 function drawCanvasRoundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath()}
 function loadChurchLogo(){return new Promise(resolve=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>resolve(null);im.src='kblc-logo.png'})}
+function loadDevotionalArtwork(url){return new Promise(resolve=>{if(!url){resolve(null);return}const im=new Image();im.crossOrigin='anonymous';im.onload=()=>resolve(im);im.onerror=()=>resolve(null);im.src=url})}
 function drawLogoWatermark(ctx,logo,cx,cy,size){if(!logo)return;ctx.save();ctx.globalAlpha=.055;ctx.drawImage(logo,cx-size/2,cy-size/2,size,size);ctx.restore()}
 async function shareDevotionalPicture(){
  const btn=document.getElementById('shareDevotional'),status=document.getElementById('shareStatus');
  if(!shareSections.length){status.textContent='The devotional is still loading.';return}
  btn.disabled=true;status.textContent='Preparing two clear A4 devotional pages…';
  try{
-  const W=1240,H=1754,pad=112,inner=W-pad*2,logo=await loadChurchLogo();
-  const bodySize=27,lineHeight=42,contentTop=520,contentBottom=1640,capacity=contentBottom-contentTop;
+  const W=1240,H=1754,pad=112,inner=W-pad*2,logo=await loadChurchLogo(),artwork=await loadDevotionalArtwork(devotionalImageUrl);
+  const bodySize=27,lineHeight=42,contentTop=555,contentBottom=1640,capacity=contentBottom-contentTop;
   const measure=document.createElement('canvas').getContext('2d');
   const flow=[];
   for(const sec of shareSections){
@@ -426,6 +427,8 @@ async function shareDevotionalPicture(){
    let ty=360;titleLines.slice(0,2).forEach(line=>{ctx.fillText(line,cx,ty);ty+=44});
    ctx.textAlign='left';ctx.fillStyle='#0758b9';ctx.font='800 17px Arial';ctx.fillText('LISTEN  •  READ  •  REFLECT  •  GROW',pad,ty+25);
    ctx.strokeStyle='#c9dcf3';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(pad,ty+45);ctx.lineTo(W-pad,ty+45);ctx.stroke();
+   // Add the Spreaker/devotional description picture to both exported PNG pages.
+   if(artwork){const maxW=190,maxH=112,scale=Math.min(maxW/artwork.naturalWidth,maxH/artwork.naturalHeight,1),iw=artwork.naturalWidth*scale,ih=artwork.naturalHeight*scale,ix=(W-iw)/2,iy=ty+60;ctx.save();ctx.shadowColor='#0758b933';ctx.shadowBlur=12;ctx.fillStyle='#ffffff';drawCanvasRoundRect(ctx,ix-7,iy-7,iw+14,ih+14,12);ctx.fill();ctx.restore();ctx.save();ctx.beginPath();drawCanvasRoundRect(ctx,ix,iy,iw,ih,7);ctx.clip();ctx.drawImage(artwork,ix,iy,iw,ih);ctx.restore();ctx.strokeStyle='#1687ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(pad,iy+ih+20);ctx.lineTo(W-pad,iy+ih+20);ctx.stroke()}
    // Very light church-logo watermark behind the devotional text.
    drawLogoWatermark(ctx,logo,W/2,1080,560);
    let y=contentTop;
@@ -439,11 +442,11 @@ async function shareDevotionalPicture(){
     }
    }
    // Page number and subtle footer.
-   ctx.strokeStyle='#d6e3f2';ctx.beginPath();ctx.moveTo(pad,1680);ctx.lineTo(W-pad,1680);ctx.stroke();ctx.textAlign='center';ctx.fillStyle='#66809d';ctx.font='700 18px Arial';ctx.fillText('KINGDOM BUILDERS LOVELIFE CHURCH INC.  •  PAGE '+(pi+1)+' OF 2',cx,1718);
+   ctx.strokeStyle='#d6e3f2';ctx.beginPath();ctx.moveTo(pad,1680);ctx.lineTo(W-pad,1680);ctx.stroke();ctx.textAlign='center';ctx.fillStyle='#66809d';ctx.font='700 18px Arial';ctx.fillText('KINGDOM BUILDERS LOVELIFE CHURCH INC.  •  PAGE '+(pi+1)+' OF 2',cx,1704);ctx.fillStyle='#0758b9';ctx.font='700 17px Arial';ctx.fillText('kblcdailydevotional.vercel.app',cx,1733);
    const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Could not create A4 picture')),'image/png'));
    files.push(new File([blob],'KBLC-Devotional-A4-Page-'+(pi+1)+'.png',{type:'image/png'}));
   }
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files})){await navigator.share({files,title:bookTitle||'KBLC Daily Devotional',text:'KBLC Daily Devotional — two-page A4 edition'});status.textContent='Two A4 devotional pages are ready to share.'}
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files})){await navigator.share({files,title:bookTitle||'KBLC Daily Devotional',text:'KBLC Daily Devotional — two-page A4 edition\nhttps://kblcdailydevotional.vercel.app'});status.textContent='Two A4 devotional pages are ready to share.'}
   else{for(const file of files){const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000)}status.textContent='Both A4 PNG pages downloaded. Open Downloads or Gallery to share them.'}
  }catch(e){if(e.name==='AbortError')status.textContent='Sharing cancelled.';else{console.error(e);status.textContent='Could not export the A4 pages. Please try again.'}}
  finally{btn.disabled=false}
