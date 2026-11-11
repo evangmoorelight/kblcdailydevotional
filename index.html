@@ -206,6 +206,15 @@ body:not(.light-theme) .book-page:before{opacity:.035!important}
 .church-rhema{margin-top:8px;padding:6px 16px;border-radius:20px;background:linear-gradient(135deg,#073b8e,#1687ff);color:#fff;font-size:clamp(11px,3vw,14px);font-weight:900;letter-spacing:2px;box-shadow:0 4px 12px #0758b933}
 body:not(.light-theme) .church-rhema{background:linear-gradient(135deg,#0758b9,#1687ff);color:#fff}
 
+/* SGE Telegram group card */
+.sge-card{text-align:center;padding:26px 20px!important}
+.sge-card img{width:150px;height:150px;border-radius:50%;object-fit:cover;background:#000;box-shadow:0 0 0 4px #1687ff30,0 8px 22px #0758b940}
+.sge-card h3{margin:18px 0 20px;color:var(--heading);font-size:clamp(20px,5.5vw,28px);font-weight:900;line-height:1.25}
+.sge-card .sge-members{color:var(--muted);font-size:14px;margin:0 0 20px}
+.sge-join{display:inline-block;min-width:200px;padding:14px 30px;border-radius:30px;background:#1e91e6;color:#fff!important;font-size:15px;font-weight:800;letter-spacing:.5px;text-decoration:none;box-shadow:0 6px 16px #1e91e655}
+.sge-join:active{transform:scale(.97)}
+.sge-card .sge-note{color:var(--muted);font-size:12px;line-height:1.7;margin:18px 0 0}
+
 </style>  
 </head>  
 <body class="splash-active">  
@@ -226,7 +235,7 @@ body:not(.light-theme) .church-rhema{background:linear-gradient(135deg,#0758b9,#
     <a href="notes.html" class="side-link"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5"/></svg></span><span class="side-link-text"><strong>My Notes</strong><small>Save your reflections</small></span><span class="side-link-arrow">›</span></a>  
     <a href="https://pstbillmatt.vercel.app/" class="side-link" target="_blank" rel="noopener"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/></svg></span><span class="side-link-text"><strong>Sermons</strong><small>Listen to messages</small></span><span class="side-link-arrow">↗</span></a>  
     <a href="contact.html" class="side-link"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg></span><span class="side-link-text"><strong>Contact Us</strong><small>Get in touch with us</small></span><span class="side-link-arrow">›</span></a>  
-    <a href="https://sge-prayer-hubs.vercel.app/" class="side-link" target="_blank" rel="noopener"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.7A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/></svg></span><span class="side-link-text"><strong>SGE Prayer Hub</strong><small>Connect • Pray • Believe</small></span><span class="side-link-arrow">↗</span></a>  
+    <a href="https://sge-prayer-hubs.vercel.app/" class="side-link" target="_blank" rel="noopener"><span class="side-link-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.7A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/></svg></span><span class="side-link-text"><strong>CONFERENCE CALL</strong><small>Connect • Pray • Believe</small></span><span class="side-link-arrow">↗</span></a>  
   </nav>  
   <div class="menu-footer"><div class="menu-footer-card"><strong>Welcome to KBLC</strong><p>Grow in God's Word every day. Listen, reflect, pray and keep your faith alive.</p></div><div class="menu-footer-copy">© <span id="menuYear"></span> Kingdom Builders Lovelife Church INC.</div></div>  
 </aside>  
@@ -265,7 +274,13 @@ body:not(.light-theme) .church-rhema{background:linear-gradient(135deg,#0758b9,#
         <button class="notification-btn" id="notificationBtn"><svg class="icon" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Enable New Devotional Alerts</span></button>  
       </div>  
     </div>  
-  </section>    <section class="card" id="allDevotionals"><div class="episodes-head"><div><h3>All Devotionals</h3><div style="color:var(--muted);font-size:10px;margin-top:5px">Explore previous messages</div></div><button class="minimize-btn" id="minimizeBtn" aria-label="Minimize devotionals" title="Minimize">−</button></div><div id="devotionalContent"><div class="search-box"><input type="search" id="episodeSearch" placeholder="Search devotionals by title..." autocomplete="off"><span class="search-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></span></div><div id="list">Loading devotional list...</div></div></section>  
+  </section>    <section class="card sge-card" id="sgeGroup">
+    <img src="sge-group.jpg" alt="Seeking God Early (SGE) group">
+    <h3>SEEKING GOD EARLY (SGE), KBLM.</h3>
+    <a class="sge-join" href="https://t.me/+fcuP97Z4W604MDc0" target="_blank" rel="noopener">JOIN GROUP</a>
+    <p class="sge-note">You are invited to the group <strong>SEEKING GOD EARLY (SGE), KBLM.</strong> Tap above to join.</p>
+  </section>
+  <section class="card" id="allDevotionals"><div class="episodes-head"><div><h3>All Devotionals</h3><div style="color:var(--muted);font-size:10px;margin-top:5px">Explore previous messages</div></div><button class="minimize-btn" id="minimizeBtn" aria-label="Minimize devotionals" title="Minimize">−</button></div><div id="devotionalContent"><div class="search-box"><input type="search" id="episodeSearch" placeholder="Search devotionals by title..." autocomplete="off"><span class="search-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></span></div><div id="list">Loading devotional list...</div></div></section>  
   <footer><strong>KBLC DAILY DEVOTIONAL</strong><br>Listen • Read • Reflect • Grow<br><br>© <span id="year"></span> Kingdom Builders Lovelife Church INC.</footer>  
 </main>  
 <div class="new-episode-alert" id="newEpisodeAlert"><div class="alert-top"><div class="alert-icon">🔔</div><div class="alert-text"><div class="alert-label">New Devotional</div><div class="alert-title" id="newEpisodeTitle">New KBLC Daily Devotional available</div></div><button class="alert-close" id="closeEpisodeAlert" aria-label="Close">✕</button></div><button class="alert-open" id="openNewEpisode">Listen Now</button></div>  
