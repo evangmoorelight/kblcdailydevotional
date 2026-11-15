@@ -227,6 +227,28 @@ body:not(.light-theme) .church-rhema{background:linear-gradient(135deg,#0758b9,#
 body:not(.light-theme) .church-downloads{background:#173454;border-color:#31577f;color:#b8dcff}
 body:not(.light-theme) .church-downloads strong{color:#fff}
 
+/* SGE prayer reminder popup */
+.sge-pop{position:fixed;inset:0;z-index:3500;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(3,10,25,.62);backdrop-filter:blur(4px)}
+.sge-pop.show{display:flex;animation:popFade .25s ease}
+@keyframes popFade{from{opacity:0}to{opacity:1}}
+.sge-pop-box{position:relative;width:min(380px,100%);padding:30px 22px 22px;border-radius:24px;text-align:center;background:var(--card);border:1px solid var(--line);box-shadow:0 22px 55px #0006;animation:popUp .3s ease}
+@keyframes popUp{from{transform:translateY(14px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+.sge-pop-icon{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:30px;background:linear-gradient(135deg,#073b8e,#1687ff);box-shadow:0 8px 20px #0758b94d}
+.sge-pop-box h3{margin:0 0 10px;color:var(--heading);font-size:21px;font-weight:900;line-height:1.3}
+.sge-pop-box p{margin:0 0 20px;color:var(--text);font-size:14px;line-height:1.75}
+.sge-pop-join{display:block;width:100%;padding:14px;border-radius:30px;background:linear-gradient(135deg,#073b8e,#1687ff);color:#fff!important;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 6px 16px #0758b94d}
+.sge-pop-later{display:block;width:100%;margin-top:10px;padding:12px;border:0;background:none;color:var(--muted);font-size:13px;font-weight:700}
+.sge-pop-x{position:absolute;right:12px;top:12px;width:34px;height:34px;border:0;border-radius:50%;background:var(--soft);color:var(--muted);font-size:16px}
+
+/* Bible text: italic, centred and separated from the devotional by a line */
+.book-page blockquote.verse{font-style:italic!important;text-align:center!important;margin:14px 0 6px!important}
+.book-page .verse-ref{font-style:italic!important;text-align:center!important;margin:10px 0 0!important;padding-bottom:0!important}
+.book-page .verse-ref::after,.book-page blockquote.verse:last-child::after{content:"";display:block;width:70%;height:3px;margin:24px auto 32px;border-radius:3px;background:linear-gradient(90deg,transparent,#1687ff 20%,#0758b9 50%,#1687ff 80%,transparent)}
+
+/* Smaller bible text */
+.book-page blockquote.verse{font-size:clamp(15px,4vw,19px)!important;font-weight:700!important;line-height:1.65!important}
+.book-page .verse-ref{font-size:clamp(12px,3.2vw,14px)!important;font-weight:600!important}
+
 /* SGE Telegram group card */
 .sge-card{text-align:center;padding:26px 20px!important}
 .sge-card img{width:150px;height:150px;border-radius:50%;object-fit:cover;background:#000;box-shadow:0 0 0 4px #1687ff30,0 8px 22px #0758b940}
@@ -305,6 +327,7 @@ body:not(.light-theme) .church-downloads strong{color:#fff}
   <section class="card" id="allDevotionals"><div class="episodes-head"><div><h3>All Devotionals</h3><div style="color:var(--muted);font-size:10px;margin-top:5px">Explore previous messages</div></div><button class="minimize-btn" id="minimizeBtn" aria-label="Minimize devotionals" title="Minimize">−</button></div><div id="devotionalContent"><div class="search-box"><input type="search" id="episodeSearch" placeholder="Search devotionals by title..." autocomplete="off"><span class="search-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></span></div><div id="list">Loading devotional list...</div></div></section>  
   <footer><strong>KBLC DAILY DEVOTIONAL</strong><br>Listen • Read • Reflect • Grow<br><br>© <span id="year"></span> Kingdom Builders Lovelife Church INC.</footer>  
 </main>  
+<div class="sge-pop" id="sgePop" role="dialog" aria-modal="true" aria-labelledby="sgePopTitle"><div class="sge-pop-box"><button class="sge-pop-x" id="sgePopX" aria-label="Close">✕</button><div class="sge-pop-icon">🙏</div><h3 id="sgePopTitle">Join the SGE Prayer</h3><p>When you are done with today's devotional, don't forget to join the <strong>SGE Prayer</strong> and seek God early with us.</p><a class="sge-pop-join" id="sgePopJoin" href="https://t.me/+fcuP97Z4W604MDc0" target="_blank" rel="noopener">Join SGE Prayer</a><button class="sge-pop-later" id="sgePopLater" type="button">I will join later</button></div></div>
 <div class="new-episode-alert" id="newEpisodeAlert"><div class="alert-top"><div class="alert-icon">🔔</div><div class="alert-text"><div class="alert-label">New Devotional</div><div class="alert-title" id="newEpisodeTitle">New KBLC Daily Devotional available</div></div><button class="alert-close" id="closeEpisodeAlert" aria-label="Close">✕</button></div><button class="alert-open" id="openNewEpisode">Listen Now</button></div>  
 <script>  
 /* Splash */  
@@ -458,46 +481,56 @@ function drawLogoWatermark(ctx,logo,cx,cy,size){if(!logo)return;ctx.save();ctx.g
 async function shareDevotionalPicture(){  
  const btn=document.getElementById('shareDevotional'),status=document.getElementById('shareStatus');  
  if(!shareSections.length){status.textContent='The devotional is still loading.';return}  
- btn.disabled=true;status.textContent='Preparing two clear A4 devotional pages…';  
+ btn.disabled=true;status.textContent='Preparing clear A4 devotional pages…';  
  try{  
   const W=1240,H=1754,pad=112,inner=W-pad*2,logo=await loadChurchLogo(),artwork=await loadDevotionalArtwork(devotionalImageUrl);  
   if(!artwork){throw new Error('The devotional picture could not be loaded for export. Please check that the devotional image is visible on the page and that its image URL can be accessed. No picture-free PNGs were created.');}  
-  const bodySize=27,lineHeight=42,contentBottom=1625;const flowCapacity=contentBottom-920;  
-  const measure=document.createElement('canvas').getContext('2d');  
-  const flow=[];  
-  for(const sec of shareSections){  
-   const prayer=sec.type==='prayer',confession=sec.type==='confession';  
-   flow.push({kind:'section',title:(sec.label||meta[sec.type].name).toUpperCase(),prayer,confession});  
-   for(const para of sec.paras){  
-    const scripture=sec.type==='scripture'||isVerse(para);  
-    const size=scripture?30:bodySize;  
-    measure.font=scripture?'italic 800 '+size+'px Georgia':(prayer||confession?'800 '+size+'px Arial':'700 '+size+'px Arial');  
-    const lines=wrapCanvasText(measure,para,inner-38);  
-    flow.push({kind:'para',lines,scripture,prayer,confession,size,lineHeight:Math.round(size*1.52)});  
-   }  
-  }  
-  // Build two pages, splitting long paragraphs cleanly at line boundaries.  
-  const pages=[[],[]];let page=0,used=0,lastSection=null;  
-  for(const block of flow){  
-   if(block.kind==='section'){  
-    const h=64;if(used+h>flowCapacity&&page===0){page=1;used=0}  
-    pages[page].push({...block,h});used+=h;lastSection=block;continue;  
-   }  
-   let offset=0;  
-   while(offset<block.lines.length&&page<2){  
-    const lh=block.lineHeight,space=flowCapacity-used;  
-    let count=Math.floor((space-22)/lh);  
-    if(count<1){if(page===0){page=1;used=0;if(lastSection)pages[page].push({...lastSection,h:64,continued:true}),used=64;continue}else{count=1}}  
-    count=Math.min(count,block.lines.length-offset);  
-    pages[page].push({...block,lines:block.lines.slice(offset,offset+count),h:count*lh+20,continued:offset>0});  
-    used+=count*lh+20;offset+=count;  
-    if(offset<block.lines.length&&page===0){page=1;used=0;if(lastSection)pages[page].push({...lastSection,h:64,continued:true}),used=64}  
-    else if(offset<block.lines.length&&page===1){break}  
-   }  
-  }  
+  const contentBottom=1625;
+  const measure=document.createElement('canvas').getContext('2d');
+  // Work out exactly how much room each page has for text.
+  measure.font='800 34px Georgia';const hdrLines=Math.min(2,wrapCanvasText(measure,bookTitle||'Today’s Devotional',inner-20).length);
+  const ruleY0=322+42*hdrLines+43;
+  measure.font='800 27px Arial';const ttlLines=Math.min(2,wrapCanvasText(measure,bookTitle||'KBLC Daily Devotional',inner-36).length);
+  const artScale=Math.min(340/artwork.naturalWidth,235/artwork.naturalHeight,1),artH=artwork.naturalHeight*artScale;
+  const top1=ruleY0+22+91+58+38*ttlLines+22,top0=top1+artH+25;
+  const capOf=i=>contentBottom-(i===0?top0:top1);
+  function buildPages(bodySize){
+   const flow=[];
+   for(const sec of shareSections){
+    const prayer=sec.type==='prayer',confession=sec.type==='confession';
+    flow.push({kind:'section',title:(sec.label||meta[sec.type].name).toUpperCase(),prayer,confession});
+    for(const para of sec.paras){
+     const scripture=sec.type==='scripture'||isVerse(para);
+     const size=scripture?bodySize+1:bodySize;
+     measure.font=scripture?'italic 800 '+size+'px Georgia':(prayer||confession?'800 '+size+'px Arial':'700 '+size+'px Arial');
+     flow.push({kind:'para',lines:wrapCanvasText(measure,para,inner-38),scripture,prayer,confession,size,lineHeight:Math.round(size*1.52)});
+    }
+   }
+   const pages=[[]];let page=0,used=0,lastSection=null;
+   const newPage=cont=>{page++;pages[page]=[];used=0;if(cont&&lastSection){pages[page].push({...lastSection,h:64,continued:true});used=64}};
+   for(const block of flow){
+    if(block.kind==='section'){
+     if(used+64+40>capOf(page)&&used>0)newPage(false);
+     pages[page].push({...block,h:64});used+=64;lastSection=block;continue;
+    }
+    let offset=0;
+    while(offset<block.lines.length){
+     const lh=block.lineHeight;let count=Math.floor((capOf(page)-used-22)/lh);
+     if(count<1){newPage(true);continue}
+     count=Math.min(count,block.lines.length-offset);
+     pages[page].push({...block,lines:block.lines.slice(offset,offset+count),h:count*lh+20,continued:offset>0});
+     used+=count*lh+20;offset+=count;
+     if(offset<block.lines.length)newPage(true);
+    }
+   }
+   return pages;
+  }
+  // Use the largest text size that fits on two pages; shrink gradually so nothing is cut.
+  let pages=null;
+  for(const size of [27,25,24,23,22,21,20]){pages=buildPages(size);if(pages.length<=2)break}
   // Keep the requested two-page format even for unusually long descriptions.  
   const files=[];  
-  for(let pi=0;pi<2;pi++){  
+  for(let pi=0;pi<pages.length;pi++){  
    const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d');  
    ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);  
    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#f4f8ff');bg.addColorStop(1,'#ffffff');ctx.fillStyle=bg;drawCanvasRoundRect(ctx,28,28,W-56,H-56,28);ctx.fill();  
@@ -547,18 +580,18 @@ if(item.kind==='section'){
 const color=item.prayer?'#0758b9':item.confession?'#925000':'#0758b9';const fill=item.prayer?'#e7f1ff':item.confession?'#fff0d9':'#edf4fd';
 ctx.fillStyle=fill;drawCanvasRoundRect(ctx,pad,y,inner,48,12);ctx.fill();ctx.font='900 24px Arial';ctx.fillStyle=color;ctx.textAlign='center';ctx.fillText((item.continued?'CONTINUED • ':'')+(item.prayer?'PRAYER • ':'')+(item.confession?'CONFESSION • ':'')+item.title,cx,y+32);y+=64;
 }else{
-const scripture=item.scripture;ctx.font=scripture?'italic 800 '+item.size+'px Georgia':(item.prayer||item.confession?'800 '+item.size+'px Arial':'700 '+item.size+'px Arial');ctx.fillStyle=scripture?'#123c72':item.prayer?'#0758b9':item.confession?'#854600':'#17283d';ctx.textAlign=item.prayer||item.confession?'center':'left';
-for(const line of item.lines){ctx.fillText(line,item.prayer||item.confession?cx:pad+18,y+item.size);y+=item.lineHeight}y+=20;
+const scripture=item.scripture;ctx.font=scripture?'italic 800 '+item.size+'px Georgia':(item.prayer||item.confession?'800 '+item.size+'px Arial':'700 '+item.size+'px Arial');ctx.fillStyle=scripture?'#123c72':item.prayer?'#0758b9':item.confession?'#854600':'#17283d';const ctr=item.prayer||item.confession||scripture;ctx.textAlign=ctr?'center':'left';
+for(const line of item.lines){ctx.fillText(line,ctr?cx:pad+18,y+item.size);y+=item.lineHeight}y+=20;
 }
 }
 // Page number and subtle footer.
-ctx.strokeStyle='#d6e3f2';ctx.beginPath();ctx.moveTo(pad,1665);ctx.lineTo(W-pad,1665);ctx.stroke();ctx.textAlign='left';ctx.fillStyle='#0758b9';ctx.font='700 16px Arial';ctx.fillText('🌐 kblcdailydevotional.vercel.app',pad,1705);ctx.textAlign='right';ctx.fillStyle='#66809d';ctx.font='700 16px Arial';ctx.fillText('PAGE '+(pi+1)+' OF 2  •  KBLC DAILY DEVOTIONAL',W-pad,1705);
+ctx.strokeStyle='#d6e3f2';ctx.beginPath();ctx.moveTo(pad,1665);ctx.lineTo(W-pad,1665);ctx.stroke();ctx.textAlign='left';ctx.fillStyle='#0758b9';ctx.font='700 16px Arial';ctx.fillText('🌐 kblcdailydevotional.vercel.app',pad,1705);ctx.textAlign='right';ctx.fillStyle='#66809d';ctx.font='700 16px Arial';ctx.fillText('PAGE '+(pi+1)+' OF '+pages.length+'  •  KBLC DAILY DEVOTIONAL',W-pad,1705);
 const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Could not create A4 picture')),'image/png'));
 files.push(new File([blob],'KBLC-Devotional-A4-Page-'+(pi+1)+'.png',{type:'image/png'}));
 }
 if(artwork&&artwork._kblcObjectUrl)URL.revokeObjectURL(artwork._kblcObjectUrl);
-if(navigator.share&&navigator.canShare&&navigator.canShare({files})){await navigator.share({files,title:bookTitle||'KBLC Daily Devotional',text:'KBLC Daily Devotional — two-page A4 edition\nhttps://kblcdailydevotional.vercel.app'});status.textContent=artwork?'Two A4 pages are ready to share. The devotional picture appears on page 1 only.':'Two A4 pages exported, but the devotional picture could not be retrieved. Check the episode image URL.'}
-else{for(const file of files){const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000)}status.textContent=artwork?'Both A4 PNG pages downloaded. The devotional picture appears on page 1 only.':'Both A4 PNG pages downloaded, but the devotional picture could not be retrieved.'}
+if(navigator.share&&navigator.canShare&&navigator.canShare({files})){await navigator.share({files,title:bookTitle||'KBLC Daily Devotional',text:'KBLC Daily Devotional — A4 edition\nhttps://kblcdailydevotional.vercel.app'});status.textContent=artwork?'A4 pages are ready to share. The devotional picture appears on page 1 only.':'A4 pages exported, but the devotional picture could not be retrieved. Check the episode image URL.'}
+else{for(const file of files){const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000)}status.textContent=artwork?'All A4 PNG pages downloaded. The devotional picture appears on page 1 only.':'All A4 PNG pages downloaded, but the devotional picture could not be retrieved.'}
 }catch(e){if(e.name==='AbortError')status.textContent='Sharing cancelled.';else{console.error(e);status.textContent=e.message&&e.message.includes('devotional picture')?'The devotional picture could not be accessed for PNG export. Please check the image URL or use a downloadable image source. No picture-free PNGs were created.':'Could not export the A4 pages. Please try again.'}}
 finally{btn.disabled=false}
 }
@@ -607,6 +640,16 @@ document.getElementById('shareDevotional').addEventListener('click',shareDevotio
   }catch(e){console.log('Downloads counter error:',e)}
  }
  update();setInterval(update,300000);
+})();
+/* SGE prayer reminder popup shown when the site opens (once per visit) */
+(function(){
+ const pop=document.getElementById('sgePop');if(!pop)return;
+ let seen=false;try{seen=sessionStorage.getItem('kblc_sge_pop')==='1'}catch(e){}
+ function hide(){pop.classList.remove('show');document.body.classList.remove('menu-open')}
+ ['sgePopX','sgePopLater','sgePopJoin'].forEach(id=>document.getElementById(id).addEventListener('click',hide));
+ pop.addEventListener('click',e=>{if(e.target===pop)hide()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
+ if(!seen)setTimeout(()=>{pop.classList.add('show');try{sessionStorage.setItem('kblc_sge_pop','1')}catch(e){}},3500);
 })();
 setPlaying(false);load();
 </script>
