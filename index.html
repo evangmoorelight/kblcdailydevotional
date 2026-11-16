@@ -241,13 +241,41 @@ body:not(.light-theme) .church-downloads strong{color:#fff}
 .sge-pop-x{position:absolute;right:12px;top:12px;width:34px;height:34px;border:0;border-radius:50%;background:var(--soft);color:var(--muted);font-size:16px}
 
 /* Bible text: italic, centred and separated from the devotional by a line */
-.book-page blockquote.verse{font-style:italic!important;text-align:center!important;margin:14px 0 6px!important}
-.book-page .verse-ref{font-style:italic!important;text-align:center!important;margin:10px 0 0!important;padding-bottom:0!important}
+.book-page blockquote.verse{font-style:normal!important;text-align:left!important;margin:14px 0 6px!important}
+.book-page .verse-ref{font-style:normal!important;text-align:left!important;margin:10px 0 0!important;padding-bottom:0!important}
 .book-page .verse-ref::after,.book-page blockquote.verse:last-child::after{content:"";display:block;width:70%;height:3px;margin:24px auto 32px;border-radius:3px;background:linear-gradient(90deg,transparent,#1687ff 20%,#0758b9 50%,#1687ff 80%,transparent)}
 
 /* Smaller bible text */
 .book-page blockquote.verse{font-size:clamp(15px,4vw,19px)!important;font-weight:700!important;line-height:1.65!important}
 .book-page .verse-ref{font-size:clamp(12px,3.2vw,14px)!important;font-weight:600!important}
+
+/* Language selector */
+.lang-toggle{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);display:flex;align-items:center;justify-content:center}
+body:not(.light-theme) .lang-toggle{background:#132b48;color:#c9e4ff;border-color:#31577f}
+.header-actions{gap:8px!important}
+.lang-menu{position:fixed;z-index:1500;top:64px;right:12px;width:min(260px,calc(100vw - 24px));max-height:70vh;overflow-y:auto;padding:8px;border-radius:18px;background:var(--card);border:1px solid var(--line);box-shadow:0 18px 45px #0004;display:none}
+.lang-menu.show{display:block;animation:popFade .2s ease}
+.lang-menu .lang-title{padding:8px 10px 6px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+.lang-menu button{display:flex;align-items:center;justify-content:space-between;width:100%;padding:11px 12px;border:0;border-radius:12px;background:none;color:var(--text);font-size:14px;font-weight:700;text-align:left}
+.lang-menu button:hover{background:var(--blue-soft)}
+.lang-menu button.active{background:linear-gradient(110deg,#0758b9,#1687ff);color:#fff}
+.lang-menu button small{opacity:.7;font-size:11px;font-weight:600}
+#google_translate_element{position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden}
+.goog-te-banner-frame,.skiptranslate>iframe,iframe.skiptranslate,#goog-gt-tt,.goog-tooltip,.goog-te-balloon-frame{display:none!important}
+body{top:0!important}
+.goog-text-highlight{background:none!important;box-shadow:none!important}
+font{vertical-align:inherit}
+
+/* Language selector */
+.read-heading-row{justify-content:space-between!important}
+.lang-pick{display:inline-flex;align-items:center;gap:7px;padding:4px 6px 4px 13px;border-radius:30px;border:2px solid #b9d6f8;background:#e8f2ff;color:#0758b9;font-size:15px}
+.lang-pick select{border:0;background:transparent;color:#0758b9;font-size:13px;font-weight:800;padding:8px 6px;max-width:150px;outline:none;cursor:pointer}
+.lang-status{min-height:14px;margin:0 0 8px;text-align:left;color:#6685a2;font-size:11px;line-height:1.5}
+#read[dir=rtl] p,#read[dir=rtl] blockquote{text-align:right!important}
+#read[dir=rtl] blockquote.verse,#read[dir=rtl] .verse-ref{text-align:right!important}
+body:not(.light-theme) .lang-pick{background:#173454;border-color:#31577f;color:#b8dcff}
+body:not(.light-theme) .lang-pick select{color:#dcecff}
+body:not(.light-theme) .lang-pick select option{background:#10213a;color:#dce8f8}
 
 /* SGE Telegram group card */
 .sge-card{text-align:center;padding:26px 20px!important}
@@ -265,8 +293,10 @@ body:not(.light-theme) .church-downloads strong{color:#fff}
 <header>  
   <div class="header-left">  
     <button class="menu-toggle" id="menuToggle" aria-label="Open side menu" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>    </div>  
-  <div class="header-actions"><button class="theme-toggle" id="themeToggle" aria-label="Switch theme" title="Switch theme"><svg class="icon" id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8Z"/></svg></button></div>  
+  <div class="header-actions"><button class="lang-toggle notranslate" id="langToggle" aria-label="Change language" aria-expanded="false" title="Language"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></button><button class="theme-toggle" id="themeToggle" aria-label="Switch theme" title="Switch theme"><svg class="icon" id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8Z"/></svg></button></div>  
 </header>  
+<div class="lang-menu notranslate" id="langMenu" translate="no" role="menu" aria-label="Choose language"></div>
+<div id="google_translate_element" aria-hidden="true"></div>
 <div class="menu-overlay" id="menuOverlay"></div>  
 <aside class="side-menu" id="sideMenu" aria-label="Main navigation" aria-hidden="true">  
   <div class="side-menu-header"><div class="side-menu-header-top"><div class="side-menu-brand"><img src="kblc-logo.png" alt="KBLC Logo"><div class="side-menu-brand-text">KBLC DAILY<br>DEVOTIONAL<small>KINGDOM BUILDERS LOVELIFE CHURCH</small></div></div><button class="menu-close" id="menuClose" aria-label="Close menu">✕</button></div><div class="side-menu-subtitle">Listen • Read • Reflect • Grow</div></div>  
@@ -285,7 +315,7 @@ body:not(.light-theme) .church-downloads strong{color:#fff}
 <main class="container">  
   <section class="church-masthead" aria-label="Kingdom Builders Lovelife Church">  
     <div class="logo-stage" id="logoStage"><canvas id="logoViz" aria-hidden="true"></canvas><span class="logo-ring r1"></span><span class="logo-ring r2"></span><div class="church-logo-glow"><img src="kblc-logo.png" alt="Kingdom Builders Lovelife Church logo"></div></div>  
-    <div class="church-name">KINGDOM BUILDERS<br>LOVELIFE CHURCH INC.</div>  
+    <div class="church-name notranslate" translate="no">KINGDOM BUILDERS<br>LOVELIFE CHURCH INC.</div>  
     <div class="church-rhema">TODAY'S RHEMA WORD</div>
     <div class="church-downloads" title="Total devotional plays"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span><strong id="spreakerDownloads">1,000</strong> Devotional Plays</span></div>  
   </section>  
@@ -301,7 +331,7 @@ body:not(.light-theme) .church-downloads strong{color:#fff}
     <div class="devotional-title-row"><div class="section-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22Z"/><path d="M4 5.5v14A2.5 2.5 0 0 1 6.5 17H20"/></svg></div><div class="section-heading-text"><h2 id="title">Loading devotional...</h2><p>Listen to today's message and spend time in the Word.</p></div><span class="badge">DAILY DEVOTIONAL</span></div>  
     <div class="devotional-layout">  
       <div class="reading-column">  
-        <div class="read-heading-row"><div class="read-heading" style="display:flex;align-items:center;gap:10px;margin:0;color:var(--heading);font-size:15px;font-weight:800"><span class="section-icon" style="width:35px;height:35px;border-radius:11px">📖</span>Read Today's Word</div><button class="share-devotional-btn" id="shareDevotional" type="button" title="Export devotional as two A4 pages"><svg class="export-pages-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 7h19l7 7v26H14z"/><path d="M33 7v8h7M9 13H7v30h25v-3M20 22h14M20 28h14M20 34h9"/></svg><span>Export A4 Pages</span></button></div><div class="share-status" id="shareStatus" aria-live="polite"></div>  
+        <div class="read-heading-row"><div class="read-heading" style="display:flex;align-items:center;gap:10px;margin:0;color:var(--heading);font-size:15px;font-weight:800"><span class="section-icon" style="width:35px;height:35px;border-radius:11px">📖</span>Read Today's Word</div><label class="lang-pick"><span aria-hidden="true">🌐</span><select id="langSelect" aria-label="Read in another language"><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="yo">Yorùbá</option><option value="ig">Igbo</option><option value="ha">Hausa</option><option value="sw">Kiswahili</option><option value="ar">العربية</option><option value="zh-CN">中文</option><option value="hi">हिन्दी</option><option value="de">Deutsch</option><option value="ru">Русский</option><option value="it">Italiano</option><option value="ko">한국어</option><option value="ja">日本語</option><option value="tl">Filipino</option><option value="id">Bahasa Indonesia</option></select></label><button class="share-devotional-btn" id="shareDevotional" type="button" title="Export devotional as two A4 pages"><svg class="export-pages-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 7h19l7 7v26H14z"/><path d="M33 7v8h7M9 13H7v30h25v-3M20 22h14M20 28h14M20 34h9"/></svg><span>Export A4 Pages</span></button></div><div class="share-status" id="shareStatus" aria-live="polite"></div><div class="lang-status" id="langStatus" aria-live="polite"></div>  
         <div class="book"><div class="book-ribbon"></div><div class="book-page" id="read">⏳ Loading today's devotional...</div></div>  
         <div class="page-controls" id="pageControls" hidden><button class="page-btn" id="prevPage" type="button">← Previous</button><div class="page-indicator"><span id="pageCount">Page 1 of 1</span><div class="page-progress"><span id="pageProgress"></span></div></div><button class="page-btn" id="nextPage" type="button">Next →</button></div>  
       </div>  
@@ -390,7 +420,7 @@ const labelRE=/^(today['’]?s\s+(?:word|text|scripture|verse|rhema)|scriptures?
 const meta={scripture:{icon:'📖',name:'Scripture'},message:{icon:'✍️',name:"Today's Message"},prayer:{icon:'🙏',name:'Prayer'},confession:{icon:'🔥',name:'Confession'},action:{icon:'✓',name:'Action Point'}};function typeFor(s){s=s.toLowerCase();if(/scripture|bible|text|verse/.test(s))return'scripture';if(/prayer/.test(s))return'prayer';if(/confession|declaration|affirmation/.test(s))return'confession';if(/action|application|study|ponder/.test(s))return'action';return'message'}function boldRefs(s){return s.replace(refRE,'<strong class="ref">$1</strong>')}function isVerse(s){return /^[“"‘']/.test(s)&&s.length<700&&refRE.test(s)&&(refRE.lastIndex=0,true)}  
 function drawPage(){const target=document.getElementById('read');if(!devotionalPages.length){target.textContent='No description available for this devotional.';document.getElementById('pageControls').hidden=true;return}const page=devotionalPages[pageIndex];target.innerHTML='<div class="book-head"><span>TODAY’S RHEMA WORD • KBLC DAILY DEVOTIONAL</span><span>'+esc(bookDate)+'</span></div><h3 class="book-title">'+esc(bookTitle)+'</h3><div class="book-orn">✦ ✦ ✦</div>'+(devotionalImageUrl?'<figure class="devotional-description-image"><img src="'+esc(devotionalImageUrl)+'" alt="Devotional description picture" loading="eager" referrerpolicy="no-referrer"></figure><div class="devotional-image-divider" aria-hidden="true"></div>':'')+page.html+'<div class="book-foot">LISTEN • READ • REFLECT • GROW</div>';const controls=document.getElementById('pageControls');controls.hidden=devotionalPages.length<2;document.getElementById('pageCount').textContent='Page '+(pageIndex+1)+' of '+devotionalPages.length;document.getElementById('pageProgress').style.width=((pageIndex+1)/devotionalPages.length*100)+'%';document.getElementById('prevPage').disabled=pageIndex===0;document.getElementById('nextPage').disabled=pageIndex===devotionalPages.length-1}  
 function renderBook(text,title,published,imageUrl=''){devotionalImageUrl=imageUrl||'';bookTitle=title||'KBLC Daily Devotional';const dt=new Date();bookDate=dt.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});const rd=document.getElementById('referenceDate');if(rd){rd.querySelector('strong').textContent=bookDate;rd.querySelector('small').textContent='KBLC DAILY DEVOTIONAL';}const lines=String(text||'').split(/\n+/).map(s=>s.trim()).filter(Boolean);if(!lines.length){devotionalPages=[];drawPage();return}const sections=[];let current={type:'message',label:'',paras:[],intro:true};lines.forEach(line=>{const m=line.match(labelRE);if(m){if(current.paras.length||current.label)sections.push(current);current={type:typeFor(m[1]),label:m[1],paras:[],intro:false};if(m[2]?.trim())current.paras.push(m[2].trim())}else current.paras.push(line)});if(current.paras.length||current.label)sections.push(current);  
-shareSections=sections.filter(s=>s.paras.length||s.label);devotionalPages=shareSections.map(section=>{const m=meta[section.type],heading=section.intro?m.name:(section.label||m.name),special=section.type==='prayer'?'prayer-section':section.type==='confession'?'confession-section':'';let body='<section class="'+special+'"><h4 class="sec-label"><span class="sec-ico">'+m.icon+'</span>'+esc(heading)+'</h4>';section.paras.forEach((para,i)=>{const e=esc(para);if(refOnly.test(para))body+='<div class="verse-ref">'+boldRefs(e)+'</div>';else if(section.type==='scripture'||isVerse(para))body+='<blockquote class="verse">'+boldRefs(e)+'</blockquote>';else body+='<p>'+(i===0&&section.type==='message'?'<strong class="lead">'+boldRefs(e)+'</strong>':boldRefs(e))+'</p>'});body+='</section>';return{html:body}});pageIndex=0;drawPage()}  
+baseSections=sections.filter(s=>s.paras.length||s.label);baseTitleText=bookTitle;baseSections.forEach(sec=>{sec.rf=sec.paras.map(x=>refOnly.test(x));sec.vf=sec.paras.map(x=>isVerse(x))});buildPagesFrom(baseSections);translateAndRender()}function buildPagesFrom(secs){shareSections=secs;devotionalPages=secs.map(section=>{const m=meta[section.type],heading=section.intro?m.name:(section.label||m.name),special=section.type==='prayer'?'prayer-section':section.type==='confession'?'confession-section':'';let body='<section class="'+special+'"><h4 class="sec-label"><span class="sec-ico">'+m.icon+'</span>'+esc(heading)+'</h4>';section.paras.forEach((para,i)=>{const e=esc(para);if(section.rf?section.rf[i]:refOnly.test(para))body+='<div class="verse-ref">'+boldRefs(e)+'</div>';else if(section.type==='scripture'||(section.vf?section.vf[i]:isVerse(para)))body+='<blockquote class="verse">'+boldRefs(e)+'</blockquote>';else body+='<p>'+(i===0&&section.type==='message'?'<strong class="lead">'+boldRefs(e)+'</strong>':boldRefs(e))+'</p>'});body+='</section>';return{html:body}});pageIndex=0;drawPage()}  
 document.getElementById('read').addEventListener('error',e=>{if(e.target&&e.target.matches('.devotional-description-image img')){if(++devotionalImageIndex<devotionalImageCandidates.length){devotionalImageUrl=devotionalImageCandidates[devotionalImageIndex];e.target.src=devotionalImageUrl}else{e.target.closest('.devotional-description-image')?.remove();devotionalImageUrl=''}}},true);  
 document.getElementById('prevPage').addEventListener('click',()=>{if(pageIndex>0){pageIndex--;drawPage()}});document.getElementById('nextPage').addEventListener('click',()=>{if(pageIndex<devotionalPages.length-1){pageIndex++;drawPage()}});  
 function render(items){const list=document.getElementById('list');if(!items.length){list.innerHTML='<div class="no-results">No devotionals found.</div>';return}list.innerHTML=items.map(ep=>{const id=String(ep.episode_id||ep.id),active=id===curId?'episode-active':'',date=(ep.published_at||'').slice(0,10);return'<div class="episode-item '+active+'" role="button" tabindex="0" data-episode-id="'+esc(id)+'"><b>'+esc(ep.title||'Untitled devotional')+'</b><small>'+esc(date||'KBLC Daily Devotional')+'</small></div>'}).join('');list.querySelectorAll('.episode-item').forEach(item=>{const open=()=>{const id=item.dataset.episodeId;if(id)location.href='?episode_id='+encodeURIComponent(id)};item.addEventListener('click',open);item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})})}  
@@ -418,7 +448,7 @@ function extractDescriptionImages(ep){
 }  
 async function load(){try{const r=await fetch('https://api.spreaker.com/v2/shows/'+SHOW_ID+'/episodes?limit=100',{cache:'no-store'});if(!r.ok)throw Error('Could not load episodes');const d=await r.json();allEpisodes=d.response?.items||[];if(!curId&&allEpisodes.length)curId=String(allEpisodes[0].episode_id||allEpisodes[0].id);render(allEpisodes);if(!curId){document.getElementById('title').textContent='No devotional available';document.getElementById('read').textContent='No devotional episodes were found. Please try again later.';showFallback(null);return}const ep=await fetchEpisode(curId);if(ep){document.getElementById('title').textContent=ep.title||'KBLC Daily Devotional';playerTitle.textContent=ep.title||'KBLC Daily Devotional';const rawDescription=ep.html_description||ep.description||'';const desc=clean(rawDescription);devotionalImageCandidates=extractDescriptionImages(ep);devotionalImageIndex=0;const descriptionImage=devotionalImageCandidates[0]||'';if(desc)renderBook(desc,ep.title,ep.published_at,descriptionImage);else{document.getElementById('read').textContent='No description available for this devotional.';document.getElementById('pageControls').hidden=true}if(!loadAudio(ep))showFallback(curId)}else{document.getElementById('read').textContent='The devotional audio is available above. The written devotional could not be loaded at this time.';showFallback(curId)}}catch(e){console.log('Loading error:',e);document.getElementById('title').textContent='KBLC Daily Devotional';document.getElementById('read').textContent='The devotional service could not be reached at this time. Please check your internet connection and try again.';showFallback(curId)}}  
 /* Export the devotional as two crisp A4 portrait PNG pages. */  
-function wrapCanvasText(ctx,text,maxWidth){const words=String(text).split(/\s+/);const lines=[];let line='';for(const word of words){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);return lines}  
+function wrapCanvasText(ctx,text,maxWidth){const words=String(text).split(/\s+/);const lines=[];let line='';for(const word of words){const pieces=ctx.measureText(word).width>maxWidth?Array.from(word):[word];pieces.forEach((piece,pi)=>{const test=line+(pi===0&&line?' ':'')+piece;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=piece}else line=test})}if(line)lines.push(line);return lines}  
 function drawCanvasRoundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath()}  
 function loadChurchLogo(){return new Promise(resolve=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>resolve(null);im.src='kblc-logo.png'})}  
 async function loadDevotionalArtwork(url){  
@@ -499,10 +529,10 @@ async function shareDevotionalPicture(){
    for(const sec of shareSections){
     const prayer=sec.type==='prayer',confession=sec.type==='confession';
     flow.push({kind:'section',title:(sec.label||meta[sec.type].name).toUpperCase(),prayer,confession});
-    for(const para of sec.paras){
-     const scripture=sec.type==='scripture'||isVerse(para);
+    for(const [pIdx,para] of sec.paras.entries()){
+     const scripture=sec.type==='scripture'||(sec.vf?sec.vf[pIdx]:isVerse(para));
      const size=scripture?bodySize+1:bodySize;
-     measure.font=scripture?'italic 800 '+size+'px Georgia':(prayer||confession?'800 '+size+'px Arial':'700 '+size+'px Arial');
+     measure.font=scripture?'800 '+size+'px Georgia':(prayer||confession?'800 '+size+'px Arial':'700 '+size+'px Arial');
      flow.push({kind:'para',lines:wrapCanvasText(measure,para,inner-38),scripture,prayer,confession,size,lineHeight:Math.round(size*1.52)});
     }
    }
@@ -580,7 +610,7 @@ if(item.kind==='section'){
 const color=item.prayer?'#0758b9':item.confession?'#925000':'#0758b9';const fill=item.prayer?'#e7f1ff':item.confession?'#fff0d9':'#edf4fd';
 ctx.fillStyle=fill;drawCanvasRoundRect(ctx,pad,y,inner,48,12);ctx.fill();ctx.font='900 24px Arial';ctx.fillStyle=color;ctx.textAlign='center';ctx.fillText((item.continued?'CONTINUED • ':'')+(item.prayer?'PRAYER • ':'')+(item.confession?'CONFESSION • ':'')+item.title,cx,y+32);y+=64;
 }else{
-const scripture=item.scripture;ctx.font=scripture?'italic 800 '+item.size+'px Georgia':(item.prayer||item.confession?'800 '+item.size+'px Arial':'700 '+item.size+'px Arial');ctx.fillStyle=scripture?'#123c72':item.prayer?'#0758b9':item.confession?'#854600':'#17283d';const ctr=item.prayer||item.confession||scripture;ctx.textAlign=ctr?'center':'left';
+const scripture=item.scripture;ctx.font=scripture?'800 '+item.size+'px Georgia':(item.prayer||item.confession?'800 '+item.size+'px Arial':'700 '+item.size+'px Arial');ctx.fillStyle=scripture?'#123c72':item.prayer?'#0758b9':item.confession?'#854600':'#17283d';const ctr=item.prayer||item.confession;ctx.textAlign=ctr?'center':'left';
 for(const line of item.lines){ctx.fillText(line,ctr?cx:pad+18,y+item.size);y+=item.lineHeight}y+=20;
 }
 }
@@ -651,6 +681,63 @@ document.getElementById('shareDevotional').addEventListener('click',shareDevotio
  document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
  if(!seen)setTimeout(()=>{pop.classList.add('show');try{sessionStorage.setItem('kblc_sge_pop','1')}catch(e){}},3500);
 })();
+/* Language selector: translates the whole page (devotional, Bible text and menus) with Google Translate */
+(function(){
+ const LANGS=[['en','English','English'],['yo','Yorùbá','Yoruba'],['ig','Igbo','Igbo'],['ha','Hausa','Hausa'],['fr','Français','French'],['es','Español','Spanish'],['pt','Português','Portuguese'],['sw','Kiswahili','Swahili'],['de','Deutsch','German'],['it','Italiano','Italian'],['ar','العربية','Arabic'],['zh-CN','中文','Chinese'],['hi','हिन्दी','Hindi'],['ru','Русский','Russian'],['tl','Filipino','Filipino']];
+ const toggle=document.getElementById('langToggle'),menu=document.getElementById('langMenu');if(!toggle||!menu)return;
+ function current(){const m=document.cookie.match(/(?:^|;\s*)googtrans=\/[^/]*\/([^;]+)/);return m?decodeURIComponent(m[1]):'en'}
+ const cur=current();
+ menu.innerHTML='<div class="lang-title">Read in your language</div>'+LANGS.map(l=>'<button type="button" role="menuitem" data-lang="'+l[0]+'" class="'+(l[0]===cur?'active':'')+'">'+l[1]+'<small>'+l[2]+'</small></button>').join('');
+ function setLang(code){
+  const gone='Thu, 01 Jan 1970 00:00:00 GMT',host=location.hostname;
+  if(code==='en'){document.cookie='googtrans=;expires='+gone+';path=/';document.cookie='googtrans=;expires='+gone+';path=/;domain='+host}
+  else{document.cookie='googtrans=/en/'+code+';path=/';document.cookie='googtrans=/en/'+code+';path=/;domain='+host}
+  try{localStorage.setItem('kblc_lang',code)}catch(e){}
+  location.reload();
+ }
+ function hide(){menu.classList.remove('show');toggle.setAttribute('aria-expanded','false')}
+ toggle.addEventListener('click',e=>{e.stopPropagation();const open=menu.classList.toggle('show');toggle.setAttribute('aria-expanded',String(open))});
+ menu.addEventListener('click',e=>{const b=e.target.closest('button[data-lang]');if(b)setLang(b.dataset.lang)});
+ document.addEventListener('click',e=>{if(!menu.contains(e.target)&&e.target!==toggle)hide()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
+ // Only load Google Translate when a non-English language is chosen.
+ if(cur&&cur!=='en'){
+  window.googleTranslateElementInit=function(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:LANGS.map(l=>l[0]).filter(c=>c!=='en').join(','),autoDisplay:false},'google_translate_element')};
+  const sc=document.createElement('script');sc.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';sc.async=true;document.head.appendChild(sc);
+ }
+})();
+/* Read in different languages (automatic translation) */
+let baseSections=[],baseTitleText='',currentLang='en',langToken=0;const langCache={};
+try{currentLang=localStorage.getItem('kblc_lang')||'en'}catch(e){}
+(function(){const sel=document.getElementById('langSelect');if(!sel)return;if([...sel.options].some(o=>o.value===currentLang))sel.value=currentLang;else currentLang='en';
+ sel.addEventListener('change',()=>{currentLang=sel.value;try{localStorage.setItem('kblc_lang',currentLang)}catch(e){}translateAndRender()})})();
+function splitChunks(text,max){const parts=String(text).match(/[^.!?…]+[.!?…]*\s*/g)||[String(text)],out=[];let cur='';for(let p of parts){while(p.length>max){if(cur){out.push(cur);cur=''}out.push(p.slice(0,max));p=p.slice(max)}if((cur+p).length>max){out.push(cur);cur=p}else cur+=p}if(cur)out.push(cur);return out.map(x=>x.trim()).filter(Boolean)}
+async function gtx(text,lang){const r=await fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl='+encodeURIComponent(lang)+'&dt=t&q='+encodeURIComponent(text));if(!r.ok)throw new Error('translate');const d=await r.json();const t=(d[0]||[]).map(x=>x[0]||'').join('');if(!t)throw new Error('empty');return t}
+async function mymem(text,lang){const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair=en|'+encodeURIComponent(lang));if(!r.ok)throw new Error('translate');const d=await r.json();const t=d.responseData&&d.responseData.translatedText;if(!t)throw new Error('empty');return t}
+async function translateText(text,lang){const key=lang+'|'+text;if(langCache[key])return langCache[key];const out=[];for(const c of splitChunks(text,1200)){try{out.push(await gtx(c,lang))}catch(e){let t='';for(const sc of splitChunks(c,450))t+=(t?' ':'')+await mymem(sc,lang);out.push(t)}}const res=out.join(' ');langCache[key]=res;return res}
+async function mapLimit(items,limit,fn){const res=new Array(items.length);let i=0;await Promise.all(Array.from({length:Math.min(limit,items.length)},async()=>{while(i<items.length){const k=i++;res[k]=await fn(items[k])}}));return res}
+async function translateAndRender(){
+ const status=document.getElementById('langStatus'),readEl=document.getElementById('read'),titleEl=document.getElementById('title'),token=++langToken;
+ if(!baseSections.length)return;
+ if(currentLang==='en'){bookTitle=baseTitleText;if(titleEl)titleEl.textContent=baseTitleText;readEl.removeAttribute('dir');readEl.removeAttribute('lang');buildPagesFrom(baseSections);if(status)status.textContent='';return}
+ if(status)status.textContent='Translating…';
+ try{
+  const lang=currentLang,jobs=[{k:'title',t:baseTitleText}];
+  baseSections.forEach((sec,si)=>{if(sec.label)jobs.push({k:'label',si,t:sec.label});sec.paras.forEach((p,pi)=>{if(!sec.rf[pi])jobs.push({k:'para',si,pi,t:p})})});
+  const results=await mapLimit(jobs,5,j=>translateText(j.t,lang));
+  if(token!==langToken)return;
+  const secs=baseSections.map(sec=>({...sec,paras:sec.paras.slice()}));let title=baseTitleText;
+  jobs.forEach((j,n)=>{if(j.k==='title')title=results[n];else if(j.k==='label')secs[j.si].label=results[n];else secs[j.si].paras[j.pi]=results[n]});
+  bookTitle=title;if(titleEl)titleEl.textContent=title;
+  readEl.setAttribute('lang',lang);if(lang==='ar')readEl.setAttribute('dir','rtl');else readEl.removeAttribute('dir');
+  buildPagesFrom(secs);
+  if(status)status.textContent='Translated automatically — wording may not be perfect.';
+ }catch(e){
+  if(token!==langToken)return;console.log('Translation failed',e);
+  bookTitle=baseTitleText;buildPagesFrom(baseSections);
+  if(status)status.textContent='Translation is unavailable right now. Showing English.';
+ }
+}
 setPlaying(false);load();
 </script>
 
