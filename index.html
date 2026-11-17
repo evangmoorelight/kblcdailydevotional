@@ -293,6 +293,11 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 img,canvas,svg{max-width:100%}
 .book-page,.episode-item,.section-heading-text h2{-webkit-hyphens:auto;hyphens:auto;word-break:break-word}
 
+/* Original player hidden; the Play button sits higher */
+.player{display:none!important}
+#dailyDevotional .player-column{margin-top:26px!important}
+.readaloud-btn{margin-top:0!important}
+
 /* SGE Telegram group card */
 .sge-card{text-align:center;padding:26px 20px!important}
 .sge-card img{width:150px;height:150px;border-radius:50%;object-fit:cover;background:#000;box-shadow:0 0 0 4px #1687ff30,0 8px 22px #0758b940}
@@ -361,7 +366,7 @@ img,canvas,svg{max-width:100%}
           <div class="player-bottom"><div class="volume-area"><span class="volume-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4zM16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/></svg></span><input class="volume" id="volume" type="range" min="0" max="1" step=".01" value="1" aria-label="Volume"></div><button class="speed-button" id="speedButton" aria-label="Playback speed">1x</button></div>  
           <p class="player-note">Take a quiet moment, listen carefully, and let the Word strengthen your faith.</p>  
         </div><div class="spreaker-fallback" id="spreakerFallback"><iframe id="mainPlayer" src="" allow="autoplay" title="KBLC Daily Devotional Player"></iframe></div></div>  
-        <button class="notification-btn" id="notificationBtn"><svg class="icon" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Enable New Devotional Alerts</span></button>  
+        <button class="notification-btn readaloud-btn" id="readAloudBtn" type="button"><svg class="icon" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4zM16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/></svg><span>Play</span></button><button class="notification-btn" id="notificationBtn"><svg class="icon" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Enable New Devotional Alerts</span></button>  
       </div>  
     </div>  
   </section>    <section class="card sge-card" id="sgeGroup">
@@ -427,7 +432,7 @@ const themeToggle=document.getElementById('themeToggle'),themeIcon=document.getE
 const SHOW_ID='7392727',params=new URLSearchParams(location.search);let curId=params.get('episode_id'),allEpisodes=[];const audio=document.getElementById('audioPlayer'),playButton=document.getElementById('playButton'),playIcon=document.getElementById('playIcon'),progress=document.getElementById('progress'),volume=document.getElementById('volume'),currentTime=document.getElementById('currentTime'),duration=document.getElementById('duration'),playerTitle=document.getElementById('playerTitle'),customPlayer=document.getElementById('customPlayer'),fallback=document.getElementById('spreakerFallback'),mainPlayer=document.getElementById('mainPlayer'),speedButton=document.getElementById('speedButton');  
 let devotionalPages=[],pageIndex=0,bookTitle='',bookDate='',shareSections=[],devotionalImageUrl='',devotionalImageCandidates=[],devotionalImageIndex=0;  
 function updateCurrentDate(){const now=new Date();const dateText=now.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});const compact=now.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});const dateNode=document.querySelector('#referenceDate strong');if(dateNode)dateNode.textContent=dateText;const todayNode=document.getElementById('todayDate');if(todayNode)todayNode.textContent=compact;document.getElementById('year').textContent=now.getFullYear();const menuYear=document.getElementById('menuYear');if(menuYear)menuYear.textContent=now.getFullYear();if(bookTitle)bookDate=dateText;}updateCurrentDate();setInterval(updateCurrentDate,60000);  
-function fmt(s){if(!Number.isFinite(s)||s<0)return'0:00';return Math.floor(s/60)+':'+Math.floor(s%60).toString().padStart(2,'0')}function fill(){progress.style.setProperty('--pct',progress.value+'%')}function setPlaying(on){customPlayer.classList.toggle('playing',!!on);playIcon.innerHTML=on?'<rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect>':'<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"></path>';playButton.setAttribute('aria-label',on?'Pause':'Play')}  
+function fmt(s){if(!Number.isFinite(s)||s<0)return'0:00';return Math.floor(s/60)+':'+Math.floor(s%60).toString().padStart(2,'0')}function fill(){progress.style.setProperty('--pct',progress.value+'%')}function setPlaying(on){if(typeof syncReadBtn==='function')syncReadBtn();customPlayer.classList.toggle('playing',!!on);playIcon.innerHTML=on?'<rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect>':'<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"></path>';playButton.setAttribute('aria-label',on?'Pause':'Play')}  
 function spreakerURL(id){return id?'https://widget.spreaker.com/player?episode_id='+encodeURIComponent(id)+'&theme=dark&playlist=show&playlist_id='+SHOW_ID+'&autoplay=false&chapters-image=true':'https://widget.spreaker.com/player?show_id='+SHOW_ID+'&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true'}function showFallback(id){customPlayer.style.display='none';fallback.style.display='block';mainPlayer.src=spreakerURL(id)}function showCustom(){customPlayer.style.display='block';fallback.style.display='none'}  
 function findAudio(ep){const urls=[ep?.audio_url,ep?.audioUrl,ep?.mp3_url,ep?.mp3Url,ep?.download_url,ep?.downloadUrl,ep?.media_url,ep?.mediaUrl,ep?.stream_url,ep?.streamUrl,ep?.audio?.url,ep?.media?.url,ep?.file?.url,ep?.download?.url];return urls.find(u=>typeof u==='string'&&/^https?:\/\//i.test(u))||null}function loadAudio(ep){const u=findAudio(ep);if(!u){showFallback(curId);return false}audio.src=u;audio.load();playerTitle.textContent=ep.title||'KBLC Daily Devotional';showCustom();return true}  
 playButton.addEventListener('click',()=>{if(handleTTSClick())return;if(audio.paused){audio.play().then(()=>setPlaying(true)).catch(()=>setPlaying(false))}else audio.pause()});document.getElementById('skipBack').addEventListener('click',()=>audio.currentTime=Math.max(0,(audio.currentTime||0)-15));document.getElementById('skipFwd').addEventListener('click',()=>audio.currentTime=Number.isFinite(audio.duration)?Math.min(audio.duration,(audio.currentTime||0)+15):(audio.currentTime||0)+15);  
@@ -758,76 +763,62 @@ async function translateAndRender(){
   if(status)status.textContent='Translation is unavailable right now. Showing English.';
  }
 }
-/* Spoken translation: online voices are picked automatically for the selected language */
-let langState='idle',ttsPlaying=false,ttsQueue=[],ttsIdx=0,ttsToken=0,ttsVoice=null,ttsStarted=false,ttsErrors=0;const onlineBad={};
+/* Spoken reading: online voices only (English and every other language) */
+let langState='idle',ttsPlaying=false,ttsQueue=[],ttsIdx=0,ttsToken=0,ttsStarted=false,ttsErrors=0,ttsSrc=0;
 const ttsAudio=new Audio();ttsAudio.preload='auto';
-let ttsSrc=0;
-function onlineVoiceURL(text,lang,k){const q='&tl='+encodeURIComponent(lang)+'&q='+encodeURIComponent(text);return k===1?'https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx'+q:'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob'+q}
-function voiceFor(lang){
- if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined')return null;
- const code=(lang==='tl'?'fil':lang).toLowerCase(),prefix=code.split('-')[0],voices=speechSynthesis.getVoices()||[];
- const norm=v=>String(v.lang||'').toLowerCase().replace('_','-');
- return voices.find(v=>norm(v)===code)||voices.find(v=>norm(v).split('-')[0]===prefix)||(lang==='tl'?voices.find(v=>norm(v).split('-')[0]==='tl'):null)||null;
+function ttsLang(){return(currentLang==='en'||langState!=='ready')?'en':currentLang}
+function onlineVoiceURL(text,lang,k){
+ const q='&tl='+encodeURIComponent(lang)+'&q='+encodeURIComponent(text);
+ if(k===2&&lang==='en')return 'https://api.streamelements.com/kappa/v2/speech?voice=Brian&text='+encodeURIComponent(text);
+ if(k===1)return 'https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx'+q;
+ return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob'+q;
 }
-if('speechSynthesis' in window){try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{})}catch(e){}}
-function voiceNote(){return ' Press Listen to hear it read aloud in this language.'}
+function voiceNote(){return ' Press Play to hear it read aloud in this language.'}
 function langMsg(m){const el=document.getElementById('langStatus');if(el)el.textContent=m}
 function buildTTSQueue(){const parts=[bookTitle];shareSections.forEach(sec=>{if(sec.label&&sec.type!=='message')parts.push(sec.label);sec.paras.forEach((t,i)=>{if(sec.rf&&sec.rf[i])return;parts.push(t)})});ttsQueue=parts.filter(Boolean).flatMap(t=>splitChunks(t,180));ttsIdx=0}
 function detachTTSAudio(){ttsAudio.onended=null;ttsAudio.onerror=null;ttsAudio.onplaying=null;try{ttsAudio.pause()}catch(e){}}
-function stopTTS(){ttsToken++;detachTTSAudio();ttsQueue=[];ttsIdx=0;try{if('speechSynthesis' in window)speechSynthesis.cancel()}catch(e){}if(ttsPlaying){ttsPlaying=false;setPlaying(!audio.paused)}progress.value=0;fill()}
-function pauseTTS(){ttsToken++;detachTTSAudio();try{if('speechSynthesis' in window)speechSynthesis.cancel()}catch(e){}ttsPlaying=false;setPlaying(false)}
+function stopTTS(){ttsToken++;detachTTSAudio();ttsQueue=[];ttsIdx=0;if(ttsPlaying){ttsPlaying=false;setPlaying(!audio.paused)}progress.value=0;fill()}
+function pauseTTS(){ttsToken++;detachTTSAudio();ttsPlaying=false;setPlaying(false)}
 function finishTTS(){ttsPlaying=false;ttsQueue=[];ttsIdx=0;setPlaying(false);progress.value=0;fill()}
-function advanceTTS(tok,mode){if(tok!==ttsToken)return;ttsIdx++;progress.value=ttsQueue.length?ttsIdx/ttsQueue.length*100:0;fill();mode==='online'?playOnline(tok):speakNext(tok)}
-/* Device voice (fallback) */
-function speakNext(tok){
- if(tok!==ttsToken)return;
- if(ttsIdx>=ttsQueue.length){finishTTS();return}
- const u=new SpeechSynthesisUtterance(ttsQueue[ttsIdx]);u.voice=ttsVoice;u.lang=ttsVoice.lang;u.rate=.95;
- u.onend=()=>advanceTTS(tok,'device');u.onerror=e=>{if(e&&(e.error==='canceled'||e.error==='interrupted'))return;advanceTTS(tok,'device')};
- speechSynthesis.speak(u);
-}
-/* Online voice (automatic) */
+function advanceTTS(tok){if(tok!==ttsToken)return;ttsIdx++;progress.value=ttsQueue.length?ttsIdx/ttsQueue.length*100:0;fill();playOnline(tok)}
 function playOnline(tok){
  if(tok!==ttsToken)return;
  if(ttsIdx>=ttsQueue.length){detachTTSAudio();finishTTS();return}
  ttsAudio.onplaying=()=>{if(tok!==ttsToken)return;ttsStarted=true;ttsErrors=0};
- ttsAudio.onended=()=>advanceTTS(tok,'online');
+ ttsAudio.onended=()=>advanceTTS(tok);
  ttsAudio.onerror=()=>onlineFail(tok);
- ttsAudio.src=onlineVoiceURL(ttsQueue[ttsIdx],currentLang,ttsSrc);
+ ttsAudio.src=onlineVoiceURL(ttsQueue[ttsIdx],ttsLang(),ttsSrc);
  const pr=ttsAudio.play();
  if(pr&&pr.catch)pr.catch(e=>{if(tok!==ttsToken)return;if(e&&e.name==='NotAllowedError'){pauseTTS();return}if(e&&e.name==='AbortError')return;onlineFail(tok)});
 }
 function onlineFail(tok){
  if(tok!==ttsToken)return;
- if(!ttsStarted){                      // first source failed: try the second online source, then the device voice
-  if(ttsSrc<1){ttsSrc++;detachTTSAudio();playOnline(tok);return}
-  ttsSrc=0;onlineBad[currentLang]=true;detachTTSAudio();
-  const v=voiceFor(currentLang);
-  if(v){ttsMode='device';ttsVoice=v;langMsg('Online voice not available for this language. Using your device voice.');speakNext(tok)}
-  else{pauseTTS();langMsg('No voice is available for this language, so Listen plays the original audio.');if(audio.paused)audio.play().then(()=>setPlaying(true)).catch(()=>{})}
-  return;
+ if(!ttsStarted){                      // try the next online voice source
+  const last=ttsLang()==='en'?2:1;
+  if(ttsSrc<last){ttsSrc++;detachTTSAudio();playOnline(tok);return}
+  ttsSrc=0;pauseTTS();langMsg('An online voice could not be loaded for this language right now. Please check your internet connection and try again.');return;
  }
- if(++ttsErrors>=3){pauseTTS();langMsg('The voice stopped because the connection was interrupted. Press Listen to continue.');return}
- advanceTTS(tok,'online');
+ if(++ttsErrors>=3){pauseTTS();langMsg('The voice stopped because the connection was interrupted. Press Play to continue.');return}
+ advanceTTS(tok);
 }
-let ttsMode='online';
-function updateMediaSession(){if(!('mediaSession' in navigator)||typeof MediaMetadata==='undefined')return;try{navigator.mediaSession.metadata=new MediaMetadata({title:bookTitle||'KBLC Daily Devotional',artist:'Kingdom Builders Lovelife Church',album:'KBLC Daily Devotional',artwork:[{src:'kblc-logo.png'}]});['play','pause'].forEach(a=>{try{navigator.mediaSession.setActionHandler(a,()=>playButton.click())}catch(e){}})}catch(e){}}
-audio.addEventListener('play',updateMediaSession);
-function startTTS(){updateMediaSession();
+function updateMediaSession(){if(!('mediaSession' in navigator)||typeof MediaMetadata==='undefined')return;try{navigator.mediaSession.metadata=new MediaMetadata({title:bookTitle||'KBLC Daily Devotional',artist:'Kingdom Builders Lovelife Church',album:'KBLC Daily Devotional',artwork:[{src:'kblc-logo.png'}]});['play','pause'].forEach(a=>{try{navigator.mediaSession.setActionHandler(a,()=>toggleReadAloud())}catch(e){}})}catch(e){}}
+function startTTS(){
+ updateMediaSession();
  if(!ttsQueue.length)buildTTSQueue();if(!ttsQueue.length)return false;
  ttsToken++;const tok=ttsToken;ttsStarted=false;ttsErrors=0;ttsPlaying=true;setPlaying(true);
- if(onlineBad[currentLang]){const v=voiceFor(currentLang);ttsMode='device';ttsVoice=v;speakNext(tok)}
- else{ttsMode='online';playOnline(tok)}
- return true;
+ if(ttsSrc===2&&ttsLang()!=='en')ttsSrc=0;
+ playOnline(tok);return true;
 }
-function handleTTSClick(){
- if(currentLang==='en'||langState==='idle'||langState==='failed')return false;
- if(langState==='busy'){langMsg('Translating… please wait a moment, then press Listen.');return true}
- if(ttsPlaying){pauseTTS();return true}
- if(onlineBad[currentLang]&&!voiceFor(currentLang)){langMsg('No voice is available for this language, so Listen plays the original audio.');return false}
+function syncReadBtn(){const b=document.getElementById('readAloudBtn');if(!b)return;const sp=b.querySelector('span');if(sp)sp.textContent=ttsPlaying?'Pause':'Play';b.classList.toggle('enabled',!!ttsPlaying)}
+function toggleReadAloud(){
+ if(ttsPlaying){pauseTTS();return}
+ if(currentLang!=='en'&&langState==='busy'){langMsg('Translating… please wait a moment, then press Play.');return}
+ if(!shareSections.length){langMsg('The devotional is still loading.');return}
  if(!audio.paused)audio.pause();
- return startTTS();
+ if(!startTTS())langMsg('Nothing to read yet.');
 }
+document.getElementById('readAloudBtn').addEventListener('click',toggleReadAloud);
+function handleTTSClick(){if(ttsPlaying)pauseTTS();return false}
 setPlaying(false);load();
 </script>
 
