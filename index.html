@@ -277,6 +277,10 @@ body:not(.light-theme) .lang-pick{background:#173454;border-color:#31577f;color:
 body:not(.light-theme) .lang-pick select{color:#dcecff}
 body:not(.light-theme) .lang-pick select option{background:#10213a;color:#dce8f8}
 
+/* Push notification help text */
+.notify-help{margin:8px 2px 0;font-size:11px;line-height:1.6;color:#6685a2;text-align:center}
+.notify-help:empty{display:none}
+
 /* SGE Telegram group card */
 .sge-card{text-align:center;padding:26px 20px!important}
 .sge-card img{width:150px;height:150px;border-radius:50%;object-fit:cover;background:#000;box-shadow:0 0 0 4px #1687ff30,0 8px 22px #0758b940}
@@ -411,8 +415,8 @@ function updateCurrentDate(){const now=new Date();const dateText=now.toLocaleDat
 function fmt(s){if(!Number.isFinite(s)||s<0)return'0:00';return Math.floor(s/60)+':'+Math.floor(s%60).toString().padStart(2,'0')}function fill(){progress.style.setProperty('--pct',progress.value+'%')}function setPlaying(on){customPlayer.classList.toggle('playing',!!on);playIcon.innerHTML=on?'<rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect>':'<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"></path>';playButton.setAttribute('aria-label',on?'Pause':'Play')}  
 function spreakerURL(id){return id?'https://widget.spreaker.com/player?episode_id='+encodeURIComponent(id)+'&theme=dark&playlist=show&playlist_id='+SHOW_ID+'&autoplay=false&chapters-image=true':'https://widget.spreaker.com/player?show_id='+SHOW_ID+'&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true'}function showFallback(id){customPlayer.style.display='none';fallback.style.display='block';mainPlayer.src=spreakerURL(id)}function showCustom(){customPlayer.style.display='block';fallback.style.display='none'}  
 function findAudio(ep){const urls=[ep?.audio_url,ep?.audioUrl,ep?.mp3_url,ep?.mp3Url,ep?.download_url,ep?.downloadUrl,ep?.media_url,ep?.mediaUrl,ep?.stream_url,ep?.streamUrl,ep?.audio?.url,ep?.media?.url,ep?.file?.url,ep?.download?.url];return urls.find(u=>typeof u==='string'&&/^https?:\/\//i.test(u))||null}function loadAudio(ep){const u=findAudio(ep);if(!u){showFallback(curId);return false}audio.src=u;audio.load();playerTitle.textContent=ep.title||'KBLC Daily Devotional';showCustom();return true}  
-playButton.addEventListener('click',()=>{if(audio.paused){audio.play().then(()=>setPlaying(true)).catch(()=>setPlaying(false))}else audio.pause()});document.getElementById('skipBack').addEventListener('click',()=>audio.currentTime=Math.max(0,(audio.currentTime||0)-15));document.getElementById('skipFwd').addEventListener('click',()=>audio.currentTime=Number.isFinite(audio.duration)?Math.min(audio.duration,(audio.currentTime||0)+15):(audio.currentTime||0)+15);  
-const speeds=[1,1.25,1.5,2,.75];let speedIndex=0;speedButton.addEventListener('click',()=>{speedIndex=(speedIndex+1)%speeds.length;audio.playbackRate=speeds[speedIndex];speedButton.textContent=speeds[speedIndex]+'x'});audio.addEventListener('play',()=>setPlaying(true));audio.addEventListener('pause',()=>setPlaying(false));audio.addEventListener('ended',()=>{setPlaying(false);progress.value=0;fill()});audio.addEventListener('loadedmetadata',()=>{duration.textContent=fmt(audio.duration);audio.playbackRate=speeds[speedIndex]});audio.addEventListener('timeupdate',()=>{if(Number.isFinite(audio.duration)&&audio.duration>0){progress.value=audio.currentTime/audio.duration*100;fill()}currentTime.textContent=fmt(audio.currentTime)});progress.addEventListener('input',()=>{if(Number.isFinite(audio.duration)&&audio.duration>0)audio.currentTime=progress.value/100*audio.duration;fill()});volume.addEventListener('input',()=>audio.volume=Number(volume.value));audio.addEventListener('error',()=>{if(curId)showFallback(curId)});fill();  
+playButton.addEventListener('click',()=>{if(handleTTSClick())return;if(audio.paused){audio.play().then(()=>setPlaying(true)).catch(()=>setPlaying(false))}else audio.pause()});document.getElementById('skipBack').addEventListener('click',()=>audio.currentTime=Math.max(0,(audio.currentTime||0)-15));document.getElementById('skipFwd').addEventListener('click',()=>audio.currentTime=Number.isFinite(audio.duration)?Math.min(audio.duration,(audio.currentTime||0)+15):(audio.currentTime||0)+15);  
+const speeds=[1,1.25,1.5,2,.75];let speedIndex=0;speedButton.addEventListener('click',()=>{speedIndex=(speedIndex+1)%speeds.length;audio.playbackRate=speeds[speedIndex];speedButton.textContent=speeds[speedIndex]+'x'});audio.addEventListener('play',()=>setPlaying(true));audio.addEventListener('pause',()=>setPlaying(ttsPlaying));audio.addEventListener('ended',()=>{setPlaying(false);progress.value=0;fill()});audio.addEventListener('loadedmetadata',()=>{duration.textContent=fmt(audio.duration);audio.playbackRate=speeds[speedIndex]});audio.addEventListener('timeupdate',()=>{if(Number.isFinite(audio.duration)&&audio.duration>0){progress.value=audio.currentTime/audio.duration*100;fill()}currentTime.textContent=fmt(audio.currentTime)});progress.addEventListener('input',()=>{if(Number.isFinite(audio.duration)&&audio.duration>0)audio.currentTime=progress.value/100*audio.duration;fill()});volume.addEventListener('input',()=>audio.volume=Number(volume.value));audio.addEventListener('error',()=>{if(curId)showFallback(curId)});fill();  
 async function fetchEpisode(id){if(!id)return null;const endpoint='https://api.spreaker.com/v2/episodes/'+encodeURIComponent(id),urls=[endpoint,'https://corsproxy.io/?'+encodeURIComponent(endpoint),'https://api.allorigins.win/get?url='+encodeURIComponent(endpoint)];for(const url of urls){try{const r=await fetch(url);if(!r.ok)continue;let d=await r.json();if(d.contents){try{d=JSON.parse(d.contents)}catch(e){}}const ep=d.response?.episode||d.response||d.episode||d;if(ep&&(ep.title||ep.description||ep.html_description))return ep}catch(e){console.log('Episode request failed',e)}}return null}  
 function clean(raw){const doc=new DOMParser().parseFromString(String(raw||'').replace(/<br\s*\/?>/gi,'\n').replace(/<\/(p|div|h[1-6])>/gi,'\n\n').replace(/<\/li>/gi,'\n'),'text/html');return(doc.body.textContent||'').replace(/\u00a0/g,' ').trim()}function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}  
 const BOOKS='(?:[1-3]\\s?)?(?:Genesis|Exodus|Leviticus|Numbers|Deuteronomy|Joshua|Judges|Ruth|Samuel|Kings|Chronicles|Ezra|Nehemiah|Esther|Job|Psalms?|Proverbs|Ecclesiastes|Song of Solomon|Isaiah|Jeremiah|Lamentations|Ezekiel|Daniel|Hosea|Joel|Amos|Obadiah|Jonah|Micah|Nahum|Habakkuk|Zephaniah|Haggai|Zechariah|Malachi|Matthew|Mark|Luke|John|Acts|Romans|Corinthians|Galatians|Ephesians|Philippians|Colossians|Thessalonians|Timothy|Titus|Philemon|Hebrews|James|Peter|Jude|Revelation)\\s\\d{1,3}(?::\\d{1,3}(?:\\s?[-–]\\s?\\d{1,3})?)?(?:\\s?\[A-Za-z]{2,6}\)?';const refRE=new RegExp('\\b('+BOOKS+')','g'),refOnly=new RegExp('^[()\\-–—\\s]*(?:'+BOOKS+')[)\\s.]*$');  
@@ -634,7 +638,7 @@ document.getElementById('shareDevotional').addEventListener('click',shareDevotio
  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
  function fit(){dpr=window.devicePixelRatio||1;size=stage.clientWidth||240;cv.width=size*dpr;cv.height=size*dpr}
  fit();addEventListener('resize',fit);
- function on(){return !audio.paused&&!audio.ended}
+ function on(){return (!audio.paused&&!audio.ended)||ttsPlaying}
  function frame(){
   t+=0.016;const playing=on()&&!still;stage.classList.toggle('playing',playing);
   ctx2.setTransform(dpr,0,0,dpr,0,0);ctx2.clearRect(0,0,size,size);
@@ -718,7 +722,7 @@ async function translateText(text,lang){const key=lang+'|'+text;if(langCache[key
 async function mapLimit(items,limit,fn){const res=new Array(items.length);let i=0;await Promise.all(Array.from({length:Math.min(limit,items.length)},async()=>{while(i<items.length){const k=i++;res[k]=await fn(items[k])}}));return res}
 async function translateAndRender(){
  const status=document.getElementById('langStatus'),readEl=document.getElementById('read'),titleEl=document.getElementById('title'),token=++langToken;
- if(!baseSections.length)return;
+ if(!baseSections.length)return;stopTTS();langState=currentLang==='en'?'idle':'busy';
  if(currentLang==='en'){bookTitle=baseTitleText;if(titleEl)titleEl.textContent=baseTitleText;readEl.removeAttribute('dir');readEl.removeAttribute('lang');buildPagesFrom(baseSections);if(status)status.textContent='';return}
  if(status)status.textContent='Translating…';
  try{
@@ -731,12 +735,78 @@ async function translateAndRender(){
   bookTitle=title;if(titleEl)titleEl.textContent=title;
   readEl.setAttribute('lang',lang);if(lang==='ar')readEl.setAttribute('dir','rtl');else readEl.removeAttribute('dir');
   buildPagesFrom(secs);
-  if(status)status.textContent='Translated automatically — wording may not be perfect.';
+  langState='ready';if(status)status.textContent='Translated automatically — wording may not be perfect.'+voiceNote();
  }catch(e){
-  if(token!==langToken)return;console.log('Translation failed',e);
+  if(token!==langToken)return;console.log('Translation failed',e);langState='failed';
   bookTitle=baseTitleText;buildPagesFrom(baseSections);
   if(status)status.textContent='Translation is unavailable right now. Showing English.';
  }
+}
+/* Spoken translation: online voices are picked automatically for the selected language */
+let langState='idle',ttsPlaying=false,ttsQueue=[],ttsIdx=0,ttsToken=0,ttsVoice=null,ttsStarted=false,ttsErrors=0;const onlineBad={};
+const ttsAudio=new Audio();ttsAudio.preload='auto';
+function onlineVoiceURL(text,lang){return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl='+encodeURIComponent(lang)+'&q='+encodeURIComponent(text)}
+function voiceFor(lang){
+ if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined')return null;
+ const code=(lang==='tl'?'fil':lang).toLowerCase(),prefix=code.split('-')[0],voices=speechSynthesis.getVoices()||[];
+ const norm=v=>String(v.lang||'').toLowerCase().replace('_','-');
+ return voices.find(v=>norm(v)===code)||voices.find(v=>norm(v).split('-')[0]===prefix)||(lang==='tl'?voices.find(v=>norm(v).split('-')[0]==='tl'):null)||null;
+}
+if('speechSynthesis' in window){try{speechSynthesis.getVoices();speechSynthesis.addEventListener('voiceschanged',()=>{})}catch(e){}}
+function voiceNote(){return ' Press Listen to hear it read aloud in this language.'}
+function langMsg(m){const el=document.getElementById('langStatus');if(el)el.textContent=m}
+function buildTTSQueue(){const parts=[bookTitle];shareSections.forEach(sec=>{if(sec.label&&sec.type!=='message')parts.push(sec.label);sec.paras.forEach((t,i)=>{if(sec.rf&&sec.rf[i])return;parts.push(t)})});ttsQueue=parts.filter(Boolean).flatMap(t=>splitChunks(t,180));ttsIdx=0}
+function detachTTSAudio(){ttsAudio.onended=null;ttsAudio.onerror=null;ttsAudio.onplaying=null;try{ttsAudio.pause()}catch(e){}}
+function stopTTS(){ttsToken++;detachTTSAudio();ttsQueue=[];ttsIdx=0;try{if('speechSynthesis' in window)speechSynthesis.cancel()}catch(e){}if(ttsPlaying){ttsPlaying=false;setPlaying(!audio.paused)}progress.value=0;fill()}
+function pauseTTS(){ttsToken++;detachTTSAudio();try{if('speechSynthesis' in window)speechSynthesis.cancel()}catch(e){}ttsPlaying=false;setPlaying(false)}
+function finishTTS(){ttsPlaying=false;ttsQueue=[];ttsIdx=0;setPlaying(false);progress.value=0;fill()}
+function advanceTTS(tok,mode){if(tok!==ttsToken)return;ttsIdx++;progress.value=ttsQueue.length?ttsIdx/ttsQueue.length*100:0;fill();mode==='online'?playOnline(tok):speakNext(tok)}
+/* Device voice (fallback) */
+function speakNext(tok){
+ if(tok!==ttsToken)return;
+ if(ttsIdx>=ttsQueue.length){finishTTS();return}
+ const u=new SpeechSynthesisUtterance(ttsQueue[ttsIdx]);u.voice=ttsVoice;u.lang=ttsVoice.lang;u.rate=.95;
+ u.onend=()=>advanceTTS(tok,'device');u.onerror=e=>{if(e&&(e.error==='canceled'||e.error==='interrupted'))return;advanceTTS(tok,'device')};
+ speechSynthesis.speak(u);
+}
+/* Online voice (automatic) */
+function playOnline(tok){
+ if(tok!==ttsToken)return;
+ if(ttsIdx>=ttsQueue.length){detachTTSAudio();finishTTS();return}
+ ttsAudio.onplaying=()=>{if(tok!==ttsToken)return;ttsStarted=true;ttsErrors=0};
+ ttsAudio.onended=()=>advanceTTS(tok,'online');
+ ttsAudio.onerror=()=>onlineFail(tok);
+ ttsAudio.src=onlineVoiceURL(ttsQueue[ttsIdx],currentLang);
+ const pr=ttsAudio.play();
+ if(pr&&pr.catch)pr.catch(e=>{if(tok!==ttsToken)return;if(e&&e.name==='NotAllowedError'){pauseTTS();return}if(e&&e.name==='AbortError')return;onlineFail(tok)});
+}
+function onlineFail(tok){
+ if(tok!==ttsToken)return;
+ if(!ttsStarted){                      // online voice does not exist for this language: switch automatically
+  onlineBad[currentLang]=true;detachTTSAudio();
+  const v=voiceFor(currentLang);
+  if(v){ttsMode='device';ttsVoice=v;langMsg('Online voice not available for this language. Using your device voice.');speakNext(tok)}
+  else{pauseTTS();langMsg('No voice is available for this language, so Listen plays the original audio.');if(audio.paused)audio.play().then(()=>setPlaying(true)).catch(()=>{})}
+  return;
+ }
+ if(++ttsErrors>=3){pauseTTS();langMsg('The voice stopped because the connection was interrupted. Press Listen to continue.');return}
+ advanceTTS(tok,'online');
+}
+let ttsMode='online';
+function startTTS(){
+ if(!ttsQueue.length)buildTTSQueue();if(!ttsQueue.length)return false;
+ ttsToken++;const tok=ttsToken;ttsStarted=false;ttsErrors=0;ttsPlaying=true;setPlaying(true);
+ if(onlineBad[currentLang]){const v=voiceFor(currentLang);ttsMode='device';ttsVoice=v;speakNext(tok)}
+ else{ttsMode='online';playOnline(tok)}
+ return true;
+}
+function handleTTSClick(){
+ if(currentLang==='en'||langState==='idle'||langState==='failed')return false;
+ if(langState==='busy'){langMsg('Translating… please wait a moment, then press Listen.');return true}
+ if(ttsPlaying){pauseTTS();return true}
+ if(onlineBad[currentLang]&&!voiceFor(currentLang)){langMsg('No voice is available for this language, so Listen plays the original audio.');return false}
+ if(!audio.paused)audio.pause();
+ return startTTS();
 }
 setPlaying(false);load();
 </script>
