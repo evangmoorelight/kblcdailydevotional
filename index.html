@@ -432,7 +432,7 @@ const themeToggle=document.getElementById('themeToggle'),themeIcon=document.getE
 const SHOW_ID='7392727',params=new URLSearchParams(location.search);let curId=params.get('episode_id'),allEpisodes=[];const audio=document.getElementById('audioPlayer'),playButton=document.getElementById('playButton'),playIcon=document.getElementById('playIcon'),progress=document.getElementById('progress'),volume=document.getElementById('volume'),currentTime=document.getElementById('currentTime'),duration=document.getElementById('duration'),playerTitle=document.getElementById('playerTitle'),customPlayer=document.getElementById('customPlayer'),fallback=document.getElementById('spreakerFallback'),mainPlayer=document.getElementById('mainPlayer'),speedButton=document.getElementById('speedButton');  
 let devotionalPages=[],pageIndex=0,bookTitle='',bookDate='',shareSections=[],devotionalImageUrl='',devotionalImageCandidates=[],devotionalImageIndex=0;  
 function updateCurrentDate(){const now=new Date();const dateText=now.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});const compact=now.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});const dateNode=document.querySelector('#referenceDate strong');if(dateNode)dateNode.textContent=dateText;const todayNode=document.getElementById('todayDate');if(todayNode)todayNode.textContent=compact;document.getElementById('year').textContent=now.getFullYear();const menuYear=document.getElementById('menuYear');if(menuYear)menuYear.textContent=now.getFullYear();if(bookTitle)bookDate=dateText;}updateCurrentDate();setInterval(updateCurrentDate,60000);  
-function fmt(s){if(!Number.isFinite(s)||s<0)return'0:00';return Math.floor(s/60)+':'+Math.floor(s%60).toString().padStart(2,'0')}function fill(){progress.style.setProperty('--pct',progress.value+'%')}function setPlaying(on){if(typeof syncReadBtn==='function')syncReadBtn();customPlayer.classList.toggle('playing',!!on);playIcon.innerHTML=on?'<rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect>':'<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"></path>';playButton.setAttribute('aria-label',on?'Pause':'Play')}  
+function fmt(s){if(!Number.isFinite(s)||s<0)return'0:00';return Math.floor(s/60)+':'+Math.floor(s%60).toString().padStart(2,'0')}function fill(){progress.style.setProperty('--pct',progress.value+'%')}function setPlaying(on){if(typeof syncReadBtn==='function')syncReadBtn();if(typeof syncAmbient==='function')syncAmbient();customPlayer.classList.toggle('playing',!!on);playIcon.innerHTML=on?'<rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"></rect>':'<path d="M8 5v14l11-7z" fill="currentColor" stroke="none"></path>';playButton.setAttribute('aria-label',on?'Pause':'Play')}  
 function spreakerURL(id){return id?'https://widget.spreaker.com/player?episode_id='+encodeURIComponent(id)+'&theme=dark&playlist=show&playlist_id='+SHOW_ID+'&autoplay=false&chapters-image=true':'https://widget.spreaker.com/player?show_id='+SHOW_ID+'&theme=dark&playlist=show&playlist-continuous=true&chapters-image=true'}function showFallback(id){customPlayer.style.display='none';fallback.style.display='block';mainPlayer.src=spreakerURL(id)}function showCustom(){customPlayer.style.display='block';fallback.style.display='none'}  
 function findAudio(ep){const urls=[ep?.audio_url,ep?.audioUrl,ep?.mp3_url,ep?.mp3Url,ep?.download_url,ep?.downloadUrl,ep?.media_url,ep?.mediaUrl,ep?.stream_url,ep?.streamUrl,ep?.audio?.url,ep?.media?.url,ep?.file?.url,ep?.download?.url];return urls.find(u=>typeof u==='string'&&/^https?:\/\//i.test(u))||null}function loadAudio(ep){const u=findAudio(ep);if(!u){showFallback(curId);return false}audio.src=u;audio.load();playerTitle.textContent=ep.title||'KBLC Daily Devotional';showCustom();return true}  
 playButton.addEventListener('click',()=>{if(handleTTSClick())return;if(audio.paused){audio.play().then(()=>setPlaying(true)).catch(()=>setPlaying(false))}else audio.pause()});document.getElementById('skipBack').addEventListener('click',()=>audio.currentTime=Math.max(0,(audio.currentTime||0)-15));document.getElementById('skipFwd').addEventListener('click',()=>audio.currentTime=Number.isFinite(audio.duration)?Math.min(audio.duration,(audio.currentTime||0)+15):(audio.currentTime||0)+15);  
@@ -768,16 +768,19 @@ let langState='idle',ttsPlaying=false,ttsQueue=[],ttsIdx=0,ttsToken=0,ttsStarted
 const ttsAudio=new Audio();ttsAudio.preload='auto';
 function ttsLang(){return(currentLang==='en'||langState!=='ready')?'en':currentLang}
 function onlineVoiceURL(text,lang,k){
+ if(lang==='en'){
+  if(k===0)return 'https://api.streamelements.com/kappa/v2/speech?voice=Joanna&text='+encodeURIComponent(text);   // natural American English (US) voice
+  if(k===1)return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en-US&q='+encodeURIComponent(text);
+  return 'https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=en-US&q='+encodeURIComponent(text);
+ }
  const q='&tl='+encodeURIComponent(lang)+'&q='+encodeURIComponent(text);
- if(k===2&&lang==='en')return 'https://api.streamelements.com/kappa/v2/speech?voice=Brian&text='+encodeURIComponent(text);
- if(k===1)return 'https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx'+q;
- return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob'+q;
+ return k===1?'https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx'+q:'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob'+q;
 }
 function voiceNote(){return ' Press Play to hear it read aloud in this language.'}
 function langMsg(m){const el=document.getElementById('langStatus');if(el)el.textContent=m}
 function buildTTSQueue(){const parts=[bookTitle];shareSections.forEach(sec=>{if(sec.label&&sec.type!=='message')parts.push(sec.label);sec.paras.forEach((t,i)=>{if(sec.rf&&sec.rf[i])return;parts.push(t)})});ttsQueue=parts.filter(Boolean).flatMap(t=>splitChunks(t,180));ttsIdx=0}
 function detachTTSAudio(){ttsAudio.onended=null;ttsAudio.onerror=null;ttsAudio.onplaying=null;try{ttsAudio.pause()}catch(e){}}
-function stopTTS(){ttsToken++;detachTTSAudio();ttsQueue=[];ttsIdx=0;if(ttsPlaying){ttsPlaying=false;setPlaying(!audio.paused)}progress.value=0;fill()}
+function stopTTS(){ttsSrc=0;ttsToken++;detachTTSAudio();ttsQueue=[];ttsIdx=0;if(ttsPlaying){ttsPlaying=false;setPlaying(!audio.paused)}progress.value=0;fill()}
 function pauseTTS(){ttsToken++;detachTTSAudio();ttsPlaying=false;setPlaying(false)}
 function finishTTS(){ttsPlaying=false;ttsQueue=[];ttsIdx=0;setPlaying(false);progress.value=0;fill()}
 function advanceTTS(tok){if(tok!==ttsToken)return;ttsIdx++;progress.value=ttsQueue.length?ttsIdx/ttsQueue.length*100:0;fill();playOnline(tok)}
@@ -806,9 +809,33 @@ function startTTS(){
  updateMediaSession();
  if(!ttsQueue.length)buildTTSQueue();if(!ttsQueue.length)return false;
  ttsToken++;const tok=ttsToken;ttsStarted=false;ttsErrors=0;ttsPlaying=true;setPlaying(true);
- if(ttsSrc===2&&ttsLang()!=='en')ttsSrc=0;
+ if(ttsSrc>(ttsLang()==='en'?2:1))ttsSrc=0;
  playOnline(tok);return true;
 }
+/* Background music (background_music.mp3) while the voice is playing */
+let bgEl=null,bgCtx=null,bgGain=null,bgStopTimer=null;const BG_VOLUME=.22;
+function bgFade(to,secs){
+ if(bgGain&&bgCtx){const t=bgCtx.currentTime;bgGain.gain.cancelScheduledValues(t);bgGain.gain.setValueAtTime(bgGain.gain.value,t);bgGain.gain.linearRampToValueAtTime(to,t+secs);return}
+ if(!bgEl)return;const from=bgEl.volume,steps=12;let i=0;const iv=setInterval(()=>{i++;try{bgEl.volume=Math.min(1,Math.max(0,from+(to-from)*i/steps))}catch(e){}if(i>=steps)clearInterval(iv)},secs*1000/steps);
+}
+function ambientStart(){
+ try{
+  if(!bgEl){bgEl=new Audio('background_music.mp3');bgEl.loop=true;bgEl.preload='auto'}
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(AC&&!bgGain&&/^https?:$/.test(location.protocol)){try{bgCtx=new AC();const src=bgCtx.createMediaElementSource(bgEl);bgGain=bgCtx.createGain();bgGain.gain.value=.0001;src.connect(bgGain);bgGain.connect(bgCtx.destination)}catch(e){bgGain=null;bgCtx=null}}
+  if(bgCtx&&bgCtx.state==='suspended')bgCtx.resume();
+  clearTimeout(bgStopTimer);
+  if(!bgGain)bgEl.volume=.0001;
+  const p=bgEl.play();if(p&&p.catch)p.catch(()=>{});
+  bgFade(BG_VOLUME,2.5);
+ }catch(e){}
+}
+function ambientStop(){
+ if(!bgEl)return;
+ try{bgFade(.0001,1.2)}catch(e){}
+ clearTimeout(bgStopTimer);bgStopTimer=setTimeout(()=>{try{bgEl.pause()}catch(e){}},1400);
+}
+function syncAmbient(){ttsPlaying?ambientStart():ambientStop()}
 function syncReadBtn(){const b=document.getElementById('readAloudBtn');if(!b)return;const sp=b.querySelector('span');if(sp)sp.textContent=ttsPlaying?'Pause':'Play';b.classList.toggle('enabled',!!ttsPlaying)}
 function toggleReadAloud(){
  if(ttsPlaying){pauseTTS();return}
