@@ -1,3 +1,4 @@
 name = "kblc-devotional-push"
 main = "worker.js"
 compatibility_date = "2026-11-24"
+# Trigger fresh Cloudflare deployment
