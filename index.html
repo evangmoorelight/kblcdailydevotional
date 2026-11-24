@@ -483,6 +483,7 @@ const NOTIFY_KEY='kblc_episode_notifications_enabled',LATEST_KEY='kblc_latest_ep
   if(perm==='default'){try{perm=await Notification.requestPermission()}catch(e){}}
   if(perm!=='granted'){alert('Notifications are blocked. Please allow notifications for this site in your phone/browser settings.');return}
   notificationEnabled=true;
+  setTimeout(()=>{let got=false;try{webpushr('fetch_id',function(sid){got=true;alert(sid?'Phone alerts are ON. This phone is registered for push notifications.':'Not registered yet. Please reload the page and tap the button again.')})}catch(e){}setTimeout(()=>{if(!got)alert('Push is not connected yet. Check that this exact website address is added in Webpushr and that webpushr-sw.js is in the site root.')},6000)},2500);
  }else notificationEnabled=false;
  try{localStorage.setItem(NOTIFY_KEY,String(notificationEnabled))}catch(e){}
  updateNotify();if(notificationEnabled)ping()
